@@ -7,6 +7,7 @@ export default function Header() {
     { name: 'Bootha Kola', path: '/boothakola' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Credits', path: '/credits' },
+    { name: 'About', path: '/about' }
   ];
 
   return (
