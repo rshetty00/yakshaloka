@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import HeroLeft from '../../assets/images/DSC_3704.jpg';
-import HeroRight from '../../assets/images/PrathibhaShetty_DeviDurgaOnLion_Mahishamardini_Yakshagana_20161229_224345.jpg';
+import HeroRight from '../../assets/images/RaghuramShettyAsPunjurliBootha_0I7A0194.png';
 
 const Home = () => {
   return (
