@@ -6,7 +6,7 @@ import Bootha3 from 'assets/images/BoothaKola1.jpg';
 const BoothaKola = () => {
   return (
     <div className="bootha-kola container mx-auto py-8">
-      <h2 className="text-3xl font-bold mb-6 text-center">Bootha Kola Ritual</h2>
+      <h2 className="text-7xl font-bold mb-6 text-center font-easter text-yellow-500">Bootha Kola Ritual</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <img src={Bootha1} alt="Bootha Kola Ritual 1" className="w-full h-auto rounded shadow" />
         <img src={Bootha2} alt="Bootha Kola Ritual 2" className="w-full h-auto rounded shadow" />

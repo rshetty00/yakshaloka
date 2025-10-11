@@ -138,3 +138,21 @@ code {
 .social-icon:hover {
   transform: scale(1.2);
 }
+
+@font-face {
+  font-family: 'Easter Discover';
+  src: url('./assets/fonts/EasterDiscover.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Monaco';
+  src: url('./assets/fonts/Monaco.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+

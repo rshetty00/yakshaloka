@@ -5,7 +5,7 @@ import Yakshagana2 from 'assets/images/Yakshagana2.jpg';
 const Yakshagana = () => {
   return (
     <div className="yakshagana container mx-auto py-8">
-      <h2 className="text-3xl font-bold mb-6 text-center">Yakshagana</h2>
+      <h2 className="text-7xl font-bold mb-6 text-center font-easter text-red-500">Yakshagana</h2>
       <p className="mb-6 text-center">
         Yakshagana is a traditional theatre form from Karnataka, combining dance, music, and dialogues.
       </p>
