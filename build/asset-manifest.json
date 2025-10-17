@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/yakshaloka/static/css/main.477dda80.css",
+    "main.js": "/yakshaloka/static/js/main.4cdcb809.js",
+    "static/js/453.dffc44bb.chunk.js": "/yakshaloka/static/js/453.dffc44bb.chunk.js",
+    "static/media/RaghuramShettyAsPunjurliBootha_0I7A0194.png": "/yakshaloka/static/media/RaghuramShettyAsPunjurliBootha_0I7A0194.4229c9c54bd9f12d3305.png",
+    "static/media/DSC_3704.jpg": "/yakshaloka/static/media/DSC_3704.fb322e82cf2cb04617de.jpg",
+    "static/media/PrathibhaShetty_DeviDurgaOnLion_Mahishamardini_Yakshagana_20161229_224345.jpg": "/yakshaloka/static/media/PrathibhaShetty_DeviDurgaOnLion_Mahishamardini_Yakshagana_20161229_224345.f647b6edee9d2d331134.jpg",
+    "static/media/Logo.png": "/yakshaloka/static/media/Logo.da4ec530fc4511bb71ad.png",
+    "static/media/BoothaKola1.jpg": "/yakshaloka/static/media/BoothaKola1.71e8ff2fffdd02c02496.jpg",
+    "static/media/BoothaKola2.jpg": "/yakshaloka/static/media/BoothaKola2.e67bd8ee549c473ffff7.jpg",
+    "static/media/Yakshagana2.jpg": "/yakshaloka/static/media/Yakshagana2.19855ebd3b69f2129a76.jpg",
+    "static/media/RaghuramShetty_Shumbha_HeadshotYakshaganaPhoto_20161229_010652.jpg": "/yakshaloka/static/media/RaghuramShetty_Shumbha_HeadshotYakshaganaPhoto_20161229_010652.8cc78e560d82fb3a5ce4.jpg",
+    "static/media/Yakshagana1.jpg": "/yakshaloka/static/media/Yakshagana1.8cc78e560d82fb3a5ce4.jpg",
+    "static/media/EasterDiscover.ttf": "/yakshaloka/static/media/EasterDiscover.90be43bd40589738d9c4.ttf",
+    "static/media/Monaco.ttf": "/yakshaloka/static/media/Monaco.b55576c32bebc9c8a480.ttf",
+    "index.html": "/yakshaloka/index.html",
+    "main.477dda80.css.map": "/yakshaloka/static/css/main.477dda80.css.map",
+    "main.4cdcb809.js.map": "/yakshaloka/static/js/main.4cdcb809.js.map",
+    "453.dffc44bb.chunk.js.map": "/yakshaloka/static/js/453.dffc44bb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.477dda80.css",
+    "static/js/main.4cdcb809.js"
+  ]
+}
