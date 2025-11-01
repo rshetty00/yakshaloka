@@ -1,11 +1,12 @@
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import Logo from '../assets/images/Logo.png'; // ✅ import logo
 
 export default function Header() {
   const links = [
     { name: 'Home', path: '/' },
     { name: 'Yakshagana', path: '/yakshagana' },
-    { name: 'Bootha Kola', path: '/boothakola' },
+    { name: 'Kola Performances', path: '/kola-performances' },
+    { name: 'Bootha Rituals', path: '/bootharituals' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Credits', path: '/credits' },
     { name: 'About', path: '/about' }
@@ -29,13 +30,13 @@ export default function Header() {
         {/* Navigation */}
         <nav className="flex flex-wrap justify-center gap-1 md:gap-3">
           {links.map(link => (
-            <Link
+            <NavLink
               key={link.path}
               to={link.path}
-              className="px-4 py-2 text-sm md:text-base font-medium hover:text-yellow-300 transition-colors"
+              className={({ isActive }) => `px-4 py-2 text-sm md:text-base font-medium transition-colors ${isActive ? 'text-yellow-300' : 'hover:text-yellow-300'}`}
             >
               {link.name}
-            </Link>
+            </NavLink>
           ))}
         </nav>
       </div>

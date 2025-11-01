@@ -47,7 +47,7 @@ const Home = () => {
                   Explore Yakshagana
                 </Link>
                 <Link
-                  to="/boothakola"
+                  to="/kola-performances"
                   className="transform hover:scale-105 transition-transform bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-medium py-3 px-8 rounded-lg shadow-md"
                 >
                   Discover Bootha Kola
