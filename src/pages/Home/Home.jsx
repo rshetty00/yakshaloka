@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import * as RouterDOM from 'react-router-dom';
+const { Link } = RouterDOM;
 import HeroLeft from '../../assets/images/DSC_3704.jpg';
 import HeroRight from '../../assets/images/RaghuramShettyAsPunjurliBootha_0I7A0194.png';
 
@@ -51,6 +52,12 @@ const Home = () => {
                   className="transform hover:scale-105 transition-transform bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-medium py-3 px-8 rounded-lg shadow-md"
                 >
                   Discover Bootha Kola
+                </Link>
+                <Link
+                  to="/other-arts"
+                  className="transform hover:scale-105 transition-transform bg-amber-400 hover:bg-amber-500 text-black font-medium py-3 px-8 rounded-lg shadow-md"
+                >
+                  Other Arts
                 </Link>
               </div>
             </div>
