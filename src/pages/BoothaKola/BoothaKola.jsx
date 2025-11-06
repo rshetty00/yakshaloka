@@ -5,26 +5,27 @@ import Bootha3 from 'assets/images/BoothaKola1.jpg';
 import ReelVideo from 'assets/videos/RaghuramShettyBoothakolaReel_24Secs.mp4';
 import ReelThumb from 'assets/images/BoothaKolaPerforamnce_WaterMarked_PanjurliWithANi_RaghuramShetty.png';
 
+
 const BoothaKola = () => {
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [shouldLoad, setShouldLoad] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [, setIsVisible] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [sessionWatermark, setSessionWatermark] = useState('');
   const [reelPlaying, setReelPlaying] = useState(false);
   const reelRef = useRef(null);
   const reelContainerRef = useRef(null);
   const [reelMuted, setReelMuted] = useState(true);
-  const [reelShouldLoad, setReelShouldLoad] = useState(false);
+  const [, setReelShouldLoad] = useState(false);
   // WebAudio references for left/main video processing (gain + compressor)
   const audioCtxRef = useRef(null);
   const sourceNodeRef = useRef(null);
   const gainNodeRef = useRef(null);
   const compressorRef = useRef(null);
-  const [isAudioRouted, setIsAudioRouted] = useState(false);
+  const [, setIsAudioRouted] = useState(false);
   const [audioGain, setAudioGain] = useState(1.6); // default boost multiplier
 
   useEffect(() => {
@@ -466,6 +467,8 @@ const BoothaKola = () => {
       <p className="mt-6 text-center">
         Bootha Kola is a traditional ritual from coastal Karnataka, performed to honor local deities.
       </p>
+
+      
     </div>
   );
 };

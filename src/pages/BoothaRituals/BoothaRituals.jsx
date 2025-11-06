@@ -14,6 +14,8 @@ const BoothaRituals = () => {
     alt: 'Altar setup for Bootha Kola ritual',
   };
 
+  
+
   return (
     <div className="bootha-rituals container mx-auto py-8">
       <HeroRitual
@@ -22,7 +24,9 @@ const BoothaRituals = () => {
         bgImage={RitualBg}
       />
 
-      <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left: Feature media (large) */}
         <div className="lg:col-span-2">
           <FeatureMedia media={sampleMedia} caption="Altar setup for Bootha Kola performance — property of Raghuram Shetty / Yakshaloka US" fullSize />
@@ -51,7 +55,8 @@ const BoothaRituals = () => {
         </div>
       </div>
 
-      {/* Gallery preview */}
+      
+      {/* Gallery preview for Bootha Rituals */}
       <div className="mt-10">
         <h3 className="text-3xl text-amber-300 mb-4">Gallery</h3>
         <GalleryLightbox
@@ -68,9 +73,7 @@ const BoothaRituals = () => {
         <RitualTimeline />
       </div>
 
-      <div className="mt-10">
-        <p className="text-center text-slate-400">If you'd like, I can flesh out the timeline, add transcripts, captions and a lightbox gallery next.</p>
-      </div>
+      
     </div>
   );
 };

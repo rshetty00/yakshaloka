@@ -68,3 +68,52 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Admin: local server credentials and usage
+
+This project includes a small optional local server (`server/index.js`) that can persist the curated "Other Arts" list. The server supports Basic Auth for write operations when `ADMIN_USER` and `ADMIN_PASS` are set in the environment.
+
+Quick development steps (PowerShell):
+
+1. Temporary (current shell only):
+
+```powershell
+$env:ADMIN_USER = 'alice'
+$env:ADMIN_PASS = 's3cret'
+npm run server
+```
+
+2. Persistent (available in new shells):
+
+```powershell
+setx ADMIN_USER "alice"
+setx ADMIN_PASS "s3cret"
+# open a new PowerShell window and then:
+npm run server
+```
+
+3. Test the admin-auth endpoint:
+
+```powershell
+#$user and $pass should match the values above
+$user = 'alice'; $pass = 's3cret'
+$b64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("$user:$pass"))
+Invoke-RestMethod -Uri 'http://localhost:4000/api/admin-auth' -Method Post -Headers @{ Authorization = "Basic $b64" }
+```
+
+Or with curl:
+
+```powershell
+curl -u alice:s3cret -X POST http://localhost:4000/api/admin-auth
+```
+
+4. Save curated list to server (example):
+
+```powershell
+Invoke-RestMethod -Uri 'http://localhost:4000/api/other-arts' -Method Post -Headers @{ Authorization = "Basic $b64"; 'Content-Type' = 'application/json' } -Body '["https://youtu.be/dQw4w9WgXcQ"]'
+```
+
+Notes:
+- If `ADMIN_USER` / `ADMIN_PASS` are not set, the server will run in a developer-convenience mode and accept writes without authentication (it returns `{ ok: true, note: 'no-admin-config' }`).
+- Do not commit or check credentials into source control. For production you should run the server behind HTTPS and replace Basic Auth with a more secure token-based flow.
+
