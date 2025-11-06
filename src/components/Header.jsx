@@ -6,6 +6,7 @@ export default function Header() {
     { name: 'Home', path: '/' },
     { name: 'Yakshagana', path: '/yakshagana' },
     { name: 'Kola Performances', path: '/kola-performances' },
+    { name: 'Other Arts', path: '/other-arts' },
     { name: 'Bootha Rituals', path: '/bootharituals' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Credits', path: '/credits' },
