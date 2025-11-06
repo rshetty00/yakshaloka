@@ -5,13 +5,11 @@ import Gallery from './pages/Gallery/Gallery';
 import Credits from './pages/Credits/Credits';
 import About from 'pages/About/About';
 import BoothaRituals from './pages/BoothaRituals/BoothaRituals';
-import OtherArts from './pages/OtherArts/OtherArts';
 
 export const routes = [
   { path: '/', component: Home },
   { path: '/yakshagana', component: Yakshagana },
   { path: '/kola-performances', component: BoothaKola },
-  { path: '/other-arts', component: OtherArts },
   { path: '/bootharituals', component: BoothaRituals },
   { path: '/gallery', component: Gallery },
   { path: '/credits', component: Credits },

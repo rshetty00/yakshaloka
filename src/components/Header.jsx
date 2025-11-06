@@ -1,5 +1,4 @@
-import * as RouterDOM from 'react-router-dom';
-const { NavLink, Link } = RouterDOM;
+import { NavLink, Link } from 'react-router-dom';
 import Logo from '../assets/images/Logo.png'; // ✅ import logo
 
 export default function Header() {
@@ -8,7 +7,6 @@ export default function Header() {
     { name: 'Yakshagana', path: '/yakshagana' },
     { name: 'Kola Performances', path: '/kola-performances' },
     { name: 'Bootha Rituals', path: '/bootharituals' },
-    { name: 'Other Arts', path: '/other-arts' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Credits', path: '/credits' },
     { name: 'About', path: '/about' }
