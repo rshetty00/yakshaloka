@@ -346,17 +346,22 @@ export default function OtherArts() {
   async function handleAdminAuth(user, pass) {
     // validate credentials with server-side admin endpoint
     const header = 'Basic ' + btoa(`${user}:${pass}`);
+    console.log('[Admin Auth] Attempting login with user:', user);
+    console.log('[Admin Auth] Server base:', SERVER_BASE);
     try {
       const res = await fetch(`${SERVER_BASE}/api/admin-auth`, {
         method: 'POST',
         headers: { Authorization: header }
       });
+      console.log('[Admin Auth] Response status:', res.status, res.statusText);
       if (!res.ok) {
         const txt = await res.text().catch(() => '');
+        console.error('[Admin Auth] Login failed:', txt || res.statusText);
         showToast({ type: 'error', message: 'Admin authentication failed: ' + (txt || res.statusText || res.status) });
         return;
       }
       // success
+      console.log('[Admin Auth] Login successful!');
       setAdminAuth(header);
       setIsAdmin(true);
       try { sessionStorage.setItem('otherArts.isAdmin', '1'); sessionStorage.setItem('otherArts.adminAuth', header); } catch (e) {}
@@ -364,6 +369,7 @@ export default function OtherArts() {
       setAuthModalOpen(false);
       setAdminPanelOpen(true);
     } catch (e) {
+      console.error('[Admin Auth] Network error:', e);
       showToast({ type: 'error', message: 'Network error: ' + (e && e.message ? e.message : 'network') });
     }
   }
