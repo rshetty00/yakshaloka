@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import * as RouterDOM from 'react-router-dom';
-const { Link } = RouterDOM;
 import YouTubeEmbed from '../../components/YouTubeEmbed';
 import AuthModal from '../../components/AuthModal';
+
+const { Link } = RouterDOM;
 
 export default function OtherArts() {
   const [urls, setUrls] = useState([]);
