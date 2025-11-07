@@ -17,3 +17,11 @@
 [2025-11-07T16:48:47.886Z] [LOG] [REQ] GET /api/other-arts -> 304 2ms
 [2025-11-07T16:48:47.889Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
 [2025-11-07T16:50:00.455Z] [LOG] [REQ] POST /api/admin-auth -> 200 2ms
+[2025-11-07T16:53:45.371Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
+[2025-11-07T16:53:45.374Z] [LOG] [REQ] GET /api/other-arts -> 304 0ms
+[2025-11-07T16:53:56.065Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
+[2025-11-07T16:53:56.067Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
+[2025-11-07T19:29:53.748Z] [LOG] [REQ] GET /api/other-arts -> 304 3ms
+[2025-11-07T19:29:53.753Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
+[2025-11-07T19:48:09.098Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
+[2025-11-07T19:48:09.102Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
