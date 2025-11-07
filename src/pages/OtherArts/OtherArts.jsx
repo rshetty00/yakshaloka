@@ -5,7 +5,14 @@ import AuthModal from '../../components/AuthModal';
 
 const { Link } = RouterDOM;
 
-export default function OtherArts() {
+export default function OtherArts({
+  sectionMode = false,
+  customTitle,
+  customSubtitle,
+  initialHeaderVariant,
+  initialViewMode,
+  hideBoothaLink = false,
+} = {}) {
   const [urls, setUrls] = useState([]);
 
   // singleInput was removed (not used) — keep fileRef for import button
@@ -27,9 +34,11 @@ export default function OtherArts() {
     { id: 'stage', title: 'Stage & Dance Highlights', subtitle: 'Spotlight: theatre, dance and ritual recordings.' },
   ];
   const [headerVariant, setHeaderVariant] = useState(() => {
+    if (initialHeaderVariant) return initialHeaderVariant;
     try { return localStorage.getItem('otherArts.headerVariant') || 'voices'; } catch(e){return 'voices'}
   });
   const [viewMode, setViewMode] = useState(() => {
+    if (initialViewMode) return initialViewMode;
     try { return localStorage.getItem('otherArts.viewMode') || 'optionA'; } catch (e) { return 'optionA'; }
   });
   const [isAdmin, setIsAdmin] = useState(() => {
@@ -429,11 +438,26 @@ export default function OtherArts() {
 
   return (
     <div className="other-arts container mx-auto py-8">
-      <header className="mb-8">
-        {/* dynamic header title/subtitle from variants */}
-        <h1 className="text-4xl text-amber-300 font-semibold">{(headerVariants.find(h=>h.id===headerVariant)||headerVariants[0]).title}</h1>
-        <p className="text-slate-300 mt-2">{(headerVariants.find(h=>h.id===headerVariant)||headerVariants[0]).subtitle}</p>
-        <p className="text-slate-400 mt-2 text-sm">For the ritual media please visit the <Link to="/bootharituals" className="text-amber-300 underline">Bootha Rituals</Link> page.</p>
+      <header className={sectionMode ? 'mb-6' : 'mb-8'}>
+        {/* dynamic header title/subtitle from variants or custom props */}
+        {(() => {
+          const hv = (headerVariants.find(h=>h.id===headerVariant)||headerVariants[0]);
+          const title = customTitle || hv.title;
+          const subtitle = customSubtitle || hv.subtitle;
+          return (
+            <>
+              {sectionMode ? (
+                <h3 className="text-2xl text-amber-300 font-semibold">{title}</h3>
+              ) : (
+                <h1 className="text-4xl text-amber-300 font-semibold">{title}</h1>
+              )}
+              <p className="text-slate-300 mt-2">{subtitle}</p>
+            </>
+          );
+        })()}
+        {!hideBoothaLink && (
+          <p className="text-slate-400 mt-2 text-sm">For the ritual media please visit the <Link to="/bootharituals" className="text-amber-300 underline">Bootha Rituals</Link> page.</p>
+        )}
       </header>
 
       <section>
