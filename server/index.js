@@ -3,6 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 
+// Load environment variables from .env file
+require('dotenv').config();
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 const DATA_DIR = path.join(__dirname, 'data');
@@ -87,4 +90,5 @@ app.post('/api/admin-auth', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`OtherArts server listening on http://localhost:${PORT}`);
+  console.log(`Admin credentials: ADMIN_USER=${process.env.ADMIN_USER ? '✓ set' : '✗ not set'}, ADMIN_PASS=${process.env.ADMIN_PASS ? '✓ set' : '✗ not set'}`);
 });
