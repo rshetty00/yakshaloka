@@ -45,6 +45,7 @@ export default function OtherArts() {
     try { return sessionStorage.getItem('otherArts.adminAuth') || null; } catch (e) { return null; }
   }); // Basic auth header when provided
   const [adminAddUrl, setAdminAddUrl] = useState(''); // single-URL add box (admin only)
+  const [adminAuthLast, setAdminAuthLast] = useState(null); // debug: last admin auth attempt details
   const SERVER_BASE = process.env.REACT_APP_OTHER_ARTS_SERVER || 'http://localhost:4000';
 
   // Load persisted URLs from localStorage on mount
@@ -349,6 +350,7 @@ export default function OtherArts() {
     console.log('[Admin Auth] Attempting login with user:', user);
     console.log('[Admin Auth] Server base:', SERVER_BASE);
     try {
+      const startedAt = new Date().toISOString();
       const res = await fetch(`${SERVER_BASE}/api/admin-auth`, {
         method: 'POST',
         headers: { Authorization: header }
@@ -357,11 +359,20 @@ export default function OtherArts() {
       if (!res.ok) {
         const txt = await res.text().catch(() => '');
         console.error('[Admin Auth] Login failed:', txt || res.statusText);
-        showToast({ type: 'error', message: 'Admin authentication failed: ' + (txt || res.statusText || res.status) });
+        setAdminAuthLast({
+          ts: startedAt,
+          server: SERVER_BASE,
+          user,
+          status: res.status,
+          statusText: res.statusText,
+          response: (txt || null)
+        });
+        showToast({ type: 'error', message: 'Admin authentication failed: ' + (txt || res.statusText || res.status), sticky: true });
         return;
       }
       // success
       console.log('[Admin Auth] Login successful!');
+      setAdminAuthLast({ ts: startedAt, server: SERVER_BASE, user, status: res.status, ok: true });
       setAdminAuth(header);
       setIsAdmin(true);
       try { sessionStorage.setItem('otherArts.isAdmin', '1'); sessionStorage.setItem('otherArts.adminAuth', header); } catch (e) {}
@@ -370,7 +381,8 @@ export default function OtherArts() {
       setAdminPanelOpen(true);
     } catch (e) {
       console.error('[Admin Auth] Network error:', e);
-      showToast({ type: 'error', message: 'Network error: ' + (e && e.message ? e.message : 'network') });
+      setAdminAuthLast({ ts: new Date().toISOString(), server: SERVER_BASE, user, error: e && e.message ? e.message : String(e) });
+      showToast({ type: 'error', message: 'Network error: ' + (e && e.message ? e.message : 'network'), sticky: true });
     }
   }
 
@@ -598,7 +610,44 @@ export default function OtherArts() {
                 </>
               )}
             </div>
+            <div className="mt-2 text-xs text-slate-500">Auth server: {SERVER_BASE}</div>
+
+            {adminAuthLast && (
+              <div className="mt-3 bg-slate-900 border border-slate-700 rounded p-3">
+                <div className="text-slate-300 text-sm mb-2">Last admin auth attempt</div>
+                <pre className="text-[11px] leading-snug text-slate-300 whitespace-pre-wrap break-words max-h-48 overflow-auto">{JSON.stringify(adminAuthLast, null, 2)}</pre>
+                <div className="mt-2 flex gap-2">
+                  <button onClick={() => { try { navigator.clipboard && navigator.clipboard.writeText(JSON.stringify(adminAuthLast, null, 2)); showToast({ type: 'success', message: 'Copied details' }); } catch(e){} }} className="bg-slate-700 text-slate-200 px-2 py-1 rounded text-xs">Copy</button>
+                  <button onClick={() => setAdminAuthLast(null)} className="bg-slate-700 text-slate-200 px-2 py-1 rounded text-xs">Clear</button>
+                </div>
+              </div>
+            )}
           </div>
+
+          {/* Admin panel: Add URL */}
+          {adminPanelOpen && (
+            <div className="mb-6 pb-6 border-b border-slate-700">
+              <h3 className="text-lg text-slate-300 font-medium mb-3">Add YouTube Video</h3>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={adminAddUrl}
+                  onChange={(e) => setAdminAddUrl(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') addUrl(); }}
+                  placeholder="Paste YouTube URL here..."
+                  className="flex-1 bg-slate-800 text-slate-100 rounded px-3 py-2 border border-slate-600 focus:border-amber-400 focus:outline-none"
+                />
+                <button onClick={addUrl} className="bg-amber-400 text-black px-4 py-2 rounded font-medium">Add URL</button>
+              </div>
+              <div className="mt-2 text-xs text-slate-400">Enter a YouTube URL (youtube.com or youtu.be) to add it to the curated list.</div>
+              
+              {/* Save to server button */}
+              <div className="mt-4 flex items-center gap-2">
+                <button onClick={handleSaveToServer} className="bg-emerald-600 text-white px-4 py-2 rounded">Save to Server</button>
+                <div className="text-xs text-slate-400">Manually save the current list to the server</div>
+              </div>
+            </div>
+          )}
 
           {/* Data management tools */}
           <div className="mb-6 pb-6 border-b border-slate-700">

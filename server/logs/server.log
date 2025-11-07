@@ -1,0 +1,19 @@
+[2025-11-07T15:45:11.084Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-07T15:45:11.084Z] [LOG] Admin credentials: ADMIN_USER=✓ set, ADMIN_PASS=✓ set
+[2025-11-07T15:45:11.084Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-07T16:14:59.895Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-07T16:14:59.895Z] [LOG] Admin credentials: ADMIN_USER=✓ set, ADMIN_PASS=✓ set
+[2025-11-07T16:14:59.896Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-07T16:39:11.153Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-07T16:39:11.154Z] [LOG] Admin credentials: ADMIN_USER=✓ set, ADMIN_PASS=✓ set
+[2025-11-07T16:39:11.154Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-07T16:42:28.724Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-07T16:42:28.724Z] [LOG] Admin credentials: ADMIN_USER=✓ set, ADMIN_PASS=✓ set
+[2025-11-07T16:42:28.725Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-07T16:46:31.633Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-07T16:46:31.634Z] [LOG] Admin credentials: ADMIN_USER=✓ set, ADMIN_PASS=✓ set
+[2025-11-07T16:46:31.634Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-07T16:47:31.041Z] [LOG] [REQ] GET /api/other-arts -> 200 12ms
+[2025-11-07T16:48:47.886Z] [LOG] [REQ] GET /api/other-arts -> 304 2ms
+[2025-11-07T16:48:47.889Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
+[2025-11-07T16:50:00.455Z] [LOG] [REQ] POST /api/admin-auth -> 200 2ms

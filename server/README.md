@@ -58,6 +58,18 @@ You'll now see admin controls to add/edit/delete videos.
 
 Curated URLs are saved to: `server/data/other-arts.json`
 
+## Log File
+
+All server console output is also written (appended) to: `server/logs/server.log`
+
+View latest lines in PowerShell:
+
+```powershell
+Get-Content -Path server/logs/server.log -Tail 50 -Wait
+```
+
+Or open the file directly in your editor. The server creates the directory/file automatically on first start.
+
 ## Security Notes
 
 - `.env` file is gitignored — keep your credentials private

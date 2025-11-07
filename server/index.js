@@ -10,9 +10,46 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const DATA_DIR = path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'other-arts.json');
+// Setup basic file logging so you can inspect server output after the fact.
+// Logs are appended to server/logs/server.log with timestamps.
+const LOG_DIR = path.join(__dirname, 'logs');
+if (!fs.existsSync(LOG_DIR)) {
+  try { fs.mkdirSync(LOG_DIR, { recursive: true }); } catch (e) { /* ignore */ }
+}
+const LOG_FILE = path.join(LOG_DIR, 'server.log');
+let logStream; 
+try {
+  logStream = fs.createWriteStream(LOG_FILE, { flags: 'a' });
+} catch (e) {
+  // fallback: no file logging
+}
+['log','error','warn','info'].forEach(level => {
+  const orig = console[level].bind(console);
+  console[level] = (...args) => {
+    orig(...args);
+    if (logStream) {
+      try {
+        const line = `[${new Date().toISOString()}] [${level.toUpperCase()}] ` + args.map(a => {
+          if (typeof a === 'string') return a;
+          try { return JSON.stringify(a); } catch (_) { return String(a); }
+        }).join(' ') + '\n';
+        logStream.write(line);
+      } catch (_) { /* ignore logging errors */ }
+    }
+  };
+});
 
 app.use(cors());
 app.use(express.json());
+
+// Request logging middleware (method, path, status) for debugging 404/401 issues.
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    console.log('[REQ]', req.method, req.originalUrl, '->', res.statusCode, `${Date.now()-start}ms`);
+  });
+  next();
+});
 
 // Basic Auth middleware for write operations. Configure ADMIN_USER and ADMIN_PASS env vars.
 function requireBasicAuth(req, res, next) {
@@ -91,4 +128,5 @@ app.post('/api/admin-auth', (req, res) => {
 app.listen(PORT, () => {
   console.log(`OtherArts server listening on http://localhost:${PORT}`);
   console.log(`Admin credentials: ADMIN_USER=${process.env.ADMIN_USER ? '✓ set' : '✗ not set'}, ADMIN_PASS=${process.env.ADMIN_PASS ? '✓ set' : '✗ not set'}`);
+  console.log(`Log file: ${LOG_FILE}`);
 });
