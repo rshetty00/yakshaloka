@@ -588,12 +588,16 @@ export default function OtherArts() {
 
       {/* Admin and preview controls section - moved below videos */}
       <section className="mt-8 mb-6">
-        <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded p-6 shadow-lg">
+          <div className={
+            !isAdmin
+              ? "bg-slate-900 rounded px-3 py-2 mt-2 mb-2 text-xs text-slate-500 border border-slate-800 opacity-80"
+              : "bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded p-6 shadow-lg"
+          }>
           <h2 className="text-2xl text-amber-300 font-semibold mb-4">Management & Settings</h2>
           
           {/* Admin login/logout section */}
-          <div className="mb-6 pb-6 border-b border-slate-700">
-            <h3 className="text-lg text-slate-300 font-medium mb-3">Admin Access</h3>
+            <div className={!isAdmin ? "" : "mb-6 pb-6 border-b border-slate-700"}>
+              <h3 className={!isAdmin ? "text-xs text-slate-500 font-normal mb-1" : "text-lg text-slate-300 font-medium mb-3"}>Admin Access</h3>
             <div className="flex items-center gap-3">
               {!isAdmin ? (
                 <>
@@ -623,98 +627,100 @@ export default function OtherArts() {
               </div>
             )}
           </div>
+            {/* Only show the rest of management tools if admin */}
+            {isAdmin && (
+              <>
+                {/* Admin panel: Add URL */}
+                {adminPanelOpen && (
+                  <div className="mb-6 pb-6 border-b border-slate-700">
+                    <h3 className="text-lg text-slate-300 font-medium mb-3">Add YouTube Video</h3>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={adminAddUrl}
+                        onChange={(e) => setAdminAddUrl(e.target.value)}
+                        onKeyDown={(e) => { if (e.key === 'Enter') addUrl(); }}
+                        placeholder="Paste YouTube URL here..."
+                        className="flex-1 bg-slate-800 text-slate-100 rounded px-3 py-2 border border-slate-600 focus:border-amber-400 focus:outline-none"
+                      />
+                      <button onClick={addUrl} className="bg-amber-400 text-black px-4 py-2 rounded font-medium">Add URL</button>
+                    </div>
+                    <div className="mt-2 text-xs text-slate-400">Enter a YouTube URL (youtube.com or youtu.be) to add it to the curated list.</div>
+                    {/* Save to server button */}
+                    <div className="mt-4 flex items-center gap-2">
+                      <button onClick={handleSaveToServer} className="bg-emerald-600 text-white px-4 py-2 rounded">Save to Server</button>
+                      <div className="text-xs text-slate-400">Manually save the current list to the server</div>
+                    </div>
+                  </div>
+                )}
 
-          {/* Admin panel: Add URL */}
-          {adminPanelOpen && (
-            <div className="mb-6 pb-6 border-b border-slate-700">
-              <h3 className="text-lg text-slate-300 font-medium mb-3">Add YouTube Video</h3>
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  value={adminAddUrl}
-                  onChange={(e) => setAdminAddUrl(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === 'Enter') addUrl(); }}
-                  placeholder="Paste YouTube URL here..."
-                  className="flex-1 bg-slate-800 text-slate-100 rounded px-3 py-2 border border-slate-600 focus:border-amber-400 focus:outline-none"
-                />
-                <button onClick={addUrl} className="bg-amber-400 text-black px-4 py-2 rounded font-medium">Add URL</button>
-              </div>
-              <div className="mt-2 text-xs text-slate-400">Enter a YouTube URL (youtube.com or youtu.be) to add it to the curated list.</div>
-              
-              {/* Save to server button */}
-              <div className="mt-4 flex items-center gap-2">
-                <button onClick={handleSaveToServer} className="bg-emerald-600 text-white px-4 py-2 rounded">Save to Server</button>
-                <div className="text-xs text-slate-400">Manually save the current list to the server</div>
-              </div>
-            </div>
-          )}
-
-          {/* Data management tools */}
-          <div className="mb-6 pb-6 border-b border-slate-700">
-            <h3 className="text-lg text-slate-300 font-medium mb-3">Data Management</h3>
-            <div className="text-slate-400 text-sm mb-3">
-              Data stored in <strong>localStorage</strong> (key <code className="bg-slate-800 px-1 rounded">otherArts.urls</code>). 
-              Server status: <span className={serverAvailable === null ? 'text-slate-400' : serverAvailable ? 'text-emerald-400' : 'text-red-400'}>
-                {serverAvailable === null ? 'unknown' : serverAvailable ? 'available' : 'unavailable'}
-              </span>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <button onClick={loadFromServer} className="bg-sky-600 text-white px-3 py-2 rounded">Load from server</button>
-              <button onClick={async () => {
-                try {
-                  const res = await fetch((process.env.PUBLIC_URL || '') + '/data/other-arts.json');
-                  if (!res.ok) throw new Error('static not found');
-                  const json = await res.json();
-                  if (Array.isArray(json)) { setUrls(json); showToast({ type: 'success', message: 'Loaded baked-in list' }); }
-                } catch (e) { showToast({ type: 'error', message: 'Failed to load static fallback' }); }
-              }} className="bg-slate-700 text-slate-200 px-3 py-2 rounded">Load baked-in list</button>
-              <button onClick={exportJson} className="bg-indigo-600 text-white px-3 py-2 rounded">Export JSON</button>
-              <button onClick={() => fileRef.current && fileRef.current.click()} className="bg-slate-600 text-slate-200 px-3 py-2 rounded">Import JSON</button>
-              <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={(e) => importJson(e.target.files && e.target.files[0])} />
-            </div>
-            <div className="mt-3 text-xs text-slate-400">Tip: use Import/Export JSON to move curated lists between devices or back up your selections.</div>
-          </div>
-
-          {/* Display & layout options */}
-          <div className="mb-6 pb-6 border-b border-slate-700">
-            <h3 className="text-lg text-slate-300 font-medium mb-3">Display & Layout Options</h3>
-            <div className="space-y-3">
-              <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" checked={showTitles} onChange={(e) => { setShowTitles(e.target.checked); try { localStorage.setItem('otherArts.showTitles', e.target.checked ? '1' : '0') } catch(e){} }} className="rounded" />
-                <span className="text-slate-300">Always show video titles</span>
-              </label>
-              <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" checked={autoSync} onChange={(e) => { setAutoSync(e.target.checked); }} className="rounded" />
-                <span className="text-slate-300">Auto-save to server on changes</span>
-                <span className="ml-2 text-xs text-slate-400">(Status: {autoSyncStatus})</span>
-              </label>
-              
-              <div className="mt-4">
-                <div className="text-sm text-slate-300 mb-2">Layout mode:</div>
-                <div className="flex items-center gap-2">
-                  <button onClick={() => { setViewMode('optionA'); try{ localStorage.setItem('otherArts.viewMode','optionA') }catch(e){} }} className={`px-3 py-2 rounded ${viewMode==='optionA'? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>Two-column with preview</button>
-                  <button onClick={() => { setViewMode('masonry'); try{ localStorage.setItem('otherArts.viewMode','masonry') }catch(e){} }} className={`px-3 py-2 rounded ${viewMode==='masonry'? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>Masonry grid</button>
+                {/* Data management tools */}
+                <div className="mb-6 pb-6 border-b border-slate-700">
+                  <h3 className="text-lg text-slate-300 font-medium mb-3">Data Management</h3>
+                  <div className="text-slate-400 text-sm mb-3">
+                    Data stored in <strong>localStorage</strong> (key <code className="bg-slate-800 px-1 rounded">otherArts.urls</code>). 
+                    Server status: <span className={serverAvailable === null ? 'text-slate-400' : serverAvailable ? 'text-emerald-400' : 'text-red-400'}>
+                      {serverAvailable === null ? 'unknown' : serverAvailable ? 'available' : 'unavailable'}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button onClick={loadFromServer} className="bg-sky-600 text-white px-3 py-2 rounded">Load from server</button>
+                    <button onClick={async () => {
+                      try {
+                        const res = await fetch((process.env.PUBLIC_URL || '') + '/data/other-arts.json');
+                        if (!res.ok) throw new Error('static not found');
+                        const json = await res.json();
+                        if (Array.isArray(json)) { setUrls(json); showToast({ type: 'success', message: 'Loaded baked-in list' }); }
+                      } catch (e) { showToast({ type: 'error', message: 'Failed to load static fallback' }); }
+                    }} className="bg-slate-700 text-slate-200 px-3 py-2 rounded">Load baked-in list</button>
+                    <button onClick={exportJson} className="bg-indigo-600 text-white px-3 py-2 rounded">Export JSON</button>
+                    <button onClick={() => fileRef.current && fileRef.current.click()} className="bg-slate-600 text-slate-200 px-3 py-2 rounded">Import JSON</button>
+                    <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={(e) => importJson(e.target.files && e.target.files[0])} />
+                  </div>
+                  <div className="mt-3 text-xs text-slate-400">Tip: use Import/Export JSON to move curated lists between devices or back up your selections.</div>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Header customization */}
-          <div>
-            <h3 className="text-lg text-slate-300 font-medium mb-3">Header Customization</h3>
-            <div className="text-sm text-slate-400 mb-2">Choose a header variant for this page:</div>
-            <div className="flex flex-wrap items-center gap-2">
-              {headerVariants.map(v => (
-                <button key={v.id} onClick={() => setHeaderVariant(v.id)} className={`px-3 py-2 rounded ${headerVariant===v.id? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>
-                  {v.id}
-                </button>
-              ))}
-              <button onClick={() => { try { localStorage.setItem('otherArts.headerVariant', headerVariant); showToast({ type: 'success', message: 'Header preference saved' }); } catch(e){}}} className="ml-2 bg-emerald-600 text-white px-3 py-2 rounded">Save preference</button>
-            </div>
-            <div className="mt-2 text-xs text-slate-400">
-              Current: <strong>{(headerVariants.find(h=>h.id===headerVariant)||headerVariants[0]).title}</strong> — {(headerVariants.find(h=>h.id===headerVariant)||headerVariants[0]).subtitle}
-            </div>
-          </div>
+                {/* Display & layout options */}
+                <div className="mb-6 pb-6 border-b border-slate-700">
+                  <h3 className="text-lg text-slate-300 font-medium mb-3">Display & Layout Options</h3>
+                  <div className="space-y-3">
+                    <label className="flex items-center gap-2 text-sm">
+                      <input type="checkbox" checked={showTitles} onChange={(e) => { setShowTitles(e.target.checked); try { localStorage.setItem('otherArts.showTitles', e.target.checked ? '1' : '0') } catch(e){} }} className="rounded" />
+                      <span className="text-slate-300">Always show video titles</span>
+                    </label>
+                    <label className="flex items-center gap-2 text-sm">
+                      <input type="checkbox" checked={autoSync} onChange={(e) => { setAutoSync(e.target.checked); }} className="rounded" />
+                      <span className="text-slate-300">Auto-save to server on changes</span>
+                      <span className="ml-2 text-xs text-slate-400">(Status: {autoSyncStatus})</span>
+                    </label>
+                    <div className="mt-4">
+                      <div className="text-sm text-slate-300 mb-2">Layout mode:</div>
+                      <div className="flex items-center gap-2">
+                        <button onClick={() => { setViewMode('optionA'); try{ localStorage.setItem('otherArts.viewMode','optionA') }catch(e){} }} className={`px-3 py-2 rounded ${viewMode==='optionA'? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>Two-column with preview</button>
+                        <button onClick={() => { setViewMode('masonry'); try{ localStorage.setItem('otherArts.viewMode','masonry') }catch(e){} }} className={`px-3 py-2 rounded ${viewMode==='masonry'? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>Masonry grid</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Header customization */}
+                <div>
+                  <h3 className="text-lg text-slate-300 font-medium mb-3">Header Customization</h3>
+                  <div className="text-sm text-slate-400 mb-2">Choose a header variant for this page:</div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {headerVariants.map(v => (
+                      <button key={v.id} onClick={() => setHeaderVariant(v.id)} className={`px-3 py-2 rounded ${headerVariant===v.id? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>
+                        {v.id}
+                      </button>
+                    ))}
+                    <button onClick={() => { try { localStorage.setItem('otherArts.headerVariant', headerVariant); showToast({ type: 'success', message: 'Header preference saved' }); } catch(e){}}} className="ml-2 bg-emerald-600 text-white px-3 py-2 rounded">Save preference</button>
+                  </div>
+                  <div className="mt-2 text-xs text-slate-400">
+                    Current: <strong>{(headerVariants.find(h=>h.id===headerVariant)||headerVariants[0]).title}</strong> — {(headerVariants.find(h=>h.id===headerVariant)||headerVariants[0]).subtitle}
+                  </div>
+                </div>
+              </>
+            )}
         </div>
       </section>
 
