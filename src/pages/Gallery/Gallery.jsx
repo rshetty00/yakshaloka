@@ -1,4 +1,5 @@
 import React from 'react';
+import OtherArtsSection from '../../components/OtherArtsSection';
 import Yakshagana1 from 'assets/images/Yakshagana1.jpg';
 import Yakshagana2 from 'assets/images/Yakshagana2.jpg';
 import BoothaKola1 from 'assets/images/BoothaKola1.jpg';
@@ -26,6 +27,7 @@ const Gallery = () => {
           </div>
         ))}
       </div>
+      <OtherArtsSection title="Gallery Videos" subtitle="Curated clips that complement the photo gallery." />
     </div>
   );
 };
