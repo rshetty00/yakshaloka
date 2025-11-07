@@ -416,98 +416,7 @@ export default function OtherArts() {
         <h1 className="text-4xl text-amber-300 font-semibold">{(headerVariants.find(h=>h.id===headerVariant)||headerVariants[0]).title}</h1>
         <p className="text-slate-300 mt-2">{(headerVariants.find(h=>h.id===headerVariant)||headerVariants[0]).subtitle}</p>
         <p className="text-slate-400 mt-2 text-sm">For the ritual media please visit the <Link to="/bootharituals" className="text-amber-300 underline">Bootha Rituals</Link> page.</p>
-        <div className="mt-4 p-3 rounded bg-slate-900 text-slate-300 text-sm">
-          <div className="flex items-center justify-between">
-            <div>
-                Data stored in <strong>localStorage</strong> (key <code>otherArts.urls</code>). Server copy: {serverAvailable === null ? 'unknown' : serverAvailable ? 'available' : 'unavailable'}.
-            </div>
-            <div className="flex items-center gap-2">
-              <button onClick={loadFromServer} className="bg-sky-600 text-white px-3 py-1 rounded">Load from server</button>
-              <button onClick={async () => {
-                try {
-                  const res = await fetch((process.env.PUBLIC_URL || '') + '/data/other-arts.json');
-                  if (!res.ok) throw new Error('static not found');
-                  const json = await res.json();
-                  if (Array.isArray(json)) { setUrls(json); }
-                } catch (e) { alert('Failed to load static fallback'); }
-              }} className="bg-slate-700 text-slate-200 px-3 py-1 rounded">Load baked-in list</button>
-              <button onClick={exportJson} className="bg-indigo-600 text-white px-3 py-1 rounded">Export JSON</button>
-              <button onClick={() => fileRef.current && fileRef.current.click()} className="bg-slate-600 text-slate-200 px-3 py-1 rounded">Import JSON</button>
-              <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={(e) => importJson(e.target.files && e.target.files[0])} />
-                <label className="flex items-center gap-2 text-sm">
-                  <input type="checkbox" checked={showTitles} onChange={(e) => { setShowTitles(e.target.checked); try { localStorage.setItem('otherArts.showTitles', e.target.checked ? '1' : '0') } catch(e){} }} />
-                  <span className="text-slate-300 text-sm">Always show titles</span>
-                </label>
-                <label className="flex items-center gap-2 text-sm ml-4">
-                  <input type="checkbox" checked={autoSync} onChange={(e) => { setAutoSync(e.target.checked); }} />
-                  <span className="text-slate-300 text-sm">Auto-save to server</span>
-                </label>
-                <div className="ml-4 text-xs text-slate-300">Sync: {autoSyncStatus}</div>
-                <div className="ml-4 text-sm text-slate-300">
-                  <div className="mb-1 font-medium">Header preview</div>
-                  <div className="flex items-center gap-2">
-                    {headerVariants.map(v => (
-                      <button key={v.id} onClick={() => setHeaderVariant(v.id)} className={`px-2 py-1 rounded ${headerVariant===v.id? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>{v.id}</button>
-                    ))}
-                    <button onClick={() => { try { localStorage.setItem('otherArts.headerVariant', headerVariant); showToast({ type: 'success', message: 'Header saved' }); } catch(e){}}} className="ml-2 bg-emerald-600 text-white px-3 py-1 rounded">Save header</button>
-                  </div>
-                  <div className="ml-4">
-                    <div className="text-xs text-slate-300 mb-1">Layout</div>
-                    <div className="flex items-center gap-2">
-                      <button onClick={() => { setViewMode('optionA'); try{ localStorage.setItem('otherArts.viewMode','optionA') }catch(e){} }} className={`px-2 py-1 rounded ${viewMode==='optionA'? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>Two-column</button>
-                      <button onClick={() => { setViewMode('masonry'); try{ localStorage.setItem('otherArts.viewMode','masonry') }catch(e){} }} className={`px-2 py-1 rounded ${viewMode==='masonry'? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>Masonry</button>
-                    </div>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div className="mt-2 text-xs text-slate-400">Tip: use Import/Export JSON to move curated lists between devices.</div>
-        </div>
       </header>
-
-      <section className="mb-6">
-        <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded p-6 shadow-lg">
-          <h2 className="text-2xl text-amber-300 font-semibold">Curated Highlights</h2>
-          <p className="text-slate-400 mt-2">A curated selection of performances and ritual arts. Visitors can browse videos here. Management (adding/removing URLs) is restricted to Admins.</p>
-          <div className="mt-4 flex items-center gap-3">
-            {!isAdmin ? (
-              <>
-                <button onClick={() => setAuthModalOpen(true)} className="bg-amber-400 text-black px-4 py-2 rounded">Admin login</button>
-                <div className="text-slate-400 text-sm">Authorized users can reveal management controls below.</div>
-              </>
-            ) : (
-              <>
-                <div className="flex items-center gap-2">
-                  <button onClick={() => { setAdminPanelOpen(s => !s); }} className="bg-emerald-600 text-black px-3 py-1 rounded">{adminPanelOpen ? 'Hide Admin' : 'Open Admin'}</button>
-                  <button onClick={() => handleAdminLogout()} className="bg-red-600 text-white px-3 py-1 rounded">Logout</button>
-                </div>
-                <div className="text-slate-400 text-sm">Admin mode active (session).</div>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
-
-        {/* Admin panel: Add URL box and management controls (visible only when adminPanelOpen && isAdmin) */}
-        {isAdmin && adminPanelOpen && (
-          <section className="mb-6">
-            <div className="bg-slate-900 rounded p-4">
-              <div className="text-slate-300 font-medium mb-2">Admin — Add a YouTube URL</div>
-              <div className="flex gap-2 items-center">
-                <input
-                  className="flex-1 bg-slate-800 text-slate-100 rounded p-2"
-                  placeholder="Paste a YouTube URL and press Add"
-                  value={adminAddUrl}
-                  onChange={(e) => setAdminAddUrl(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addUrl(); } }}
-                />
-                <button onClick={() => addUrl()} className="bg-amber-400 text-black px-4 py-2 rounded">Add</button>
-                <button onClick={() => { setAdminAddUrl(''); }} className="bg-slate-700 text-slate-200 px-3 py-1 rounded">Clear</button>
-              </div>
-              <div className="text-xs text-slate-400 mt-2">URLs will be stored locally and optionally saved to the server when Auto-save is enabled.</div>
-            </div>
-          </section>
-        )}
 
       <section>
         {urls.length === 0 ? (
@@ -657,6 +566,101 @@ export default function OtherArts() {
             </div>
           )
         )}
+      </section>
+
+      {/* Admin and preview controls section - moved below videos */}
+      <section className="mt-8 mb-6">
+        <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded p-6 shadow-lg">
+          <h2 className="text-2xl text-amber-300 font-semibold mb-4">Management & Settings</h2>
+          
+          {/* Admin login/logout section */}
+          <div className="mb-6 pb-6 border-b border-slate-700">
+            <h3 className="text-lg text-slate-300 font-medium mb-3">Admin Access</h3>
+            <div className="flex items-center gap-3">
+              {!isAdmin ? (
+                <>
+                  <button onClick={() => setAuthModalOpen(true)} className="bg-amber-400 text-black px-4 py-2 rounded">Admin login</button>
+                  <div className="text-slate-400 text-sm">Authorized users can manage the curated list.</div>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => { setAdminPanelOpen(s => !s); }} className="bg-emerald-600 text-black px-3 py-1 rounded">{adminPanelOpen ? 'Hide Admin Panel' : 'Show Admin Panel'}</button>
+                    <button onClick={() => handleAdminLogout()} className="bg-red-600 text-white px-3 py-1 rounded">Logout</button>
+                  </div>
+                  <div className="text-slate-400 text-sm">Admin mode active (session).</div>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Data management tools */}
+          <div className="mb-6 pb-6 border-b border-slate-700">
+            <h3 className="text-lg text-slate-300 font-medium mb-3">Data Management</h3>
+            <div className="text-slate-400 text-sm mb-3">
+              Data stored in <strong>localStorage</strong> (key <code className="bg-slate-800 px-1 rounded">otherArts.urls</code>). 
+              Server status: <span className={serverAvailable === null ? 'text-slate-400' : serverAvailable ? 'text-emerald-400' : 'text-red-400'}>
+                {serverAvailable === null ? 'unknown' : serverAvailable ? 'available' : 'unavailable'}
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button onClick={loadFromServer} className="bg-sky-600 text-white px-3 py-2 rounded">Load from server</button>
+              <button onClick={async () => {
+                try {
+                  const res = await fetch((process.env.PUBLIC_URL || '') + '/data/other-arts.json');
+                  if (!res.ok) throw new Error('static not found');
+                  const json = await res.json();
+                  if (Array.isArray(json)) { setUrls(json); showToast({ type: 'success', message: 'Loaded baked-in list' }); }
+                } catch (e) { showToast({ type: 'error', message: 'Failed to load static fallback' }); }
+              }} className="bg-slate-700 text-slate-200 px-3 py-2 rounded">Load baked-in list</button>
+              <button onClick={exportJson} className="bg-indigo-600 text-white px-3 py-2 rounded">Export JSON</button>
+              <button onClick={() => fileRef.current && fileRef.current.click()} className="bg-slate-600 text-slate-200 px-3 py-2 rounded">Import JSON</button>
+              <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={(e) => importJson(e.target.files && e.target.files[0])} />
+            </div>
+            <div className="mt-3 text-xs text-slate-400">Tip: use Import/Export JSON to move curated lists between devices or back up your selections.</div>
+          </div>
+
+          {/* Display & layout options */}
+          <div className="mb-6 pb-6 border-b border-slate-700">
+            <h3 className="text-lg text-slate-300 font-medium mb-3">Display & Layout Options</h3>
+            <div className="space-y-3">
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={showTitles} onChange={(e) => { setShowTitles(e.target.checked); try { localStorage.setItem('otherArts.showTitles', e.target.checked ? '1' : '0') } catch(e){} }} className="rounded" />
+                <span className="text-slate-300">Always show video titles</span>
+              </label>
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={autoSync} onChange={(e) => { setAutoSync(e.target.checked); }} className="rounded" />
+                <span className="text-slate-300">Auto-save to server on changes</span>
+                <span className="ml-2 text-xs text-slate-400">(Status: {autoSyncStatus})</span>
+              </label>
+              
+              <div className="mt-4">
+                <div className="text-sm text-slate-300 mb-2">Layout mode:</div>
+                <div className="flex items-center gap-2">
+                  <button onClick={() => { setViewMode('optionA'); try{ localStorage.setItem('otherArts.viewMode','optionA') }catch(e){} }} className={`px-3 py-2 rounded ${viewMode==='optionA'? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>Two-column with preview</button>
+                  <button onClick={() => { setViewMode('masonry'); try{ localStorage.setItem('otherArts.viewMode','masonry') }catch(e){} }} className={`px-3 py-2 rounded ${viewMode==='masonry'? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>Masonry grid</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Header customization */}
+          <div>
+            <h3 className="text-lg text-slate-300 font-medium mb-3">Header Customization</h3>
+            <div className="text-sm text-slate-400 mb-2">Choose a header variant for this page:</div>
+            <div className="flex flex-wrap items-center gap-2">
+              {headerVariants.map(v => (
+                <button key={v.id} onClick={() => setHeaderVariant(v.id)} className={`px-3 py-2 rounded ${headerVariant===v.id? 'bg-amber-400 text-black':'bg-slate-700 text-slate-200'}`}>
+                  {v.id}
+                </button>
+              ))}
+              <button onClick={() => { try { localStorage.setItem('otherArts.headerVariant', headerVariant); showToast({ type: 'success', message: 'Header preference saved' }); } catch(e){}}} className="ml-2 bg-emerald-600 text-white px-3 py-2 rounded">Save preference</button>
+            </div>
+            <div className="mt-2 text-xs text-slate-400">
+              Current: <strong>{(headerVariants.find(h=>h.id===headerVariant)||headerVariants[0]).title}</strong> — {(headerVariants.find(h=>h.id===headerVariant)||headerVariants[0]).subtitle}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Undo snackbar for deletions */}
