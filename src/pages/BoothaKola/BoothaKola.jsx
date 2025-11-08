@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import OtherArtsSection from '../../components/OtherArtsSection';
 import BoothaVideo from 'assets/videos/ImportantKolaVideo_SpinningBeforeDance_RaghuramShettyPerformingArtistAsPunjurliBootha_0I7A0169.MP4';
 import Bootha2 from 'assets/images/BoothaKola2.jpg';
 import Bootha3 from 'assets/images/BoothaKola1.jpg';
@@ -467,8 +468,13 @@ const BoothaKola = () => {
       <p className="mt-6 text-center">
         Bootha Kola is a traditional ritual from coastal Karnataka, performed to honor local deities.
       </p>
-
-      
+      <OtherArtsSection
+        title="BoothaKola: Related Performances"
+        subtitle="Supplementary ritual and folk performance videos."
+        listId="boothakola"
+        initialHeaderVariant="stage"
+        initialViewMode="optionA"
+      />
     </div>
   );
 };

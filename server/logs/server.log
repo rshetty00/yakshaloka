@@ -1,0 +1,57 @@
+[2025-11-07T21:58:19.160Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-07T21:58:19.160Z] [LOG] Admin credentials: ADMIN_USER=✗ not set, ADMIN_PASS=✗ not set
+[2025-11-07T21:58:19.160Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-07T22:06:06.451Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-07T22:06:06.452Z] [LOG] Admin credentials: ADMIN_USER=✗ not set, ADMIN_PASS=✗ not set
+[2025-11-07T22:06:06.452Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-07T22:12:24.665Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-07T22:12:24.665Z] [LOG] Admin credentials: ADMIN_USER=✗ not set, ADMIN_PASS=✗ not set
+[2025-11-07T22:12:24.665Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-07T22:13:22.201Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-07T22:13:22.201Z] [LOG] Admin credentials: ADMIN_USER=✗ not set, ADMIN_PASS=✗ not set
+[2025-11-07T22:13:22.201Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-08T01:15:44.283Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 200 11ms
+[2025-11-08T01:15:44.287Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 2ms
+[2025-11-08T01:15:53.344Z] [LOG] [REQ] GET /api/other-arts/boothakola -> 200 2ms
+[2025-11-08T01:15:53.347Z] [LOG] [REQ] GET /api/other-arts/boothakola -> 304 2ms
+[2025-11-08T01:16:09.545Z] [LOG] [REQ] GET /api/other-arts -> 200 2ms
+[2025-11-08T01:16:09.550Z] [LOG] [REQ] GET /api/other-arts -> 304 3ms
+[2025-11-08T01:16:14.346Z] [LOG] [REQ] GET /api/other-arts/gallery -> 200 3ms
+[2025-11-08T01:16:14.350Z] [LOG] [REQ] GET /api/other-arts/gallery -> 304 2ms
+[2025-11-08T01:16:26.401Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 4ms
+[2025-11-08T01:16:26.407Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 2ms
+[2025-11-08T01:17:59.864Z] [LOG] [REQ] POST /api/admin-auth -> 200 4ms
+[2025-11-08T01:18:19.395Z] [LOG] [REQ] POST /api/other-arts/yakshagana -> 200 5ms
+[2025-11-08T01:18:29.327Z] [LOG] [REQ] POST /api/other-arts/yakshagana -> 200 3ms
+[2025-11-08T01:20:00.399Z] [LOG] [REQ] POST /api/other-arts/yakshagana -> 200 1ms
+[2025-11-08T01:20:08.192Z] [LOG] [REQ] POST /api/other-arts/yakshagana -> 200 3ms
+[2025-11-08T01:20:10.519Z] [LOG] [REQ] POST /api/other-arts/yakshagana -> 200 2ms
+[2025-11-08T01:21:49.595Z] [LOG] [REQ] POST /api/other-arts/yakshagana -> 200 3ms
+[2025-11-08T01:36:14.530Z] [LOG] [REQ] POST /api/other-arts/yakshagana -> 200 4ms
+[2025-11-08T01:36:18.198Z] [LOG] [REQ] POST /api/other-arts/yakshagana -> 200 3ms
+[2025-11-08T01:36:36.596Z] [LOG] [REQ] GET /api/other-arts/boothakola -> 304 1ms
+[2025-11-08T01:36:36.597Z] [LOG] [REQ] GET /api/other-arts/boothakola -> 304 0ms
+[2025-11-08T01:36:49.668Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
+[2025-11-08T01:36:49.671Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
+[2025-11-08T01:37:18.263Z] [LOG] [REQ] POST /api/other-arts -> 200 4ms
+[2025-11-08T01:37:55.388Z] [LOG] [REQ] POST /api/other-arts -> 200 3ms
+[2025-11-08T01:41:03.248Z] [LOG] [REQ] GET /api/other-arts -> 200 1ms
+[2025-11-08T01:41:03.251Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
+[2025-11-08T01:41:14.852Z] [LOG] [REQ] GET /api/other-arts/boothakola -> 304 1ms
+[2025-11-08T01:41:14.854Z] [LOG] [REQ] GET /api/other-arts/boothakola -> 304 0ms
+[2025-11-08T01:41:20.182Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 200 1ms
+[2025-11-08T01:41:20.194Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 1ms
+[2025-11-08T01:41:29.654Z] [LOG] [REQ] GET /api/other-arts -> 304 0ms
+[2025-11-08T01:41:29.655Z] [LOG] [REQ] GET /api/other-arts -> 304 1ms
+[2025-11-08T01:42:12.870Z] [LOG] [REQ] POST /api/admin-auth -> 200 0ms
+[2025-11-08T01:42:20.976Z] [LOG] [REQ] POST /api/other-arts -> 200 2ms
+[2025-11-08T01:42:41.305Z] [LOG] [REQ] GET /api/other-arts/gallery -> 304 2ms
+[2025-11-08T01:42:41.309Z] [LOG] [REQ] GET /api/other-arts/gallery -> 304 1ms
+[2025-11-08T01:43:57.812Z] [LOG] [REQ] POST /api/other-arts/gallery -> 200 5ms
+[2025-11-08T01:44:14.097Z] [LOG] [REQ] POST /api/other-arts/gallery -> 200 2ms
+[2025-11-08T06:33:51.424Z] [LOG] [REQ] GET /api/other-arts/boothakola -> 304 1ms
+[2025-11-08T06:33:51.425Z] [LOG] [REQ] GET /api/other-arts/boothakola -> 304 1ms
+[2025-11-08T06:33:55.200Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 1ms
+[2025-11-08T06:33:55.202Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 1ms
+[2025-11-08T06:35:55.758Z] [LOG] [REQ] GET /api/other-arts/gallery -> 200 3ms
+[2025-11-08T06:35:55.767Z] [LOG] [REQ] GET /api/other-arts/gallery -> 304 2ms
