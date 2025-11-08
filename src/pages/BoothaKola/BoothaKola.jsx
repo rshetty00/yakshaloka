@@ -6,26 +6,27 @@ import Bootha3 from 'assets/images/BoothaKola1.jpg';
 import ReelVideo from 'assets/videos/RaghuramShettyBoothakolaReel_24Secs.mp4';
 import ReelThumb from 'assets/images/BoothaKolaPerforamnce_WaterMarked_PanjurliWithANi_RaghuramShetty.png';
 
+
 const BoothaKola = () => {
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [shouldLoad, setShouldLoad] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [, setIsVisible] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [sessionWatermark, setSessionWatermark] = useState('');
   const [reelPlaying, setReelPlaying] = useState(false);
   const reelRef = useRef(null);
   const reelContainerRef = useRef(null);
   const [reelMuted, setReelMuted] = useState(true);
-  const [reelShouldLoad, setReelShouldLoad] = useState(false);
+  const [, setReelShouldLoad] = useState(false);
   // WebAudio references for left/main video processing (gain + compressor)
   const audioCtxRef = useRef(null);
   const sourceNodeRef = useRef(null);
   const gainNodeRef = useRef(null);
   const compressorRef = useRef(null);
-  const [isAudioRouted, setIsAudioRouted] = useState(false);
+  const [, setIsAudioRouted] = useState(false);
   const [audioGain, setAudioGain] = useState(1.6); // default boost multiplier
 
   useEffect(() => {
@@ -260,11 +261,12 @@ const BoothaKola = () => {
 
   return (
     <div className="bootha-kola container mx-auto py-8">
-      <h2 className="text-7xl font-bold mb-6 text-center font-easter text-yellow-500">Our BoothaKola Performances</h2>
+  <h2 className="text-7xl font-bold mb-6 text-center font-easter text-yellow-500">Our BoothaKola Performances</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Responsive aspect-ratio wrapper (main ritual video) */}
+        {/* Responsive aspect-ratio wrapper (Tailwind's aspect-video). If your Tailwind config
+            doesn't include aspect-ratio, you can replace with custom CSS. */}
         <div ref={containerRef} onContextMenu={(e) => e.preventDefault()} className="relative w-full rounded overflow-hidden shadow aspect-video">
-          {/* Watermark */}
+          {/* Watermark - non-interactive, visible in fullscreen */}
           <div className="absolute left-3 top-3 pointer-events-none z-20 bg-black bg-opacity-30 text-white text-xs px-2 py-1 rounded">
             {sessionWatermark}
           </div>
@@ -283,7 +285,8 @@ const BoothaKola = () => {
             {shouldLoad && <source src={BoothaVideo} type="video/mp4" />}
             Your browser does not support the video tag.
           </video>
-          {/* Play/Pause overlay */}
+
+          {/* Play/Pause overlay button */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <button
               onClick={togglePlay}
@@ -302,7 +305,8 @@ const BoothaKola = () => {
               )}
             </button>
           </div>
-          {/* Mute + gain */}
+
+          {/* Mute/Unmute + gain control */}
           <div className="absolute right-3 bottom-3 flex items-center gap-2">
             <button
               onClick={toggleMute}
@@ -311,15 +315,19 @@ const BoothaKola = () => {
               className="pointer-events-auto w-10 h-10 rounded bg-black bg-opacity-40 flex items-center justify-center text-white"
             >
               {isMuted ? (
+                // muted speaker icon
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M16.5 12c0-1.77-.77-3.36-1.98-4.46L13.5 9.56v4.88l1.02 2.02C15.73 16.36 16.5 14.77 16.5 12zM3 9v6h4l5 5V4L7 9H3z" />
                 </svg>
               ) : (
+                // unmuted speaker icon
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.36-1.98-4.46l-1.02 1.02c.57.6.92 1.4.92 2.44s-.35 1.84-.92 2.44l1.02 1.02C15.73 15.36 16.5 13.77 16.5 12z" />
                 </svg>
               )}
             </button>
+
+            {/* small gain slider (0.5x - 3x) to adjust normalization/boost */}
             <div className="flex items-center gap-2 px-2 py-1 rounded bg-black bg-opacity-30">
               <label className="text-xs text-white">Vol</label>
               <input
@@ -334,6 +342,7 @@ const BoothaKola = () => {
               />
             </div>
           </div>
+
           {/* Fullscreen button */}
           <button
             onClick={toggleFullscreen}
@@ -352,8 +361,10 @@ const BoothaKola = () => {
             )}
           </button>
         </div>
+
         {/* Reel video tile */}
         <div ref={reelContainerRef} onContextMenu={(e) => e.preventDefault()} className="w-full rounded overflow-hidden shadow aspect-video relative">
+          {/* Reel poster image (shows until video plays) */}
           <img
             src={ReelThumb}
             alt="Bootha Kola reel poster"
@@ -363,12 +374,23 @@ const BoothaKola = () => {
             onClick={() => {
               const rv = reelRef.current;
               if (!rv) return;
-              if (reelMuted) { try { rv.muted = false; } catch (err) {} setReelMuted(false); }
+              // if currently muted, treat this as user gesture to unmute + play
+              if (reelMuted) {
+                try {
+                  rv.muted = false;
+                } catch (err) {}
+                setReelMuted(false);
+              }
               const p = rv.play();
-              if (p && typeof p.then === 'function') { p.then(() => setReelPlaying(true)).catch(() => {}); } else { setReelPlaying(true); }
+              if (p && typeof p.then === 'function') {
+                p.then(() => setReelPlaying(true)).catch(() => {});
+              } else {
+                setReelPlaying(true);
+              }
             }}
             style={{ cursor: 'pointer' }}
           />
+          {/* Watermark overlay for reel (non-interactive) */}
           <div className="absolute left-3 top-3 pointer-events-none z-20 bg-black bg-opacity-30 text-white text-xs px-2 py-1 rounded">
             {sessionWatermark}
           </div>
@@ -388,7 +410,14 @@ const BoothaKola = () => {
             onEnded={() => {
               const rv = reelRef.current;
               if (rv) {
-                try { rv.pause(); rv.currentTime = 0; rv.load(); } catch (err) {}
+                try {
+                  rv.pause();
+                  rv.currentTime = 0;
+                  // reload to show poster in some browsers
+                  rv.load();
+                } catch (err) {
+                  // ignore
+                }
               }
               setReelPlaying(false);
             }}
@@ -396,13 +425,22 @@ const BoothaKola = () => {
             <source src={ReelVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
+          {/* Play icon overlay for affordance */}
           {!reelPlaying && (
             <button
               onClick={() => {
-                const rv = reelRef.current; if (!rv) return;
-                if (reelMuted) { try { rv.muted = false; } catch (e) {} setReelMuted(false); }
+                const rv = reelRef.current;
+                if (!rv) return;
+                if (reelMuted) {
+                  try { rv.muted = false; } catch (e) {}
+                  setReelMuted(false);
+                }
                 const p = rv.play();
-                if (p && typeof p.then === 'function') { p.then(() => setReelPlaying(true)).catch(() => {}); } else { setReelPlaying(true); }
+                if (p && typeof p.then === 'function') {
+                  p.then(() => setReelPlaying(true)).catch(() => {});
+                } else {
+                  setReelPlaying(true);
+                }
               }}
               aria-label="Play reel"
               className="absolute inset-0 m-auto w-16 h-16 rounded-full bg-black bg-opacity-40 flex items-center justify-center text-white pointer-events-auto"
@@ -413,18 +451,30 @@ const BoothaKola = () => {
             </button>
           )}
         </div>
-        {/* Static ritual images */}
+
         <div className="relative w-full rounded overflow-hidden shadow aspect-video">
           <img src={Bootha2} alt="Bootha Kola Ritual 2" className="w-full h-full object-cover" draggable={false} onDragStart={(e) => e.preventDefault()} />
-          <div className="absolute left-3 top-3 pointer-events-none z-20 bg-black bg-opacity-30 text-white text-xs px-2 py-1 rounded">{sessionWatermark}</div>
+          <div className="absolute left-3 top-3 pointer-events-none z-20 bg-black bg-opacity-30 text-white text-xs px-2 py-1 rounded">
+            {sessionWatermark}
+          </div>
         </div>
         <div className="relative w-full rounded overflow-hidden shadow aspect-video">
           <img src={Bootha3} alt="Bootha Kola Ritual 3" className="w-full h-full object-cover" draggable={false} onDragStart={(e) => e.preventDefault()} />
-          <div className="absolute left-3 top-3 pointer-events-none z-20 bg-black bg-opacity-30 text-white text-xs px-2 py-1 rounded">{sessionWatermark}</div>
+          <div className="absolute left-3 top-3 pointer-events-none z-20 bg-black bg-opacity-30 text-white text-xs px-2 py-1 rounded">
+            {sessionWatermark}
+          </div>
         </div>
       </div>
-      <p className="mt-6 text-center">Bootha Kola is a traditional ritual from coastal Karnataka, performed to honor local deities.</p>
-      <OtherArtsSection title="BoothaKola: Related Performances" subtitle="Supplementary ritual and folk performance videos." />
+      <p className="mt-6 text-center">
+        Bootha Kola is a traditional ritual from coastal Karnataka, performed to honor local deities.
+      </p>
+      <OtherArtsSection
+        title="BoothaKola: Related Performances"
+        subtitle="Supplementary ritual and folk performance videos."
+        listId="boothakola"
+        initialHeaderVariant="stage"
+        initialViewMode="optionA"
+      />
     </div>
   );
 };

@@ -14,7 +14,7 @@ const galleryItems = [
 
 const Gallery = () => {
   return (
-    <div className="gallery container mx-auto py-8">
+  <div className="gallery container mx-auto py-8">
       <h2 className="text-3xl font-bold mb-6 text-center">Gallery</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {galleryItems.map((item, index) => (
@@ -27,7 +27,13 @@ const Gallery = () => {
           </div>
         ))}
       </div>
-      <OtherArtsSection title="Gallery Videos" subtitle="Curated clips that complement the photo gallery." />
+      <OtherArtsSection
+        title="Gallery Videos"
+        subtitle="Curated clips that complement the photo gallery."
+        listId="gallery"
+        initialViewMode="masonry"
+        initialHeaderVariant="voices"
+      />
     </div>
   );
 };
