@@ -9,7 +9,7 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 const DATA_DIR = path.join(__dirname, 'data');
-const DATA_FILE = path.join(DATA_DIR, 'other-arts.json');
+const DEFAULT_DATA_FILE = path.join(DATA_DIR, 'other-arts.json');
 // Setup basic file logging so you can inspect server output after the fact.
 // Logs are appended to server/logs/server.log with timestamps.
 const LOG_DIR = path.join(__dirname, 'logs');
@@ -70,19 +70,32 @@ function requireBasicAuth(req, res, next) {
   return res.status(401).json({ ok: false, error: 'Invalid credentials' });
 }
 
-function readData() {
+function safeId(id) {
+  if (!id) return '';
+  return String(id).toLowerCase().replace(/[^a-z0-9-_]/g, '').slice(0, 64);
+}
+
+function dataFileFor(listId) {
+  const sid = safeId(listId);
+  if (!sid) return DEFAULT_DATA_FILE;
+  return path.join(DATA_DIR, `other-arts-${sid}.json`);
+}
+
+function readData(listId) {
   try {
-    const raw = fs.readFileSync(DATA_FILE, 'utf8');
+    const file = dataFileFor(listId);
+    const raw = fs.readFileSync(file, 'utf8');
     return JSON.parse(raw || '[]');
   } catch (err) {
     return [];
   }
 }
 
-function writeData(arr) {
+function writeData(arr, listId) {
   try {
     if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-    fs.writeFileSync(DATA_FILE, JSON.stringify(arr, null, 2), 'utf8');
+    const file = dataFileFor(listId);
+    fs.writeFileSync(file, JSON.stringify(arr, null, 2), 'utf8');
     return true;
   } catch (err) {
     console.error('Failed to write data', err);
@@ -91,7 +104,7 @@ function writeData(arr) {
 }
 
 app.get('/api/other-arts', (req, res) => {
-  const data = readData();
+  const data = readData('default');
   res.json({ ok: true, data });
 });
 
@@ -100,7 +113,25 @@ app.post('/api/other-arts', requireBasicAuth, (req, res) => {
   if (!Array.isArray(body)) {
     return res.status(400).json({ ok: false, error: 'Expected an array of URLs' });
   }
-  const saved = writeData(body.map(String));
+  const saved = writeData(body.map(String), 'default');
+  if (!saved) return res.status(500).json({ ok: false, error: 'Failed to write data' });
+  res.json({ ok: true });
+});
+
+// Multi-list support: specify a listId to read/write a separate JSON file
+app.get('/api/other-arts/:listId', (req, res) => {
+  const { listId } = req.params;
+  const data = readData(listId);
+  res.json({ ok: true, data });
+});
+
+app.post('/api/other-arts/:listId', requireBasicAuth, (req, res) => {
+  const { listId } = req.params;
+  const body = req.body;
+  if (!Array.isArray(body)) {
+    return res.status(400).json({ ok: false, error: 'Expected an array of URLs' });
+  }
+  const saved = writeData(body.map(String), listId);
   if (!saved) return res.status(500).json({ ok: false, error: 'Failed to write data' });
   res.json({ ok: true });
 });
