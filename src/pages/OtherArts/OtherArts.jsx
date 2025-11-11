@@ -1,6 +1,8 @@
 ﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import YouTubeEmbed from '../../components/YouTubeEmbed';
+import ImageEmbed from '../../components/ImageEmbed';
+import ImageUploader from '../../components/ImageUploader';
 import AuthModal from '../../components/AuthModal';
 
 export default function OtherArts({
@@ -57,7 +59,15 @@ export default function OtherArts({
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(urls)); } catch {}
   }, [urls, STORAGE_KEY]);
 
-  const SERVER_BASE = process.env.REACT_APP_OTHER_ARTS_SERVER || 'http://localhost:4000';
+  function inferServerBase() {
+  const env = process.env.REACT_APP_OTHER_ARTS_SERVER;
+  if (env && typeof env === 'string') return env.replace(/\/+$/, '');
+  const { protocol, hostname } = window.location;
+  const host = (hostname === 'localhost' || hostname === '127.0.0.1') ? 'localhost' : hostname;
+  return `${protocol}//${host}:4000`;
+}
+const SERVER_BASE = inferServerBase();
+
   const [serverAvailable, setServerAvailable] = useState(null);
   useEffect(() => {
     let mounted = true;
@@ -145,22 +155,81 @@ export default function OtherArts({
     if (t && !t.sticky) setTimeout(() => setToast(null), t.duration || 4000);
   }, []);
 
-  function _normalizeUrl(u) { let s = (u || '').trim(); if (!/^https?:\/\//i.test(s)) s = 'https://' + s; return s; }
-  function _looksLikeYouTube(u) { try { const o = new URL(u); return /youtube\.com|youtu\.be/.test(o.hostname); } catch { return /youtube\.com|youtu\.be/.test(u); } }
+  function _normalizeUrl(u) { 
+    let s = (u || '').trim(); 
+    if (!/^https?:\/\//i.test(s)) s = 'https://' + s; 
+    return s; 
+  }
+  
+  function _looksLikeYouTube(u) { 
+    try { 
+      const o = new URL(u); 
+      return /youtube\.com|youtu\.be/.test(o.hostname); 
+    } catch { 
+      return /youtube\.com|youtu\.be/.test(u); 
+    } 
+  }
+  
+  function _looksLikeImage(u) {
+    try {
+      const url = new URL(u);
+      const pathname = url.pathname.toLowerCase();
+      return /\.(jpg|jpeg|png|gif|webp)$/i.test(pathname);
+    } catch {
+      return /\.(jpg|jpeg|png|gif|webp)$/i.test(u);
+    }
+  }
+  
   async function addUrl() {
     const raw = adminAddUrl.trim();
-    if (!raw) { showToast({ type: 'error', message: 'Paste a URL first' }); return; }
+    if (!raw) { 
+      showToast({ type: 'error', message: 'Paste a URL first' }); 
+      return; 
+    }
+    
     const normalized = _normalizeUrl(raw);
-    if (!_looksLikeYouTube(normalized)) { showToast({ type: 'error', message: 'Must be YouTube URL' }); return; }
-    if (urls.includes(normalized)) { showToast({ type: 'error', message: 'Already exists' }); return; }
+    
+    // Check if it's YouTube or Image
+    const isYouTube = _looksLikeYouTube(normalized);
+    const isImage = _looksLikeImage(normalized);
+    
+    if (!isYouTube && !isImage) { 
+      showToast({ type: 'error', message: 'Must be YouTube URL or Image URL (.jpg, .png, .gif, .webp)' }); 
+      return; 
+    }
+    
+    if (urls.includes(normalized)) { 
+      showToast({ type: 'error', message: 'Already exists' }); 
+      return; 
+    }
+    
     const newList = [...urls, normalized];
-    setUrls(newList); setAdminAddUrl(''); showToast({ type: 'success', message: 'Added' });
+    setUrls(newList); 
+    setAdminAddUrl(''); 
+    showToast({ type: 'success', message: isImage ? 'Image added' : 'Video added' });
+    
     if (autoSync && !pauseAutoSync) saveToServer(newList, false);
   }
+
+  // Handler for ImageUploader component
+  function handleImageUploaded(imageUrl) {
+    if (urls.includes(imageUrl)) {
+      showToast({ type: 'error', message: 'Image already exists' });
+      return;
+    }
+    const newList = [...urls, imageUrl];
+    setUrls(newList);
+    showToast({ type: 'success', message: 'Image added to gallery!' });
+    if (autoSync && !pauseAutoSync) saveToServer(newList, false);
+  }
+
+  // Helper to determine if URL is an image
+  const isImageUrl = (url) => _looksLikeImage(url);
+
   function replaceUrl(idx, newUrl) { setUrls(list => list.map((u, i) => i === idx ? newUrl : u)); setEditingIndex(-1); setEditingValue(''); }
   const [pendingDeletion, setPendingDeletion] = useState(null);
   function deleteUrl(idx) {
-    if (!window.confirm('Delete this video?')) return;
+    if (!window.confirm('Delete this item?')) return;
     const removed = urls[idx];
     const newList = urls.filter((_, i) => i !== idx);
     setUrls(newList);
@@ -253,7 +322,7 @@ export default function OtherArts({
       </header>
       <section>
         {urls.length === 0 && (
-          <div className="bg-slate-900 rounded p-6 text-slate-300">No videos yet. Add some in the admin panel.</div>
+          <div className="bg-slate-900 rounded p-6 text-slate-300">No content yet. Add videos or images in the admin panel.</div>
         )}
         {urls.length > 0 && viewMode === 'optionA' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -261,7 +330,11 @@ export default function OtherArts({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {urls.map((u, i) => (
                   <div key={i} className={`relative bg-slate-900 rounded overflow-hidden border ${selectedIndex === i ? 'border-amber-400' : 'border-transparent'}`} draggable onDragStart={(e) => handleDragStart(e, i)} onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, i)} onClick={() => setSelectedIndex(i)}>
-                    <YouTubeEmbed url={u} title={`Video ${i + 1}`} onMeta={m => setTitles(t => ({ ...t, [u]: m.title || '' }))} showTitle={showTitles} />
+                    {isImageUrl(u) ? (
+                      <ImageEmbed url={u} showTitle={showTitles} />
+                    ) : (
+                      <YouTubeEmbed url={u} title={`Video ${i + 1}`} onMeta={m => setTitles(t => ({ ...t, [u]: m.title || '' }))} showTitle={showTitles} />
+                    )}
                     <div className="p-3 bg-slate-800 flex items-center gap-3">
                       <div className="flex-1">
                         {editingIndex === i ? (
@@ -294,7 +367,11 @@ export default function OtherArts({
                 <div className="text-slate-300 text-sm mb-3">Preview</div>
                 {selectedIndex >= 0 ? (
                   <div>
-                    <YouTubeEmbed url={urls[selectedIndex]} title="Preview" large onMeta={m => setTitles(t => ({ ...t, [urls[selectedIndex]]: m.title || '' }))} showTitle={showTitles} />
+                    {isImageUrl(urls[selectedIndex]) ? (
+                      <ImageEmbed url={urls[selectedIndex]} showTitle={showTitles} />
+                    ) : (
+                      <YouTubeEmbed url={urls[selectedIndex]} title="Preview" large onMeta={m => setTitles(t => ({ ...t, [urls[selectedIndex]]: m.title || '' }))} showTitle={showTitles} />
+                    )}
                     <div className="mt-3 flex flex-wrap gap-2">
                       <button onClick={() => { navigator.clipboard && navigator.clipboard.writeText(urls[selectedIndex]); showToast({ type: 'success', message: 'Copied URL' }); }} className="bg-slate-700 text-slate-200 px-3 py-1 rounded">Copy</button>
                       <button onClick={() => { setEditingIndex(selectedIndex); setEditingValue(urls[selectedIndex]); }} className="bg-amber-400 text-black px-3 py-1 rounded">Edit</button>
@@ -302,7 +379,7 @@ export default function OtherArts({
                       <button onClick={() => saveToServer(urls)} className="bg-emerald-600 text-white px-3 py-1 rounded">Save</button>
                     </div>
                   </div>
-                ) : <div className="text-slate-500">Select a video.</div>}
+                ) : <div className="text-slate-500">Select an item.</div>}
               </div>
             </div>
           </div>
@@ -330,18 +407,46 @@ export default function OtherArts({
             <div className="mt-2 text-xs text-slate-500">Server: {SERVER_BASE}</div>
           </div>
           {isAdmin && adminPanelOpen && (
-            <div className="mb-6 pb-6 border-b border-slate-700">
-              <h3 className="text-lg text-slate-300 font-medium mb-3">Add YouTube Video</h3>
-              <div className="flex items-center gap-2 flex-wrap">
-                <input type="text" value={adminAddUrl} onChange={e => setAdminAddUrl(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addUrl(); }} placeholder="Paste YouTube URL..." className="flex-1 bg-slate-800 text-slate-100 rounded px-3 py-2 border border-slate-600 focus:border-amber-400 focus:outline-none min-w-[250px]" />
-                <button onClick={addUrl} className="bg-amber-400 text-black px-4 py-2 rounded font-medium">Add URL</button>
-                <button onClick={() => saveToServer(urls)} className="bg-emerald-600 text-white px-4 py-2 rounded">Save to Server</button>
+            <>
+              <div className="mb-6 pb-6 border-b border-slate-700">
+                <h3 className="text-lg text-slate-300 font-medium mb-3">Upload Image from Computer</h3>
+                <ImageUploader
+                  adminAuth={adminAuth}
+                  onImageAdded={handleImageUploaded}
+                />
               </div>
-              <div className="mt-2 text-xs text-slate-400">Auto-sync: {autoSync ? `${autoSyncStatus}` : 'off'}</div>
-            </div>
+              <div className="mb-6 pb-6 border-b border-slate-700">
+                <h3 className="text-lg text-slate-300 font-medium mb-3">Add YouTube Video or Image URL</h3>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <input type="text" value={adminAddUrl} onChange={e => setAdminAddUrl(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addUrl(); }} placeholder="Paste YouTube or Image URL..." className="flex-1 bg-slate-800 text-slate-100 rounded px-3 py-2 border border-slate-600 focus:border-amber-400 focus:outline-none min-w-[250px]" />
+                  <button onClick={addUrl} className="bg-amber-400 text-black px-4 py-2 rounded font-medium">Add URL</button>
+                  <button onClick={() => saveToServer(urls)} className="bg-emerald-600 text-white px-4 py-2 rounded">Save to Server</button>
+                </div>
+                <div className="mt-2 text-xs text-slate-400">Accepts: YouTube videos or direct image URLs (.jpg, .png, .gif, .webp)</div>
+                <div className="mt-1 text-xs text-slate-400">Auto-sync: {autoSync ? `${autoSyncStatus}` : 'off'}</div>
+              </div>
+            </>
           )}
         </div>
       </section>
+      {toast && (
+        <div className={`fixed bottom-4 right-4 px-6 py-3 rounded-lg text-white z-50 shadow-lg ${
+          toast.type === 'success' ? 'bg-green-600' : toast.type === 'error' ? 'bg-red-600' : 'bg-blue-600'
+        }`}>
+          {toast.message}
+          {toast.actionLabel && (
+            <button onClick={toast.action} className="ml-3 underline font-semibold">
+              {toast.actionLabel}
+            </button>
+          )}
+        </div>
+      )}
+      {pendingDeletion && (
+        <div className="fixed bottom-4 left-4 bg-yellow-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-3">
+          <span>Item deleted</span>
+          <button onClick={undoDelete} className="underline font-semibold">Undo</button>
+        </div>
+      )}
       <AuthModal open={authModalOpen} onClose={() => { setAuthModalOpen(false); setPendingSave(null); }} onSubmit={async (user, pass) => { setAuthModalOpen(false); if (pendingSave) { const header = 'Basic ' + btoa(`${user}:${pass}`); try { const endpoint = listId === 'default' ? `${SERVER_BASE}/api/other-arts` : `${SERVER_BASE}/api/other-arts/${encodeURIComponent(listId)}`; const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: header }, body: JSON.stringify(pendingSave.list) }); if (!res.ok) throw new Error('Save failed'); setAdminAuth(header); setIsAdmin(true); try { sessionStorage.setItem('otherArts.isAdmin','1'); sessionStorage.setItem('otherArts.adminAuth', header); } catch {}; showToast({ type: 'success', message: 'Saved to server' }); setPendingSave(null); } catch (e) { showToast({ type: 'error', message: 'Auth/save error', sticky: true }); setPendingSave(null); } } else { await handleAdminAuth(user, pass); } }} />
     </div>
   );

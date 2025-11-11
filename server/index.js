@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
+const multer = require('multer');
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -10,6 +11,14 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const DATA_DIR = path.join(__dirname, 'data');
 const DEFAULT_DATA_FILE = path.join(DATA_DIR, 'other-arts.json');
+const UPLOAD_DIR = path.join(__dirname, 'uploads', 'images');
+
+// Ensure upload directory exists
+if (!fs.existsSync(UPLOAD_DIR)) {
+  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+  console.log(`Created upload directory: ${UPLOAD_DIR}`);
+}
+
 // Setup basic file logging so you can inspect server output after the fact.
 // Logs are appended to server/logs/server.log with timestamps.
 const LOG_DIR = path.join(__dirname, 'logs');
@@ -42,6 +51,9 @@ try {
 app.use(cors());
 app.use(express.json());
 
+// Serve uploaded images statically
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Request logging middleware (method, path, status) for debugging 404/401 issues.
 app.use((req, res, next) => {
   const start = Date.now();
@@ -69,6 +81,37 @@ function requireBasicAuth(req, res, next) {
   res.setHeader('WWW-Authenticate', 'Basic realm="OtherArts"');
   return res.status(401).json({ ok: false, error: 'Invalid credentials' });
 }
+
+// Multer configuration for image uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, UPLOAD_DIR);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(2, 9);
+    cb(null, `${timestamp}-${random}${ext}`);
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = /jpeg|jpg|png|gif|webp/;
+    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = allowedTypes.test(file.mimetype);
+    
+    if (extname && mimetype) {
+      return cb(null, true);
+    } else {
+      cb(new Error('Only image files (jpeg, jpg, png, gif, webp) are allowed!'));
+    }
+  }
+});
 
 function safeId(id) {
   if (!id) return '';
@@ -156,8 +199,58 @@ app.post('/api/admin-auth', (req, res) => {
   return res.status(401).json({ ok: false, error: 'Invalid credentials' });
 });
 
+// Image upload endpoint
+app.post('/api/upload/image', requireBasicAuth, (req, res) => {
+  upload.single('image')(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      if (err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({ ok: false, error: 'File size too large. Maximum size is 5MB.' });
+      }
+      return res.status(400).json({ ok: false, error: err.message });
+    } else if (err) {
+      return res.status(400).json({ ok: false, error: err.message });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ ok: false, error: 'No file uploaded' });
+    }
+
+    const url = `/uploads/images/${req.file.filename}`;
+    console.log(`[UPLOAD] ${req.file.originalname} (${(req.file.size / 1024).toFixed(2)}KB) -> ${url}`);
+    
+    res.json({ 
+      ok: true, 
+      url: url,
+      filename: req.file.filename,
+      originalName: req.file.originalname,
+      size: req.file.size
+    });
+  });
+});
+
+// Delete image endpoint
+app.delete('/api/upload/image/:filename', requireBasicAuth, (req, res) => {
+  const { filename } = req.params;
+  const safeFilename = path.basename(filename); // Prevent path traversal
+  const filePath = path.join(UPLOAD_DIR, safeFilename);
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ ok: false, error: 'File not found' });
+  }
+
+  try {
+    fs.unlinkSync(filePath);
+    console.log(`[DELETE] ${safeFilename}`);
+    res.json({ ok: true, message: 'File deleted successfully' });
+  } catch (err) {
+    console.error('Failed to delete file:', err);
+    res.status(500).json({ ok: false, error: 'Failed to delete file' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`OtherArts server listening on http://localhost:${PORT}`);
   console.log(`Admin credentials: ADMIN_USER=${process.env.ADMIN_USER ? '✓ set' : '✗ not set'}, ADMIN_PASS=${process.env.ADMIN_PASS ? '✓ set' : '✗ not set'}`);
+  console.log(`Upload directory: ${UPLOAD_DIR}`);
   console.log(`Log file: ${LOG_FILE}`);
 });
