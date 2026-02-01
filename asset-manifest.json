@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.29fb8d39.css",
-    "main.js": "/static/js/main.2a760907.js",
-    "static/js/206.58abc889.chunk.js": "/static/js/206.58abc889.chunk.js",
+    "main.css": "/static/css/main.95290f16.css",
+    "main.js": "/static/js/main.ab379347.js",
+    "static/js/453.dffc44bb.chunk.js": "/static/js/453.dffc44bb.chunk.js",
     "static/media/RaghuramShettyBoothakolaReel_24Secs.mp4": "/static/media/RaghuramShettyBoothakolaReel_24Secs.029a9d369ad262dcc107.mp4",
     "static/media/ImportantKolaVideo_SpinningBeforeDance_RaghuramShettyPerformingArtistAsPunjurliBootha_0I7A0169.MP4": "/static/media/ImportantKolaVideo_SpinningBeforeDance_RaghuramShettyPerformingArtistAsPunjurliBootha_0I7A0169.1e2160b28cf66f2cc37b.MP4",
     "static/media/BoothaKolaPerforamnce_WaterMarked_PanjurliWithANi_RaghuramShetty.png": "/static/media/BoothaKolaPerforamnce_WaterMarked_PanjurliWithANi_RaghuramShetty.083896b54adda7f3f7a3.png",
@@ -19,10 +19,13 @@
     "static/media/Yakshagana2.jpg": "/static/media/Yakshagana2.19855ebd3b69f2129a76.jpg",
     "static/media/EasterDiscover.ttf": "/static/media/EasterDiscover.90be43bd40589738d9c4.ttf",
     "static/media/Monaco.ttf": "/static/media/Monaco.b55576c32bebc9c8a480.ttf",
-    "index.html": "/index.html"
+    "index.html": "/index.html",
+    "main.95290f16.css.map": "/static/css/main.95290f16.css.map",
+    "main.ab379347.js.map": "/static/js/main.ab379347.js.map",
+    "453.dffc44bb.chunk.js.map": "/static/js/453.dffc44bb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.29fb8d39.css",
-    "static/js/main.2a760907.js"
+    "static/css/main.95290f16.css",
+    "static/js/main.ab379347.js"
   ]
 }
