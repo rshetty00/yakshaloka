@@ -151,3 +151,36 @@
 [2025-11-10T21:42:13.395Z] [LOG] Admin credentials: ADMIN_USER=✓ set, ADMIN_PASS=✓ set
 [2025-11-10T21:42:13.395Z] [LOG] Upload directory: C:\Users\rshet\Desktop\yakshaloka\server\uploads\images
 [2025-11-10T21:42:13.396Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-10T21:42:49.235Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 10ms
+[2025-11-10T21:42:49.239Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 2ms
+[2025-11-10T21:43:12.111Z] [LOG] [REQ] POST /api/admin-auth -> 200 2ms
+[2025-11-10T21:43:38.081Z] [LOG] [UPLOAD] RaghuramShetty_Shumbhasura_WaterMarked_Yakshagana_DSC09178.jpg (2155.77KB) -> /uploads/images/1762811018041-m0dgqiw.jpg
+[2025-11-10T21:43:38.083Z] [LOG] [REQ] POST /api/upload/image -> 200 49ms
+[2025-11-10T23:45:51.526Z] [LOG] [REQ] GET /api/other-arts/boothakola -> 200 2ms
+[2025-11-10T23:45:51.530Z] [LOG] [REQ] GET /api/other-arts/boothakola -> 304 2ms
+[2025-11-10T23:46:15.957Z] [LOG] [REQ] GET /api/other-arts -> 304 4ms
+[2025-11-10T23:46:15.963Z] [LOG] [REQ] GET /api/other-arts -> 304 3ms
+[2025-11-10T23:46:36.008Z] [LOG] [REQ] GET /api/other-arts/gallery -> 200 3ms
+[2025-11-10T23:46:36.013Z] [LOG] [REQ] GET /api/other-arts/gallery -> 304 3ms
+[2025-11-11T01:30:37.740Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 7ms
+[2025-11-11T01:30:37.744Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 3ms
+[2025-11-11T01:32:15.761Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-11T01:32:15.761Z] [LOG] Admin credentials: ADMIN_USER=✓ set, ADMIN_PASS=✓ set
+[2025-11-11T01:32:15.761Z] [LOG] Upload directory: C:\Users\rshet\Desktop\yakshaloka\server\uploads\images
+[2025-11-11T01:32:15.761Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-11T01:32:49.961Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 14ms
+[2025-11-11T01:32:50.018Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 3ms
+[2025-11-11T01:51:01.834Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-11T01:51:01.834Z] [LOG] Admin credentials: ADMIN_USER=✓ set, ADMIN_PASS=✓ set
+[2025-11-11T01:51:01.834Z] [LOG] Upload directory: C:\Users\rshet\Desktop\yakshaloka\server\uploads\images
+[2025-11-11T01:51:01.834Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-11T01:55:02.815Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-11T01:55:02.815Z] [LOG] Admin credentials: ADMIN_USER=✓ set, ADMIN_PASS=✓ set
+[2025-11-11T01:55:02.816Z] [LOG] Upload directory: C:\Users\rshet\Desktop\yakshaloka\server\uploads\images
+[2025-11-11T01:55:02.816Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-11T02:01:22.123Z] [LOG] OtherArts server listening on http://localhost:4000
+[2025-11-11T02:01:22.123Z] [LOG] Admin credentials: ADMIN_USER=✓ set, ADMIN_PASS=✓ set
+[2025-11-11T02:01:22.123Z] [LOG] Upload directory: C:\Users\rshet\Desktop\yakshaloka\server\uploads\images
+[2025-11-11T02:01:22.123Z] [LOG] Log file: C:\Users\rshet\Desktop\yakshaloka\server\logs\server.log
+[2025-11-11T02:02:06.977Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 12ms
+[2025-11-11T02:02:06.982Z] [LOG] [REQ] GET /api/other-arts/yakshagana -> 304 2ms
