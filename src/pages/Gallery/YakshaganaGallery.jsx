@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import GalleryLightbox from '../../../components/GalleryLightbox';
-import SectionHeader from '../../../components/SectionHeader';
+import GalleryLightbox from '../../components/GalleryLightbox';
+import SectionHeader from '../../components/SectionHeader';
 
 const importAll = (r) => r.keys().map((key) => {
   const name = key.replace('./', '');
@@ -8,22 +8,21 @@ const importAll = (r) => r.keys().map((key) => {
   return { name, src, title: name.replace(/\.(jpe?g|png|gif|webp)$/i, ''), description: '' };
 });
 
-const allImages = importAll(require.context('../../../assets/images', false, /\.(jpe?g|png|gif|webp)$/));
-
-// Filter for Yakshagana-related images
-const yakshaganaImages = allImages.filter(img => 
-  img.name.toLowerCase().includes('yakshagana') || 
-  img.name.toLowerCase().includes('raghuram')
-);
-
-const items = useMemo(() => yakshaganaImages.map(img => ({
-  type: 'image',
-  src: img.src,
-  alt: img.title,
-  caption: img.description || ''
-})), []);
-
 const YakshaganaGallery = () => {
+  const allImages = useMemo(() => importAll(require.context('../../assets/images', false, /\.(jpe?g|png|gif|webp)$/)), []);
+
+  // Filter for Yakshagana-related images
+  const yakshaganaImages = useMemo(() => allImages.filter(img => 
+    img.name.toLowerCase().includes('yakshagana') || 
+    img.name.toLowerCase().includes('raghuram')
+  ), [allImages]);
+
+  const items = useMemo(() => yakshaganaImages.map(img => ({
+    type: 'image',
+    src: img.src,
+    alt: img.title,
+    caption: img.description || ''
+  })), [yakshaganaImages]);
   return (
     <div className="yakshagana-gallery container mx-auto py-12">
       <SectionHeader

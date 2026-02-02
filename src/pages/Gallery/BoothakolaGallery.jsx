@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import GalleryLightbox from '../../../components/GalleryLightbox';
-import SectionHeader from '../../../components/SectionHeader';
+import GalleryLightbox from '../../components/GalleryLightbox';
+import SectionHeader from '../../components/SectionHeader';
 
 const importAll = (r) => r.keys().map((key) => {
   const name = key.replace('./', '');
@@ -8,24 +8,23 @@ const importAll = (r) => r.keys().map((key) => {
   return { name, src, title: name.replace(/\.(jpe?g|png|gif|webp)$/i, ''), description: '' };
 });
 
-const allImages = importAll(require.context('../../../assets/images', false, /\.(jpe?g|png|gif|webp)$/));
-
-// Filter for BoothaKola-related images
-const boothakolaImages = allImages.filter(img => 
-  img.name.toLowerCase().includes('bootha') || 
-  img.name.toLowerCase().includes('kola') ||
-  img.name.toLowerCase().includes('bhuta') ||
-  img.name.toLowerCase().includes('panjurli')
-);
-
-const items = useMemo(() => boothakolaImages.map(img => ({
-  type: 'image',
-  src: img.src,
-  alt: img.title,
-  caption: img.description || ''
-})), []);
-
 const BoothakolaGallery = () => {
+  const allImages = useMemo(() => importAll(require.context('../../assets/images', false, /\.(jpe?g|png|gif|webp)$/)), []);
+
+  // Filter for BoothaKola-related images
+  const boothakolaImages = useMemo(() => allImages.filter(img => 
+    img.name.toLowerCase().includes('bootha') || 
+    img.name.toLowerCase().includes('kola') ||
+    img.name.toLowerCase().includes('bhuta') ||
+    img.name.toLowerCase().includes('panjurli')
+  ), [allImages]);
+
+  const items = useMemo(() => boothakolaImages.map(img => ({
+    type: 'image',
+    src: img.src,
+    alt: img.title,
+    caption: img.description || ''
+  })), [boothakolaImages]);
   return (
     <div className="boothakola-gallery container mx-auto py-12">
       <SectionHeader
