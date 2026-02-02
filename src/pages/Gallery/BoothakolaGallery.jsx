@@ -11,13 +11,15 @@ const importAll = (r) => r.keys().map((key) => {
 const BoothakolaGallery = () => {
   const allImages = useMemo(() => importAll(require.context('../../assets/images', false, /\.(jpe?g|png|gif|webp)$/)), []);
 
-  // Filter for BoothaKola-related images
-  const boothakolaImages = useMemo(() => allImages.filter(img => 
-    img.name.toLowerCase().includes('bootha') || 
-    img.name.toLowerCase().includes('kola') ||
-    img.name.toLowerCase().includes('bhuta') ||
-    img.name.toLowerCase().includes('panjurli')
-  ), [allImages]);
+  // Filter for BoothaKola-related images, excluding Yakshagana
+  const boothakolaImages = useMemo(() => allImages.filter(img => {
+    const name = img.name.toLowerCase();
+    // Include if it has bootha/kola keywords
+    const isBootha = name.includes('bootha') || name.includes('kola') || name.includes('bhuta') || name.includes('panjurli') || name.includes('maada') || name.includes('moorti');
+    // Exclude if it has yakshagana-specific keywords
+    const isNotYakshagana = !name.includes('yakshagana') && !name.includes('shumbha') && !name.includes('durga') && !name.includes('mahishamardini');
+    return isBootha && isNotYakshagana;
+  }), [allImages]);
 
   const items = useMemo(() => boothakolaImages.map(img => ({
     type: 'image',
