@@ -89,12 +89,6 @@ const Yakshagana = () => {
     { type: 'image', src: YakshaganaY, alt: 'Yakshagana Performance Y', caption: 'Character portrayal' }
   ]), []);
 
-  // GalleryLightbox expects items with type/src
-  const galleryItems = useMemo(() => ([
-    { type: 'image', src: HeroImg, caption: 'Live performance still' },
-    { type: 'image', src: Yakshagana2, caption: 'Backstage moment' }
-  ]), []);
-
   return (
     <div className="yakshagana">
             {/* Hero */}
