@@ -75,6 +75,9 @@ const yakItems = mapItems(yakImages);
 const bootaItems = mapItems(bootaImages);
 const otherItems = mapItems(otherImages);
 
+// Combined items for the main gallery view (keeps previous behavior).
+const items = [...yakItems, ...bootaItems, ...otherItems];
+
 const Gallery = () => {
   return (
     <div className="gallery container mx-auto py-8">
