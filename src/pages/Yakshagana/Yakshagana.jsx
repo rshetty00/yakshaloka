@@ -9,6 +9,9 @@ import OtherArtsSection from '../../components/OtherArtsSection';
 // Your existing images
 import HeroImg from 'assets/images/Yakshagana1.jpg';
 import Yakshagana2 from 'assets/images/Yakshagana2.jpg';
+import YakshaganaX from 'assets/images/YakshaganaX.jpg';
+import YakshaganaXX1 from 'assets/images/YakshaganaXX1.jpg';
+import YakshaganaY from 'assets/images/YakshaganaY.jpg';
 
 const Yakshagana = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -77,10 +80,13 @@ const Yakshagana = () => {
     'https://www.youtube.com/watch?v=0EunnFnmnVs'
   ]), []);
 
-  // GalleryLightbox expects items with type/src
+  // Gallery items with all Yakshagana images
   const galleryItems = useMemo(() => ([
-    { type: 'image', src: HeroImg, caption: 'Live performance still' },
-    { type: 'image', src: Yakshagana2, caption: 'Backstage moment' }
+    { type: 'image', src: HeroImg, alt: 'Yakshagana Performance 1', caption: 'Performance moments' },
+    { type: 'image', src: Yakshagana2, alt: 'Yakshagana Performance 2', caption: 'Dance scene' },
+    { type: 'image', src: YakshaganaX, alt: 'Yakshagana Performance X', caption: 'Stage presence' },
+    { type: 'image', src: YakshaganaXX1, alt: 'Yakshagana Performance XX1', caption: 'Ensemble performance' },
+    { type: 'image', src: YakshaganaY, alt: 'Yakshagana Performance Y', caption: 'Character portrayal' }
   ]), []);
 
   return (
@@ -260,6 +266,21 @@ const Yakshagana = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section 
+        id="gallery"
+        className="container mx-auto px-4 py-12 opacity-0 translate-y-8 transition-all duration-700"
+        ref={(el) => (sectionsRef.current[5] = el)}
+      >
+        <SectionHeader
+          eyebrow="Photo Gallery"
+          title="Performance Gallery"
+          subtitle="Visual moments capturing the essence of Yakshagana performances."
+          align="left"
+        />
+        <GalleryLightbox items={galleryItems} />
       </section>
 
       {/* Curated videos (admin-manageable) */}

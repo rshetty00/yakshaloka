@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import OtherArtsSection from '../../components/OtherArtsSection';
 import GalleryLightbox from '../../components/GalleryLightbox';
 
@@ -42,6 +43,22 @@ const Gallery = () => {
   return (
     <div className="gallery container mx-auto py-8">
       <h2 className="text-3xl font-bold mb-6 text-center">Gallery</h2>
+
+      {/* Gallery Navigation */}
+      <div className="flex flex-wrap justify-center gap-4 mb-8">
+        <Link 
+          to="/gallery/yakshagana" 
+          className="px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold hover:from-amber-400 hover:to-amber-500 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-amber-500/50"
+        >
+          Yakshagana Gallery
+        </Link>
+        <Link 
+          to="/gallery/boothakola" 
+          className="px-6 py-3 rounded-full bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold hover:from-red-500 hover:to-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-red-500/50"
+        >
+          Bootha Kola Gallery
+        </Link>
+      </div>
 
       {/* Grid + lightbox */}
       <GalleryLightbox items={items} />
