@@ -22,22 +22,14 @@ const Home = () => {
           <div className="flex-1 flex flex-col justify-center items-center w-full h-full">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl mb-6 font-easter">
-                <span className="text-amber-300 block">
-                  Discover the Mystical World of
-                </span>
-                <span className="text-red-500 mr-2">
-                  Yakshagana
-                </span>
-                <span className="text-amber-300">
-                  &amp;
-                </span>
-                <span className="text-red-500 ml-2">
-                  Folk Arts
-                </span>
-
+                <span className="text-amber-300 block">DISCOVER THE MYSTICAL WORLD OF</span>
+                <span className="text-red-500 mr-2">YAKSHAGANA, KOLA</span>
+                <span className="text-amber-300"> &amp; </span>
+                <span className="text-red-500 ml-2">FOLK ARTS</span>
               </h1>
               <p className="text-lg md:text-xl text-red-500 mb-10 font-monaco">
-                Explore the rich cultural heritage of Karnataka's traditional performing arts
+                Explore YakshalokaUS - a fun, mystic kaleidoscope of TulunaaD (the west coast of Karnataka, India),
+                revealing its rich cultural heritage through performance, ritual, and community.
               </p>
               <div className="flex flex-wrap justify-center gap-5">
                 <Link
@@ -62,7 +54,7 @@ const Home = () => {
       <div className="bg-slate-900 py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-amber-300">
-            Cultural Treasures of Karnataka
+            Cultural Treasures of Coastal Karnataka, India showcased by YakshalokaUS
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Feature 1 */}
@@ -74,7 +66,7 @@ const Home = () => {
               </div>
               <h3 className="text-xl font-semibold text-center mb-2 text-amber-300">Yakshagana</h3>
               <p className="text-slate-300 text-center">
-                A traditional theater form that combines dance, music, dialogue, costume, make-up, and stage techniques with a unique style.
+                Advanced traditional performing arts theater form that blends classical dance with rich folklore, vibrant music, improvized dialogues, glittering costume, complex make-up, and stage techniques with unique style.
               </p>
             </div>
             {/* Feature 2 */}
@@ -86,7 +78,7 @@ const Home = () => {
               </div>
               <h3 className="text-xl font-semibold text-center mb-2 text-cyan-300">Bootha Kola</h3>
               <p className="text-slate-300 text-center">
-                A ritual dance form of worship where performers invoke and embody divine spirits, connecting the human and spiritual worlds.
+                Unique ancient ritual theater form of worship where performers invoke and embody divine spirits thru series of rituals, dances, vibrant music, supernatural acts, and dialogues connect the human and spiritual worlds.
               </p>
             </div>
             {/* Feature 3 */}
@@ -98,7 +90,7 @@ const Home = () => {
               </div>
               <h3 className="text-xl font-semibold text-center mb-2 text-lime-300">Cultural Heritage</h3>
               <p className="text-slate-300 text-center">
-                Preserving centuries-old traditions that showcase Karnataka's rich mythology, folklore, and spiritual practices.
+                Preserving millenials-old traditions that showcase TulunaaD's vibrant culture, rich mythology, mesmerizing folklore, unique spiritual practices and Performing Arts.
               </p>
             </div>
           </div>
