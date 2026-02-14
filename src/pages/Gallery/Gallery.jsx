@@ -24,52 +24,31 @@ const usedImageNames = new Set([
   'Logo.png'
 ]);
 
-const importAll = (r) => r.keys().map((key) => {
-  const name = key.replace('./', '');
+// Recursively import all images from `assets/images` and group those inside
+// `assets/images/gallery/<category>` into respective collections.
+const importAllRecursive = (r) => r.keys().map((key) => {
+  const path = key.replace('./', '');
+  const parts = path.split('/');
+  const name = parts[parts.length - 1];
   const src = r(key);
-  return { name, src, title: name.replace(/\.(jpe?g|png|gif|webp|bmp|jpeg|mov)$/i, ''), description: '' };
+  return { name, src, path, title: name.replace(/\.(jpe?g|png|gif|webp|bmp|jpeg|mov)$/i, ''), description: '' };
 });
 
-// Try loading images from explicit gallery subfolders first (if present). If not, fall back
-// to scanning the top-level images directory and grouping by filename heuristics.
-let yakImages = [];
-let bootaImages = [];
-let otherImages = [];
-
+let allImages = [];
 try {
-  yakImages = importAll(require.context('../../assets/images/gallery/yakshagana', false, /\.(jpe?g|png|gif|webp|bmp|jpeg|mov)$/));
+  // load recursively from images directory (this will include gallery subfolders)
+  allImages = importAllRecursive(require.context('../../assets/images', true, /\.(jpe?g|png|gif|webp|bmp|jpeg|mov)$/));
 } catch (e) {
-  yakImages = [];
+  // If something goes wrong, fall back to empty array
+  allImages = [];
 }
 
-try {
-  bootaImages = importAll(require.context('../../assets/images/gallery/bootakola', false, /\.(jpe?g|png|gif|webp|bmp|jpeg|mov)$/));
-} catch (e) {
-  bootaImages = [];
-}
+// images inside gallery subfolders
+const galleryImages = allImages.filter(i => i.path.toLowerCase().startsWith('gallery/'));
 
-try {
-  otherImages = importAll(require.context('../../assets/images/gallery/other', false, /\.(jpe?g|png|gif|webp|bmp|jpeg|mov)$/));
-} catch (e) {
-  otherImages = [];
-}
-
-if (yakImages.length === 0 && bootaImages.length === 0 && otherImages.length === 0) {
-  const allImages = importAll(require.context('../../assets/images', false, /\.(jpe?g|png|gif|webp|bmp|jpeg|mov)$/));
-  yakImages = allImages.filter(img => /yakshagana|vaali|raghuram|bannadavesha|prathibha/i.test(img.name));
-  bootaImages = allImages.filter(img => /(bootha|boota|butakola|bootakola|butakola|butakola)/i.test(img.name));
-  otherImages = allImages.filter(img => !yakImages.some(y => y.name === img.name) && !bootaImages.some(b => b.name === img.name) && !usedImageNames.has(img.name));
-} else {
-  // if we found subfolders, include any other top-level images that don't appear in those groups
-  try {
-    const allTop = importAll(require.context('../../assets/images', false, /\.(jpe?g|png|gif|webp|bmp|jpeg|mov)$/));
-    const groupedNames = new Set([...yakImages, ...bootaImages, ...otherImages].map(i => i.name));
-    const extras = allTop.filter(img => !groupedNames.has(img.name) && !usedImageNames.has(img.name));
-    otherImages = [...otherImages, ...extras];
-  } catch (e) {
-    // ignore
-  }
-}
+const yakImages = galleryImages.filter(i => i.path.toLowerCase().includes('gallery/yakshagana') || /yakshagana|vaali|bannadavesha|raghuram|prathibha/i.test(i.name));
+const bootaImages = galleryImages.filter(i => i.path.toLowerCase().includes('gallery/bootakola') || /bootha|boota|buta|panjurli|bootakola/i.test(i.name));
+const otherImages = galleryImages.filter(i => !yakImages.some(y => y.name === i.name) && !bootaImages.some(b => b.name === i.name) && !usedImageNames.has(i.name));
 
 const mapItems = (arr) => arr.map(img => ({ type: 'image', src: img.src, alt: img.title, caption: img.description || '' }));
 
