@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import OtherArtsSection from '../../components/OtherArtsSection';
 import GalleryLightbox from '../../components/GalleryLightbox';
+import tours from '../../data/tours';
+import TourModal from '../../components/TourModal';
 
 /*
   Images referenced elsewhere — keep this list in sync when you add/remove page-specific images.
@@ -79,6 +81,23 @@ const otherItems = mapItems(otherImages);
 const items = [...yakItems, ...bootaItems, ...otherItems];
 
 const Gallery = () => {
+  const [tourOpen, setTourOpen] = React.useState(false);
+  const [tourItems, setTourItems] = React.useState([]);
+  const [tourStartIndex, setTourStartIndex] = React.useState(0);
+
+  const openTour = (tour) => {
+    const source = tour.group === 'yakshagana' ? yakItems : (tour.group === 'bootakola' ? bootaItems : otherItems);
+    const matched = [];
+    tour.selectors.forEach(sel => {
+      const found = source.filter(i => (i.alt || '').toLowerCase().includes(sel.toLowerCase()) || (i.caption || '').toLowerCase().includes(sel.toLowerCase()) || (i.src || '').toLowerCase().includes(sel.toLowerCase()));
+      found.forEach(f => { if (!matched.some(m => m.src === f.src)) matched.push(f); });
+    });
+    const itemsToShow = matched.length ? matched : source;
+    setTourItems(itemsToShow);
+    setTourStartIndex(0);
+    setTourOpen(true);
+  };
+
   return (
     <div className="gallery container mx-auto py-8">
       <h2 className="text-3xl font-bold mb-6 text-center">Gallery</h2>
@@ -97,6 +116,19 @@ const Gallery = () => {
         >
           Bootha Kola Gallery
         </Link>
+      </div>
+
+      {/* Curated Tours */}
+      <div className="mb-8 container mx-auto px-4">
+        <h3 className="text-xl font-semibold mb-4">Curated Tours</h3>
+        <div className="flex flex-wrap gap-4">
+          {tours.map(t => (
+            <button key={t.id} onClick={() => openTour(t)} className="bg-white/5 border border-white/10 rounded-lg p-4 hover:scale-105 transition-transform">
+              <div className="font-semibold">{t.title}</div>
+              <div className="text-sm text-gray-300">{t.description}</div>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Grid + lightbox */}
