@@ -31,7 +31,7 @@ export default function GalleryLightbox({ items = [] }) {
           <button
             key={idx}
             onClick={() => open(idx)}
-            className="relative w-full h-48 bg-black rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-amber-400"
+            className="relative w-full aspect-video bg-black rounded overflow-hidden focus:outline-none focus:ring-2 focus:ring-amber-400 flex items-center justify-center"
             onContextMenu={(e) => e.preventDefault()}
             aria-label={`Open gallery item ${idx + 1}`}
           >
@@ -39,7 +39,7 @@ export default function GalleryLightbox({ items = [] }) {
               <video
                 src={it.src}
                 poster={it.poster}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 preload="metadata"
                 muted
                 playsInline
@@ -50,7 +50,7 @@ export default function GalleryLightbox({ items = [] }) {
               <img
                 src={it.src}
                 alt={it.alt || it.caption || `gallery-${idx + 1}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 loading="lazy"
                 draggable={false}
                 onDragStart={(e) => e.preventDefault()}
