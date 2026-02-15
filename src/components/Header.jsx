@@ -4,13 +4,13 @@ import Logo from '../assets/images/Logo.png'; // ✅ import logo
 export default function Header() {
   const links = [
     { name: 'Home', path: '/' },
+    { name: 'Our Story', path: '/our-story' },
     { name: 'Yakshagana', path: '/yakshagana' },
     { name: 'Kola Performances', path: '/kola-performances' },
     { name: 'Other Arts', path: '/other-arts' },
     { name: 'Bootha Rituals', path: '/bootharituals' },
     { name: 'Gallery', path: '/gallery' },
-    { name: 'Credits', path: '/credits' },
-    { name: 'About', path: '/about' }
+    { name: 'Credits', path: '/credits' }
   ];
 
   return (
