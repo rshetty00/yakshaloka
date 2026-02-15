@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function ShivaratriPerformances() {
@@ -220,33 +220,17 @@ export default function ShivaratriPerformances() {
         </div>
       </section>
 
-      {/* Archive Section */}
+      {/* Archive Section (2017-2026) with upload widgets */}
       <section className="py-16 md:py-24 bg-slate-900">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 text-blue-400">8 Years of Sacred Performances</h2>
-          <p className="text-center text-slate-400 mb-12 text-lg">Exclusive archive of Shivaratri performances across Southern California (2016-2024)</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { year: '2024', status: '🎥 Latest' },
-              { year: '2023', status: '📸 Available' },
-              { year: '2022', status: '📹 Archive' },
-              { year: '2021', status: '🎞️ Recorded' },
-              { year: '2020', status: '📹 Available' },
-              { year: '2019', status: '🎥 HD' },
-              { year: '2018', status: '📸 Photos' },
-              { year: '2017', status: '🎬 Archive' },
-            ].map((item, idx) => (
-              <div key={idx} className="bg-slate-800 rounded-lg p-6 border border-slate-700 hover:border-blue-400 transition-colors text-center">
-                <p className="text-3xl font-bold text-blue-400 mb-2">{item.year}</p>
-                <p className="text-slate-300 font-semibold">{item.status}</p>
-              </div>
-            ))}
-          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 text-blue-400">10 Years of Sacred Performances</h2>
+          <p className="text-center text-slate-400 mb-12 text-lg">Exclusive archive of Shivaratri performances across Southern California (2017-2026). Select a year to upload photos/videos.</p>
+
+          <ArchiveGrid />
 
           <div className="mt-12 bg-slate-800 rounded-lg p-8 border border-slate-700 text-center">
-            <p className="text-slate-400 mb-4">🎬 Exclusive videos and photos coming soon</p>
-            <p className="text-slate-500 text-sm">High-quality documentation of 8 years of Shivaratri celebrations across Southern California temples and spiritual centers</p>
+            <p className="text-slate-400 mb-4">🎬 Exclusive videos and photos coming soon — upload to add to the archive</p>
+            <p className="text-slate-500 text-sm">Select media files (images or videos). Files are kept client-side until you choose to transfer them to an external storage or server.</p>
           </div>
         </div>
       </section>
@@ -310,6 +294,74 @@ export default function ShivaratriPerformances() {
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+function ArchiveGrid() {
+  const years = Array.from({ length: 10 }, (_, i) => 2017 + i);
+  const [uploads, setUploads] = useState({});
+
+  const handleFiles = (year, fileList) => {
+    const files = Array.from(fileList);
+    setUploads(prev => {
+      const next = { ...prev };
+      next[year] = [...(next[year] || []), ...files];
+      return next;
+    });
+  };
+
+  const triggerInput = (year) => {
+    const el = document.getElementById(`file-input-${year}`);
+    if (el) el.click();
+  };
+
+  const removeFile = (year, idx) => {
+    setUploads(prev => {
+      const next = { ...prev };
+      next[year] = (next[year] || []).filter((_, i) => i !== idx);
+      return next;
+    });
+  };
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+      {years.map(year => (
+        <div key={year} className="bg-slate-800 rounded-lg p-4 border border-slate-700 hover:border-blue-400 transition-colors">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <p className="text-2xl font-bold text-blue-400">{year}</p>
+              <p className="text-sm text-slate-300">Shivaratri Archive</p>
+            </div>
+            <div className="text-right">
+              <button type="button" onClick={() => triggerInput(year)} className="bg-amber-400 text-slate-900 px-3 py-1 rounded text-sm font-semibold">Upload</button>
+            </div>
+          </div>
+
+          <input id={`file-input-${year}`} type="file" accept="image/*,video/*" multiple className="hidden" onChange={(e) => handleFiles(year, e.target.files)} />
+
+          <div className="space-y-2">
+            {(uploads[year] || []).length === 0 && (
+              <div className="text-sm text-slate-400">No files selected</div>
+            )}
+
+            {(uploads[year] || []).map((f, idx) => (
+              <div key={idx} className="flex items-center gap-3 bg-slate-900 p-2 rounded">
+                {f.type.startsWith('image') ? (
+                  <img src={URL.createObjectURL(f)} alt={f.name} className="w-16 h-10 object-cover rounded" />
+                ) : (
+                  <video src={URL.createObjectURL(f)} className="w-20 h-12 object-contain rounded" muted />
+                )}
+                <div className="flex-1 text-left">
+                  <div className="text-sm text-slate-200">{f.name}</div>
+                  <div className="text-xs text-slate-400">{(f.size/1024/1024).toFixed(2)} MB</div>
+                </div>
+                <button onClick={() => removeFile(year, idx)} className="text-xs text-rose-400 hover:underline">Remove</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
