@@ -3,23 +3,25 @@ import GalleryLightbox from '../../components/GalleryLightbox';
 import SectionHeader from '../../components/SectionHeader';
 
 const importAll = (r) => r.keys().map((key) => {
-  const name = key.replace('./', '');
+  const path = key.replace('./', '');
+  const parts = path.split('/');
+  const name = parts[parts.length - 1];
   const src = r(key);
-  return { name, src, title: name.replace(/\.(jpe?g|png|gif|webp)$/i, ''), description: '' };
+  return { name, src, path, title: name.replace(/\.(jpe?g|png|gif|webp|bmp|jpeg)$/i, ''), description: '' };
 });
 
 const YakshaganaGallery = () => {
-  const allImages = useMemo(() => importAll(require.context('../../assets/images', false, /\.(jpe?g|png|gif|webp)$/)), []);
-
-  // Filter for Yakshagana-related images, excluding Bootha Kola
-  const yakshaganaImages = useMemo(() => allImages.filter(img => {
-    const name = img.name.toLowerCase();
-    // Include if it has yakshagana or raghuram keywords
-    const isYakshagana = name.includes('yakshagana') || name.includes('raghuram') || name.includes('shumbha') || name.includes('durga') || name.includes('lion') || name.includes('mahishamardini');
-    // Exclude if it has bootha/kola keywords
-    const isNotBootha = !name.includes('bootha') && !name.includes('kola') && !name.includes('bhuta') && !name.includes('panjurli') && !name.includes('maada') && !name.includes('moorti');
-    return isYakshagana && isNotBootha;
-  }), [allImages]);
+  const allYakshaganaImages = useMemo(() => importAll(require.context('../../assets/images/gallery/yakshagana', false, /\.(jpe?g|png|gif|webp|bmp|jpeg)$/)), []);
+  
+  // Deduplicate by filename since webpack loads same files via multiple paths
+  const yakshaganaImages = useMemo(() => {
+    const seen = new Set();
+    return allYakshaganaImages.filter(img => {
+      if (seen.has(img.name)) return false;
+      seen.add(img.name);
+      return true;
+    });
+  }, [allYakshaganaImages]);
 
   const items = useMemo(() => yakshaganaImages.map(img => ({
     type: 'image',

@@ -3,23 +3,25 @@ import GalleryLightbox from '../../components/GalleryLightbox';
 import SectionHeader from '../../components/SectionHeader';
 
 const importAll = (r) => r.keys().map((key) => {
-  const name = key.replace('./', '');
+  const path = key.replace('./', '');
+  const parts = path.split('/');
+  const name = parts[parts.length - 1];
   const src = r(key);
-  return { name, src, title: name.replace(/\.(jpe?g|png|gif|webp)$/i, ''), description: '' };
+  return { name, src, path, title: name.replace(/\.(jpe?g|png|gif|webp|bmp|jpeg)$/i, ''), description: '' };
 });
 
 const BoothakolaGallery = () => {
-  const allImages = useMemo(() => importAll(require.context('../../assets/images', false, /\.(jpe?g|png|gif|webp)$/)), []);
-
-  // Filter for BoothaKola-related images, excluding Yakshagana
-  const boothakolaImages = useMemo(() => allImages.filter(img => {
-    const name = img.name.toLowerCase();
-    // Include if it has bootha/kola keywords
-    const isBootha = name.includes('bootha') || name.includes('kola') || name.includes('bhuta') || name.includes('panjurli') || name.includes('maada') || name.includes('moorti');
-    // Exclude if it has yakshagana-specific keywords
-    const isNotYakshagana = !name.includes('yakshagana') && !name.includes('shumbha') && !name.includes('durga') && !name.includes('mahishamardini');
-    return isBootha && isNotYakshagana;
-  }), [allImages]);
+  const allBoothakolaImages = useMemo(() => importAll(require.context('../../assets/images/gallery/bootakola', false, /\.(jpe?g|png|gif|webp|bmp|jpeg)$/)), []);
+  
+  // Deduplicate by filename since webpack loads same files via multiple paths
+  const boothakolaImages = useMemo(() => {
+    const seen = new Set();
+    return allBoothakolaImages.filter(img => {
+      if (seen.has(img.name)) return false;
+      seen.add(img.name);
+      return true;
+    });
+  }, [allBoothakolaImages]);
 
   const items = useMemo(() => boothakolaImages.map(img => ({
     type: 'image',
