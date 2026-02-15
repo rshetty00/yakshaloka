@@ -1,6 +1,7 @@
 import Home from './pages/Home/Home';
 import OurStory from './pages/OurStory/OurStory';
 import Raghuram from './pages/Raghuram/Raghuram';
+import ShivaratriPerformances from './pages/ShivaratriPerformances/ShivaratriPerformances';
 import Yakshagana from './pages/Yakshagana/Yakshagana';
 import BoothaKola from './pages/BoothaKola/BoothaKola';
 import Gallery from './pages/Gallery/Gallery';
@@ -15,6 +16,7 @@ export const routes = [
   { path: '/', component: Home },
   { path: '/our-story', component: OurStory },
   { path: '/raghuram', component: Raghuram },
+  { path: '/shivaratri-performances', component: ShivaratriPerformances },
   { path: '/yakshagana', component: Yakshagana },
   { path: '/kola-performances', component: BoothaKola },
   { path: '/other-arts', component: OtherArts },

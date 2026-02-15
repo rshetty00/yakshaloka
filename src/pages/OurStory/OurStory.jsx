@@ -77,19 +77,34 @@ export default function OurStory() {
                 description: 'Renowned athletic background instilled discipline, endurance, and the ability to command energy and presence on any stage.'
               },
               {
+                icon: '🎭',
+                title: 'Master of Classical Arts',
+                description: 'Highly skilled in Yakshagana, Bootakola, and 12+ ancient folk and classical dance forms. Visionary performer and choreographer.'
+              },
+              {
+                icon: '🎬',
+                title: 'Actor & Media Performer',
+                description: 'Accomplished in movies, TV series, commercials, PSAs, and both Indian and Western theatrical dramas. Cross-cultural performer.'
+              },
+              {
+                icon: '🎪',
+                title: 'Director & Choreographer',
+                description: 'Creative director of vibrant dance-drama independent theater productions. Innovative fusion of ancient and contemporary styles.'
+              },
+              {
+                icon: '📱',
+                title: 'Social Media Influencer',
+                description: 'Leverages modern media to reach global audiences. Spreads ancient arts and spiritual wisdom through digital platforms.'
+              },
+              {
                 icon: '🧠',
                 title: 'Scholar & Researcher',
                 description: 'Deep expertise in Vedas, Upanishads, epics (Ramayana, Mahabharata, Puranas), tantric philosophy, and ancient spiritual sciences.'
               },
               {
-                icon: '🎭',
-                title: 'Master of Classical Arts',
-                description: 'Highly skilled in Yakshagana, Bootakola, and other classical performing arts. Years of rigorous training and practice.'
-              },
-              {
-                icon: '⚡',
-                title: 'Tech Innovator',
-                description: 'Advanced knowledge and research in hardware/software. Engineering background enables bridging ancient arts with modern technology.'
+                icon: '✍️',
+                title: 'Writer & Chronicler',
+                description: 'Documents and preserves knowledge of performing arts traditions. Bridges ancient wisdom with contemporary understanding.'
               },
               {
                 icon: '🙏',
@@ -97,14 +112,14 @@ export default function OurStory() {
                 description: 'Expert in yoga, meditation, hypnotherapy (including past life regression), and spiritual counseling. Genuine spiritual depth.'
               },
               {
+                icon: '⚡',
+                title: 'Tech Innovator',
+                description: 'Advanced knowledge and research in hardware/software. Engineering background enables bridging ancient arts with modern technology.'
+              },
+              {
                 icon: '❤️',
                 title: 'Philanthropist',
                 description: 'Decades of charity work and community service without seeking recognition or awards. Genuine compassion drives his mission.'
-              },
-              {
-                icon: '🎯',
-                title: 'Mentor & Educator',
-                description: 'Exceptional ability to teach complex arts to students from diverse backgrounds. Patience, wisdom, and clear transmission of knowledge.'
               },
               {
                 icon: '🌱',
