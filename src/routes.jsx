@@ -16,7 +16,7 @@ export const routes = [
   { path: '/', component: Home },
   { path: '/our-story', component: OurStory },
   { path: '/raghuram', component: Raghuram },
-  { path: '/shivaratri-performances', component: ShivaratriPerformances },
+  { path: '/shivaratri', component: ShivaratriPerformances },
   { path: '/yakshagana', component: Yakshagana },
   { path: '/kola-performances', component: BoothaKola },
   { path: '/other-arts', component: OtherArts },

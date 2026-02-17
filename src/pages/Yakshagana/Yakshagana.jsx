@@ -6,12 +6,13 @@ import YouTubeEmbed from '../../components/YouTubeEmbed';
 import GalleryLightbox from '../../components/GalleryLightbox';
 import OtherArtsSection from '../../components/OtherArtsSection';
 
-// Your existing images
-import HeroImg from 'assets/images/Yakshagana1.jpg';
-import Yakshagana2 from 'assets/images/Yakshagana2.jpg';
-import YakshaganaX from 'assets/images/YakshaganaX.jpg';
-import YakshaganaXX1 from 'assets/images/YakshaganaXX1.jpg';
-import YakshaganaY from 'assets/images/YakshaganaY.jpg';
+// Yakshagana-specific images and videos
+import HeroImg from 'assets/images/yakshagana/Yakshagana1.jpg';
+import Yakshagana2 from 'assets/images/yakshagana/Yakshagana2.jpg';
+import YakshaganaX from 'assets/images/yakshagana/YakshaganaX.jpg';
+import YakshaganaXX1 from 'assets/images/yakshagana/YakshaganaXX1.jpg';
+import YakshaganaY from 'assets/images/yakshagana/YakshaganaY.jpg';
+import YakshaganaReel from 'assets/images/yakshagana/RaghuramShettyVaali_YakshaganaPerfromanceOnPaciificOcean_Real1.mov';
 
 const Yakshagana = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -80,8 +81,9 @@ const Yakshagana = () => {
     'https://www.youtube.com/watch?v=0EunnFnmnVs'
   ]), []);
 
-  // Gallery items with all Yakshagana images
+  // Gallery items with all Yakshagana images and videos
   const galleryItems = useMemo(() => ([
+    { type: 'video', src: YakshaganaReel, alt: 'Yakshagana Reel Performance', caption: 'Pacific Ocean Performance - Reel' },
     { type: 'image', src: HeroImg, alt: 'Yakshagana Performance 1', caption: 'Performance moments' },
     { type: 'image', src: Yakshagana2, alt: 'Yakshagana Performance 2', caption: 'Dance scene' },
     { type: 'image', src: YakshaganaX, alt: 'Yakshagana Performance X', caption: 'Stage presence' },

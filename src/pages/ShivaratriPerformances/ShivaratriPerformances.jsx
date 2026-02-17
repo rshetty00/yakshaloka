@@ -301,6 +301,16 @@ export default function ShivaratriPerformances() {
 function ArchiveGrid() {
   const years = Array.from({ length: 10 }, (_, i) => 2017 + i);
   const [uploads, setUploads] = useState({});
+  const [uploading, setUploading] = useState({});
+  const [uploadedUrls, setUploadedUrls] = useState({});
+
+  const hostname = window.location.hostname || '';
+  const isLocal = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '';
+  const API_BASE = process.env.REACT_APP_API_BASE || (isLocal ? 'http://localhost:4000' : '');
+
+  // Optional: allow basic auth from build-time env for dev/testing only
+  const ADMIN_USER = process.env.REACT_APP_ADMIN_USER || null;
+  const ADMIN_PASS = process.env.REACT_APP_ADMIN_PASS || null;
 
   const handleFiles = (year, fileList) => {
     const files = Array.from(fileList);
@@ -324,6 +334,43 @@ function ArchiveGrid() {
     });
   };
 
+  const [uploadError, setUploadError] = useState({});
+
+  const uploadToServer = async (year) => {
+    const files = uploads[year] || [];
+    if (!files.length) return;
+    setUploading(prev => ({ ...prev, [year]: 'uploading' }));
+
+    try {
+      const fd = new FormData();
+      files.forEach(f => fd.append('files', f));
+      const headers = {};
+      if (ADMIN_USER && ADMIN_PASS) {
+        const b64 = btoa(`${ADMIN_USER}:${ADMIN_PASS}`);
+        headers['Authorization'] = `Basic ${b64}`;
+      }
+      const res = await fetch(`${API_BASE}/api/shivaratri/upload/${year}`, {
+        method: 'POST',
+        body: fd,
+        headers
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        const msg = (data && data.error) ? data.error : `${res.status} ${res.statusText}`;
+        throw new Error(msg);
+      }
+      // store returned URLs
+      setUploadedUrls(prev => ({ ...prev, [year]: data.files || [] }));
+      // clear local selections for that year
+      setUploads(prev => ({ ...prev, [year]: [] }));
+      setUploading(prev => ({ ...prev, [year]: 'done' }));
+    } catch (err) {
+      console.error('Upload error', err);
+      setUploading(prev => ({ ...prev, [year]: 'error' }));
+      setUploadError(prev => ({ ...prev, [year]: String(err.message || err) }));
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
       {years.map(year => (
@@ -334,7 +381,7 @@ function ArchiveGrid() {
               <p className="text-sm text-slate-300">Shivaratri Archive</p>
             </div>
             <div className="text-right">
-              <button type="button" onClick={() => triggerInput(year)} className="bg-amber-400 text-slate-900 px-3 py-1 rounded text-sm font-semibold">Upload</button>
+              <button type="button" onClick={() => triggerInput(year)} className="bg-amber-400 text-slate-900 px-3 py-1 rounded text-sm font-semibold">Select</button>
             </div>
           </div>
 
@@ -347,7 +394,7 @@ function ArchiveGrid() {
 
             {(uploads[year] || []).map((f, idx) => (
               <div key={idx} className="flex items-center gap-3 bg-slate-900 p-2 rounded">
-                {f.type.startsWith('image') ? (
+                {f.type && f.type.startsWith('image') ? (
                   <img src={URL.createObjectURL(f)} alt={f.name} className="w-16 h-10 object-cover rounded" />
                 ) : (
                   <video src={URL.createObjectURL(f)} className="w-20 h-12 object-contain rounded" muted />
@@ -359,6 +406,22 @@ function ArchiveGrid() {
                 <button onClick={() => removeFile(year, idx)} className="text-xs text-rose-400 hover:underline">Remove</button>
               </div>
             ))}
+
+            {(uploadedUrls[year] || []).length > 0 && (
+              <div className="text-xs text-slate-400">
+                Uploaded: {(uploadedUrls[year] || []).length} files
+              </div>
+            )}
+
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <div className="flex gap-2">
+                <button disabled={(uploads[year] || []).length === 0 || uploading[year] === 'uploading'} onClick={() => uploadToServer(year)} className="bg-emerald-500 disabled:opacity-50 text-white px-3 py-1 rounded text-sm">Send to Server</button>
+                {uploading[year] === 'uploading' && <div className="text-sm text-slate-300">Uploading...</div>}
+                {uploading[year] === 'done' && <div className="text-sm text-green-400">Uploaded</div>}
+                {uploading[year] === 'error' && <div className="text-sm text-rose-400">Upload failed</div>}
+              </div>
+              {uploadError[year] && <div className="text-xs text-rose-400">{uploadError[year]}</div>}
+            </div>
           </div>
         </div>
       ))}

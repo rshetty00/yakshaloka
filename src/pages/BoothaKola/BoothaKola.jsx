@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import OtherArtsSection from '../../components/OtherArtsSection';
-import BoothaVideo from 'assets/videos/ImportantKolaVideo_SpinningBeforeDance_RaghuramShettyPerformingArtistAsPunjurliBootha_0I7A0169.MP4';
-import Bootha2 from 'assets/images/BoothaKola2.jpg';
-import Bootha3 from 'assets/images/BoothaKola1.jpg';
-import ReelVideo from 'assets/videos/RaghuramShettyBoothakolaReel_24Secs.mp4';
-import ReelThumb from 'assets/images/BoothaKolaPerforamnce_WaterMarked_PanjurliWithANi_RaghuramShetty.png';
+import BoothaVideo from 'assets/videos/boothakola/ImportantKolaVideo_SpinningBeforeDance_RaghuramShettyPerformingArtistAsPunjurliBootha_0I7A0169.MP4';
+import Bootha2 from 'assets/images/boothakola/BoothaKola2.jpg';
+import Bootha3 from 'assets/images/boothakola/BoothaKola1.jpg';
+import ReelVideo from 'assets/videos/boothakola/RaghuramShettyBoothakolaReel_24Secs.mp4';
+import ReelThumb from 'assets/images/boothakola/BoothaKolaPerforamnce_WaterMarked_PanjurliWithANi_RaghuramShetty.png';
 
 
 const BoothaKola = () => {

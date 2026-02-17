@@ -158,8 +158,8 @@ export default function Raghuram() {
               Raghuram's Shivaratri performances across Southern California temples showcase his most innovative approach to cultural and spiritual preservation. These aren't merely performances—they are transformative spiritual experiences where Yakshagana becomes a vehicle for divine connection.
             </p>
             
-            <Link 
-              to="/shivaratri-performances" 
+            <Link
+              to="/shivaratri"
               className="inline-block bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-2 px-6 rounded transition-colors"
             >
               Explore Shivaratri Performances

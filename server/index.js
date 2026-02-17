@@ -113,6 +113,34 @@ const upload = multer({
   }
 });
 
+// Multer storage for Shivaratri uploads (images + videos), destination depends on :year param
+const shivaStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const year = safeId(req.params.year) || 'unknown';
+    const dir = path.join(__dirname, 'uploads', 'shivaratri', year);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(2, 9);
+    cb(null, `${timestamp}-${random}${ext}`);
+  }
+});
+
+const shivaUpload = multer({
+  storage: shivaStorage,
+  limits: { fileSize: 50 * 1024 * 1024 }, // 50MB per file
+  fileFilter: (req, file, cb) => {
+    // Allow common image and video mime types
+    const allowed = /jpeg|jpg|png|gif|webp|mp4|webm|ogg|mov/;
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (allowed.test(ext) || allowed.test(file.mimetype)) return cb(null, true);
+    cb(new Error('Only image/video files are allowed (jpg/png/gif/webp/mp4/webm/ogg/mov)'));
+  }
+});
+
 function safeId(id) {
   if (!id) return '';
   return String(id).toLowerCase().replace(/[^a-z0-9-_]/g, '').slice(0, 64);
@@ -225,6 +253,26 @@ app.post('/api/upload/image', requireBasicAuth, (req, res) => {
       originalName: req.file.originalname,
       size: req.file.size
     });
+  });
+});
+
+// Shivaratri multi-file upload endpoint: saves files to uploads/shivaratri/<year>
+app.post('/api/shivaratri/upload/:year', requireBasicAuth, (req, res) => {
+  shivaUpload.array('files', 50)(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      return res.status(400).json({ ok: false, error: err.message });
+    } else if (err) {
+      return res.status(400).json({ ok: false, error: err.message });
+    }
+
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ ok: false, error: 'No files uploaded' });
+    }
+
+    const year = safeId(req.params.year) || 'unknown';
+    const urls = req.files.map(f => ({ url: `/uploads/shivaratri/${year}/${f.filename}`, originalName: f.originalname, size: f.size }));
+    console.log(`[SHIVARATRI UPLOAD] year=${year} files=${req.files.length}`);
+    res.json({ ok: true, files: urls });
   });
 });
 
