@@ -4,6 +4,9 @@ import Raghuram from './pages/Raghuram/Raghuram';
 import ShivaratriPerformances from './pages/ShivaratriPerformances/ShivaratriPerformances';
 import Yakshagana from './pages/Yakshagana/Yakshagana';
 import BoothaKola from './pages/BoothaKola/BoothaKola';
+import TrainingTeaching from './pages/TrainingTeaching/TrainingTeaching';
+import HollywoodMedia from './pages/HollywoodMedia/HollywoodMedia';
+import BeyondTheStage from './pages/BeyondTheStage/BeyondTheStage';
 import Gallery from './pages/Gallery/Gallery';
 import YakshaganaGallery from './pages/Gallery/YakshaganaGallery';
 import BoothakolaGallery from './pages/Gallery/BoothakolaGallery';
@@ -19,8 +22,11 @@ export const routes = [
   { path: '/shivaratri', component: ShivaratriPerformances },
   { path: '/yakshagana', component: Yakshagana },
   { path: '/kola-performances', component: BoothaKola },
+  { path: '/training-teaching', component: TrainingTeaching },
+  { path: '/hollywood-media', component: HollywoodMedia },
   { path: '/other-arts', component: OtherArts },
   { path: '/bootharituals', component: BoothaRituals },
+  { path: '/beyond-the-stage', component: BeyondTheStage },
   { path: '/gallery', component: Gallery },
   { path: '/gallery/yakshagana', component: YakshaganaGallery },
   { path: '/gallery/boothakola', component: BoothakolaGallery },

@@ -7,12 +7,12 @@ import GalleryLightbox from '../../components/GalleryLightbox';
 import OtherArtsSection from '../../components/OtherArtsSection';
 
 // Yakshagana-specific images and videos
-import HeroImg from 'assets/images/yakshagana/Yakshagana1.jpg';
+import HeroImg from 'assets/images/yakshagana/Yakshagana_Main_RaghuramShettyAsShumbhaHeadshot.jpg';
 import Yakshagana2 from 'assets/images/yakshagana/Yakshagana2.jpg';
 import YakshaganaX from 'assets/images/yakshagana/YakshaganaX.jpg';
 import YakshaganaXX1 from 'assets/images/yakshagana/YakshaganaXX1.jpg';
 import YakshaganaY from 'assets/images/yakshagana/YakshaganaY.jpg';
-import YakshaganaReel from 'assets/images/yakshagana/RaghuramShettyVaali_YakshaganaPerfromanceOnPaciificOcean_Real1.mov';
+import YakshaganaReel from 'assets/images/yakshagana/RaghuramShettAsSamudramathanaVaali_YakshaganaPerfromanceOnPaciificOcean_Real1.mov';
 
 const Yakshagana = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -79,6 +79,76 @@ const Yakshagana = () => {
   const videoHighlights = useMemo(() => ([
     'https://www.youtube.com/watch?v=0mrR3MfIgpU',
     'https://www.youtube.com/watch?v=0EunnFnmnVs'
+  ]), []);
+
+  // Era timeline data
+  const eraTimeline = useMemo(() => ([
+    {
+      era: 'Indian Era',
+      period: 'Upto 1994',
+      location: 'Karnataka, India',
+      icon: '🇮🇳',
+      shows: '50+',
+      highlights: 'Training, early performances, temple dedications',
+      countries: ['India'],
+      image: HeroImg,
+      description: 'Foundations in classical training and performances across Karnataka temples and cultural festivals.'
+    },
+    {
+      era: 'New England Era',
+      period: '1995-2003',
+      location: 'New England, USA',
+      icon: '🗽',
+      shows: '40+',
+      highlights: 'US debut, university tours, cultural centers',
+      countries: ['USA'],
+      image: Yakshagana2,
+      description: 'Introduction of Yakshagana to North American audiences through universities and cultural institutions.'
+    },
+    {
+      era: 'Florida Era',
+      period: '2004-2006',
+      location: 'Florida, USA',
+      icon: '🌴',
+      shows: '30+',
+      highlights: 'Expansion, local community programs, regional recognition',
+      countries: ['USA'],
+      image: YakshaganaX,
+      description: 'Growing presence in Florida with community performances and festival appearances.'
+    },
+    {
+      era: 'Bay Area Era',
+      period: '2006-2013',
+      location: 'San Francisco, USA',
+      icon: '🌉',
+      shows: '60+',
+      highlights: 'Asia Society, Herbst Theatre, touring to international venues',
+      countries: ['USA', 'Canada', 'UK'],
+      image: YakshaganaXX1,
+      description: 'Significant growth with performances at major venues and international touring to multiple countries.'
+    },
+    {
+      era: 'SoCal Era I',
+      period: '2013-2022',
+      location: 'Southern California, USA',
+      icon: '🏖️',
+      shows: '75+',
+      highlights: 'Frequent performances, Asia Society series, TED talks integration',
+      countries: ['USA', 'Canada', 'Europe'],
+      image: YakshaganaY,
+      description: 'Establishing LA/Southern California as major performance hub with extended touring.'
+    },
+    {
+      era: 'SoCal Era II',
+      period: '2023-2026',
+      location: 'Southern California, USA',
+      icon: '✨',
+      shows: '45+',
+      highlights: 'Current era, major productions, training academy establishment, international reach',
+      countries: ['USA', 'Canada', 'Europe', 'Asia'],
+      image: HeroImg,
+      description: 'Contemporary period with established reputation, advanced productions, and global performances.'
+    }
   ]), []);
 
   // Gallery items with all Yakshagana images and videos
@@ -234,6 +304,119 @@ const Yakshagana = () => {
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {ensemble.map((m, i) => <EnsembleMemberCard key={i} {...m} />)}
+        </div>
+      </section>
+
+      {/* Era Timeline Section */}
+      <section 
+        id="era-timeline"
+        className="bg-gradient-to-b from-slate-900 to-slate-950 border-y border-slate-800 relative py-16 opacity-0 translate-y-8 transition-all duration-700"
+        ref={(el) => (sectionsRef.current[6] = el)}
+      >
+        {/* Subtle texture overlay */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }} />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <SectionHeader
+            eyebrow="Journey across continents"
+            title="Six Eras of Yakshagana USA"
+            subtitle="From India to the world: 300+ performances across 6 geographical and temporal eras."
+            align="center"
+          />
+
+          {/* Stats cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div className="p-4 bg-slate-800/40 backdrop-blur-sm rounded-lg border border-amber-400/20 text-center hover:bg-slate-800/60 transition-all">
+              <div className="text-3xl font-bold text-amber-300">300+</div>
+              <div className="text-slate-400 text-sm mt-1">Performances</div>
+            </div>
+            <div className="p-4 bg-slate-800/40 backdrop-blur-sm rounded-lg border border-amber-400/20 text-center hover:bg-slate-800/60 transition-all">
+              <div className="text-3xl font-bold text-amber-300">6</div>
+              <div className="text-slate-400 text-sm mt-1">Eras / Regions</div>
+            </div>
+            <div className="p-4 bg-slate-800/40 backdrop-blur-sm rounded-lg border border-amber-400/20 text-center hover:bg-slate-800/60 transition-all">
+              <div className="text-3xl font-bold text-amber-300">30+</div>
+              <div className="text-slate-400 text-sm mt-1">Years Active</div>
+            </div>
+            <div className="p-4 bg-slate-800/40 backdrop-blur-sm rounded-lg border border-amber-400/20 text-center hover:bg-slate-800/60 transition-all">
+              <div className="text-3xl font-bold text-amber-300">4</div>
+              <div className="text-slate-400 text-sm mt-1">Continents</div>
+            </div>
+          </div>
+
+          {/* Timeline cards */}
+          <div className="space-y-4">
+            {eraTimeline.map((era, idx) => (
+              <div 
+                key={idx}
+                className="group relative overflow-hidden rounded-lg border border-slate-700 hover:border-amber-400/40 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-500/10"
+              >
+                {/* Background gradient */}
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-800 to-slate-900 opacity-90 group-hover:opacity-95 transition-all" />
+                
+                {/* Timeline number on left */}
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 to-amber-600" />
+                
+                {/* Era content */}
+                <div className="relative p-6 flex flex-col md:flex-row gap-6">
+                  {/* Left: Era info */}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-3xl">{era.icon}</span>
+                      <div>
+                        <h3 className="text-xl font-bold text-amber-300">{era.era}</h3>
+                        <p className="text-sm text-slate-400">{era.period}</p>
+                      </div>
+                    </div>
+                    <p className="text-slate-300 mb-3">{era.description}</p>
+                    <div className="flex flex-wrap gap-2 items-start">
+                      <div className="flex gap-2">
+                        {era.countries.map((country) => (
+                          <span 
+                            key={country}
+                            className="px-3 py-1 bg-amber-400/10 border border-amber-400/30 rounded-full text-xs text-amber-300 font-semibold"
+                          >
+                            {country}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex gap-2">
+                        <span className="px-3 py-1 bg-slate-700/50 border border-slate-600 rounded-full text-xs text-slate-300">
+                          {era.shows} shows
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Right: Stats */}
+                  <div className="md:w-40 flex flex-col justify-start gap-2 text-sm">
+                    <div>
+                      <div className="text-slate-400 font-semibold">Location</div>
+                      <div className="text-slate-200">{era.location}</div>
+                    </div>
+                    <div>
+                      <div className="text-slate-400 font-semibold">Highlights</div>
+                      <div className="text-slate-300 text-xs">{era.highlights}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Call to action */}
+          <div className="mt-12 text-center p-8 bg-gradient-to-r from-amber-600/20 to-amber-500/20 rounded-lg border border-amber-400/30">
+            <h3 className="text-2xl font-bold text-amber-300 mb-2">Experience the Journey</h3>
+            <p className="text-slate-300 mb-4">From India to international stages - a testament to the universal appeal of Yakshagana.</p>
+            <a 
+              href="#shows"
+              className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold hover:from-amber-400 hover:to-amber-500 transition-all transform hover:scale-105 shadow-lg hover:shadow-amber-500/50"
+            >
+              View Upcoming Shows
+            </a>
+          </div>
         </div>
       </section>
 

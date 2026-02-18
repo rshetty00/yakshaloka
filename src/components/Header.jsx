@@ -5,8 +5,11 @@ export default function Header() {
   const links = [
     { name: 'Home', path: '/' },
     { name: 'Our Story', path: '/our-story' },
+    { name: 'Beyond the Stage', path: '/beyond-the-stage' },
     { name: 'Yakshagana', path: '/yakshagana' },
     { name: 'Kola Performances', path: '/kola-performances' },
+    { name: 'Training & Teaching', path: '/training-teaching' },
+    { name: 'Hollywood & Media', path: '/hollywood-media' },
     { name: 'Other Arts', path: '/other-arts' },
     { name: 'Bootha Rituals', path: '/bootharituals' },
     { name: 'Gallery', path: '/gallery' },
