@@ -44,6 +44,12 @@ const Home = () => {
                 >
                   Discover Bootha Kola
                 </Link>
+                <Link
+                  to="/beyond-the-stage"
+                  className="transform hover:scale-105 transition-transform bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-8 rounded-lg shadow-md"
+                >
+                  Beyond the Stage
+                </Link>
               </div>
             </div>
           </div>
@@ -92,6 +98,45 @@ const Home = () => {
               <p className="text-slate-300 text-center">
                 Preserving millenials-old traditions that showcase TulunaaD's vibrant culture, rich mythology, mesmerizing folklore, unique spiritual practices and Performing Arts.
               </p>
+            </div>
+          </div>
+
+          {/* Additional Dimensions Section */}
+          <div className="mt-12 pt-8 border-t border-slate-700">
+            <h3 className="text-2xl font-bold text-center mb-8 text-amber-300">Beyond Performance: A Complete Life Philosophy</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Healing */}
+              <Link to="/beyond-the-stage" className="group">
+                <div className="bg-emerald-900/40 hover:bg-emerald-900/60 rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
+                  <div className="text-4xl mb-3">🧘</div>
+                  <h4 className="text-lg font-semibold text-emerald-300 mb-2 group-hover:text-emerald-200">Healing & Wellness</h4>
+                  <p className="text-sm text-slate-400 group-hover:text-slate-300">Therapeutic practice, life coaching, yoga & meditation</p>
+                </div>
+              </Link>
+              {/* Community */}
+              <Link to="/beyond-the-stage" className="group">
+                <div className="bg-rose-900/40 hover:bg-rose-900/60 rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
+                  <div className="text-4xl mb-3">🤝</div>
+                  <h4 className="text-lg font-semibold text-rose-300 mb-2 group-hover:text-rose-200">Community</h4>
+                  <p className="text-sm text-slate-400 group-hover:text-slate-300">Cultural programs, sports, community events</p>
+                </div>
+              </Link>
+              {/* Charity */}
+              <Link to="/beyond-the-stage" className="group">
+                <div className="bg-red-900/40 hover:bg-red-900/60 rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
+                  <div className="text-4xl mb-3">❤️</div>
+                  <h4 className="text-lg font-semibold text-red-300 mb-2 group-hover:text-red-200">Philanthropy</h4>
+                  <p className="text-sm text-slate-400 group-hover:text-slate-300">Disaster relief, charitable giving, social impact</p>
+                </div>
+              </Link>
+              {/* Education */}
+              <Link to="/training-teaching" className="group">
+                <div className="bg-blue-900/40 hover:bg-blue-900/60 rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
+                  <div className="text-4xl mb-3">🎓</div>
+                  <h4 className="text-lg font-semibold text-blue-300 mb-2 group-hover:text-blue-200">Education</h4>
+                  <p className="text-sm text-slate-400 group-hover:text-slate-300">Training programs, workshops, institutions</p>
+                </div>
+              </Link>
             </div>
           </div>
         </div>

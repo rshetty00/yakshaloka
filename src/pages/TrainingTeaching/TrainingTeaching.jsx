@@ -379,6 +379,40 @@ const TrainingTeaching = () => {
           initialViewMode="optionA"
         />
       </section>
+
+      {/* Related Pages Section */}
+      <section className="bg-slate-900 border-t border-slate-800 py-16 opacity-0 translate-y-8 transition-all duration-700"
+        ref={(el) => (sectionsRef.current[7] = el)}>
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-amber-300 mb-4">Explore More</h2>
+            <p className="text-slate-300 text-lg">Discover other dimensions of Raghuram's work</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <a href="/yakshagana" className="group">
+              <div className="p-8 bg-gradient-to-br from-orange-900/40 to-orange-800/20 rounded-lg border border-orange-400/30 hover:border-orange-400/60 transition-all transform group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-orange-500/20">
+                <div className="text-5xl mb-4">🎪</div>
+                <h3 className="text-xl font-bold text-orange-300 mb-2">Yakshagana</h3>
+                <p className="text-slate-300 text-sm">Classical theatre across 6 continents</p>
+              </div>
+            </a>
+            <a href="/beyond-the-stage" className="group">
+              <div className="p-8 bg-gradient-to-br from-amber-900/40 to-amber-800/20 rounded-lg border border-amber-400/30 hover:border-amber-400/60 transition-all transform group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-amber-500/20">
+                <div className="text-5xl mb-4">🌟</div>
+                <h3 className="text-xl font-bold text-amber-300 mb-2">Beyond the Stage</h3>
+                <p className="text-slate-300 text-sm">Healing, community, charity & education</p>
+              </div>
+            </a>
+            <a href="/hollywood-media" className="group">
+              <div className="p-8 bg-gradient-to-br from-rose-900/40 to-rose-800/20 rounded-lg border border-rose-400/30 hover:border-rose-400/60 transition-all transform group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-rose-500/20">
+                <div className="text-5xl mb-4">🎬</div>
+                <h3 className="text-xl font-bold text-rose-300 mb-2">Hollywood & Media</h3>
+                <p className="text-slate-300 text-sm">Featured in TV, film & documentaries</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
