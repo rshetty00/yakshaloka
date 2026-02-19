@@ -92,7 +92,7 @@ const Yakshagana = () => {
       highlights: 'Training, early performances, temple dedications',
       countries: ['India'],
       image: HeroImg,
-      description: 'Foundations in classical training and performances across Karnataka temples and cultural festivals.'
+      description: 'Foundational training in classical, folk, and spiritual traditions; formative performances across cities, villages, universities, temples and cultural festivals that established deep roots in heritage and ritual.'
     },
     {
       era: 'New England Era',
@@ -103,7 +103,7 @@ const Yakshagana = () => {
       highlights: 'US debut, university tours, cultural centers',
       countries: ['USA'],
       image: Yakshagana2,
-      description: 'Introduction of Yakshagana to North American audiences through universities and cultural institutions.'
+      description: 'A pivotal introduction of Yakshagana to North American and international audiences via university tours, renowned theaters, and cultural institutions—sparking cross-cultural dialogue and critical acclaim.'
     },
     {
       era: 'Florida Era',
@@ -114,7 +114,7 @@ const Yakshagana = () => {
       highlights: 'Expansion, local community programs, regional recognition',
       countries: ['USA'],
       image: YakshaganaX,
-      description: 'Growing presence in Florida with community performances and festival appearances.'
+      description: 'Expanding presence across Florida through community events, university engagements, and folk festivals—an era of regional growth and rising international influence through touring.'
     },
     {
       era: 'Bay Area Era',
@@ -335,8 +335,8 @@ const Yakshagana = () => {
             <div className="p-4 bg-slate-800/40 backdrop-blur-sm rounded-lg border border-amber-400/20 text-center hover:bg-slate-800/60 transition-all">
               <div className="text-3xl font-bold text-amber-300">6</div>
               <div className="text-slate-400 text-sm mt-1">Eras / Regions</div>
-            </div>
-            <div className="p-4 bg-slate-800/40 backdrop-blur-sm rounded-lg border border-amber-400/20 text-center hover:bg-slate-800/60 transition-all">
+                <div className="text-3xl font-bold text-amber-300">5</div>
+                  <div className="text-slate-400 font-semibold text-sm md:text-base">Continents</div>
               <div className="text-3xl font-bold text-amber-300">30+</div>
               <div className="text-slate-400 text-sm mt-1">Years Active</div>
             </div>
