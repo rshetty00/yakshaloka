@@ -51,21 +51,21 @@ const Yakshagana = () => {
   const repertoire = useMemo(() => ([
     {
       cover: Yakshagana2,
-      title: 'Karna Shapatha',
-      origin: 'Mahabharata',
+      title: '“The Epic Vanquishing of Ravana”',
+      origin: 'Ramayana',
       duration: '90-120 min',
-      summary: 'A fierce retelling of Karna oath, fate, and dharma amidst the Kurukshetra storm.',
-      cast: ['Raghuram', 'Shreya', 'Arun'],
-      music: ['Maddale', 'Chende', 'Harmonium']
+      summary: 'A fierce battle of Rama - Ravana, Ravana\'s Ten-Headed Sovereign, Rama\'s heroic talents, and power of Self knowledge',
+      cast: ['Raghuram', 'Vedavit', 'Viravara', 'Abhishek', 'Priya'],
+      music: ['Bhaagavata', 'Chakra taala', 'Maddale', 'Chende', 'Harmonium']
     },
     {
       cover: HeroImg,
-      title: 'Seetha Kalyana',
-      origin: 'Ramayana',
+      title: 'Goddess Durga',
+      origin: 'Devi Bhagavatam',
       duration: '120-150 min',
-      summary: 'A vibrant celebration of divine union with grandeur, devotion, and classical choreography.',
-      cast: ['Raghuram', 'Deepa', 'Kiran'],
-      music: ['Bhagavata', 'Harmonium', 'Maddale']
+      summary: 'A vibrant celebration of women empowerment and divine union of universal powers with grandeur, chilling devotion, and classical choreography.',
+      cast: ['Raghuram', 'Prathibha', 'Vedavit', 'Viravara'],
+      music: ['Bhagavata', 'Harmonium', 'Maddale', 'Chende', 'Chakra Tala']
     }
   ]), []);
 
@@ -128,26 +128,26 @@ const Yakshagana = () => {
       description: 'Significant growth with performances at major venues and international touring to multiple countries.'
     },
     {
-      era: 'SoCal Era I',
+      era: 'SoCal Era I — Hollywood Debut',
       period: '2013-2022',
       location: 'Southern California, USA',
       icon: '🏖️',
       shows: '75+',
-      highlights: 'Frequent performances, Asia Society series, TED talks integration',
+      highlights: 'Frequent performances, Asia Society series, TED talks integration, first Yakshagana appearance in a Hollywood movie',
       countries: ['USA', 'Canada', 'Europe'],
       image: YakshaganaY,
-      description: 'Establishing LA/Southern California as major performance hub with extended touring.'
+      description: 'LA emerges as a major performance hub; this era includes Yakshagana’s first-ever appearance in a Hollywood film (featuring Viravara Shetty), broadening the art form’s cultural footprint and audience reach.'
     },
     {
-      era: 'SoCal Era II',
+      era: 'SoCal Era II — Feature Film & Legacy',
       period: '2023-2026',
       location: 'Southern California, USA',
       icon: '✨',
       shows: '45+',
-      highlights: 'Current era, major productions, training academy establishment, international reach',
+      highlights: 'Major productions, training academy growth, and a feature-film project inspired by Raghuram’s life',
       countries: ['USA', 'Canada', 'Europe', 'Asia'],
       image: HeroImg,
-      description: 'Contemporary period with established reputation, advanced productions, and global performances.'
+      description: 'A contemporary era marked by on-screen prominence: Raghuram appears in a major film role, and his life and artistic journey have inspired a Hollywood feature (with his elder son Vivaswan Shetty cast in a principal role). The project is being pitched to investors and aims to complete pre-production in 2026, cementing Yakshagana’s cultural legacy on the global stage.'
     }
   ]), []);
 
