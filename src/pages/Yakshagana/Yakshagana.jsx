@@ -334,15 +334,15 @@ const Yakshagana = () => {
             </div>
             <div className="p-4 bg-slate-800/40 backdrop-blur-sm rounded-lg border border-amber-400/20 text-center hover:bg-slate-800/60 transition-all">
               <div className="text-3xl font-bold text-amber-300">6</div>
-              <div className="text-slate-400 text-sm mt-1">Eras / Regions</div>
+              <div className="text-slate-400 text-sm mt-1">Eras</div>
                 <div className="text-3xl font-bold text-amber-300">5</div>
                   <div className="text-slate-400 font-semibold text-sm md:text-base">Continents</div>
               <div className="text-3xl font-bold text-amber-300">30+</div>
               <div className="text-slate-400 text-sm mt-1">Years Active</div>
             </div>
             <div className="p-4 bg-slate-800/40 backdrop-blur-sm rounded-lg border border-amber-400/20 text-center hover:bg-slate-800/60 transition-all">
-              <div className="text-3xl font-bold text-amber-300">4</div>
-              <div className="text-slate-400 text-sm mt-1">Continents</div>
+              <div className="text-3xl font-bold text-amber-300">1000+</div>
+              <div className="text-slate-400 text-sm mt-1">Artists-AdditionalStats</div>
             </div>
           </div>
 
