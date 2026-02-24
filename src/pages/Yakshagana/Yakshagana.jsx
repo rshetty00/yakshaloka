@@ -12,7 +12,9 @@ import Yakshagana2 from 'assets/images/yakshagana/Yakshagana2.jpg';
 import YakshaganaX from 'assets/images/yakshagana/YakshaganaX.jpg';
 import YakshaganaXX1 from 'assets/images/yakshagana/YakshaganaXX1.jpg';
 import YakshaganaY from 'assets/images/yakshagana/YakshaganaY.jpg';
-import YakshaganaReel from 'assets/images/yakshagana/RaghuramShettAsSamudramathanaVaali_YakshaganaPerfromanceOnPaciificOcean_Real1.mov';
+
+// YouTube highlights
+const PACIFIC_OCEAN_VIDEO = 'https://youtube.com/shorts/Tnv7y42SpKk?feature=share';
 
 const Yakshagana = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -153,7 +155,7 @@ const Yakshagana = () => {
 
   // Gallery items with all Yakshagana images and videos
   const galleryItems = useMemo(() => ([
-    { type: 'video', src: YakshaganaReel, alt: 'Yakshagana Reel Performance', caption: 'Pacific Ocean Performance - Reel' },
+    { type: 'youtube', src: PACIFIC_OCEAN_VIDEO, alt: 'Yakshagana Reel Performance', caption: 'Pacific Ocean Performance' },
     { type: 'image', src: HeroImg, alt: 'Yakshagana Performance 1', caption: 'Performance moments' },
     { type: 'image', src: Yakshagana2, alt: 'Yakshagana Performance 2', caption: 'Dance scene' },
     { type: 'image', src: YakshaganaX, alt: 'Yakshagana Performance X', caption: 'Stage presence' },
