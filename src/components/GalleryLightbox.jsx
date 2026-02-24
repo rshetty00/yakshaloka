@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-// items: [{ type: 'image'|'video', src, poster, alt, caption, transcript, captions }]
+// Helper to extract or validate YouTube video ID
+const getYouTubeVideoId = (src) => {
+  // If already just an ID (11 chars, alphanumeric, -, _)
+  if (/^[a-zA-Z0-9_-]{11}$/.test(src)) return src;
+  // Extract from URL
+  const match = src.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\s]{11})/);
+  return match?.[1] || src;
+};
+
+// items: [{ type: 'image'|'video'|'youtube', src, poster, alt, caption, transcript, captions }]
 export default function GalleryLightbox({ items = [] }) {
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -35,7 +44,16 @@ export default function GalleryLightbox({ items = [] }) {
             onContextMenu={(e) => e.preventDefault()}
             aria-label={`Open gallery item ${idx + 1}`}
           >
-            {it.type === 'video' ? (
+            {it.type === 'youtube' ? (
+              <img
+                src={`https://img.youtube.com/vi/${getYouTubeVideoId(it.src)}/maxresdefault.jpg`}
+                alt={it.alt || 'YouTube thumbnail'}
+                className="w-full h-full object-cover"
+                loading="lazy"
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
+              />
+            ) : it.type === 'video' ? (
               <video
                 src={it.src}
                 poster={it.poster}
@@ -46,6 +64,13 @@ export default function GalleryLightbox({ items = [] }) {
                 draggable={false}
                 onDragStart={(e) => e.preventDefault()}
               />
+            ) : it.type === 'youtube' ? (
+              <div className="w-full h-full flex items-center justify-center bg-black">
+                <div className="text-center">
+                  <div className="text-4xl mb-2">▶️</div>
+                  <div className="text-white text-sm">YouTube Video</div>
+                </div>
+              </div>
             ) : (
               <img
                 src={it.src}
@@ -121,6 +146,18 @@ export default function GalleryLightbox({ items = [] }) {
                     <track key={i} kind={t.kind || 'subtitles'} srcLang={t.srclang} label={t.label} src={t.src} default={t.default} />
                   ))}
                 </video>
+              ) : current.type === 'youtube' ? (
+                <div className="w-full">
+                  <iframe
+                    width="100%"
+                    height="450"
+                    src={`https://www.youtube.com/embed/${getYouTubeVideoId(current.src)}?rel=0&modestbranding=1&fs=1`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full rounded"
+                    title={current.alt || 'YouTube video'}
+                  />
+                </div>
               ) : (
                 <img
                   src={current.src}
