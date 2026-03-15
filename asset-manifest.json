@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.dee44adc.css",
-    "main.js": "/static/js/main.6450f028.js",
+    "main.css": "/static/css/main.490e4181.css",
+    "main.js": "/static/js/main.c7f1af31.js",
     "static/js/453.3c0ef39b.chunk.js": "/static/js/453.3c0ef39b.chunk.js",
     "static/media/RaghuramShettyBoothakolaReel_24Secs.mp4": "/static/media/RaghuramShettyBoothakolaReel_24Secs.029a9d369ad262dcc107.mp4",
     "static/media/ImportantKolaVideo_SpinningBeforeDance_RaghuramShettyPerformingArtistAsPunjurliBootha_0I7A0169.MP4": "/static/media/ImportantKolaVideo_SpinningBeforeDance_RaghuramShettyPerformingArtistAsPunjurliBootha_0I7A0169.1e2160b28cf66f2cc37b.MP4",
@@ -15,6 +15,7 @@
     "static/media/Vaali_KCAOntheOceanProgram_RaghuramShetty_DSC02810.jpg": "/static/media/Vaali_KCAOntheOceanProgram_RaghuramShetty_DSC02810.2deca1b3725b6cd6ba68.jpg",
     "static/media/Vaali_KCAOntheOceanProgram_RaghuramShetty_DSC02608.jpg": "/static/media/Vaali_KCAOntheOceanProgram_RaghuramShetty_DSC02608.5ef304b9ddc5735bbc55.jpg",
     "static/media/PrathibhaShetty_CostumeDesigner_Yakshaloka_YakshaganaOnTheOcean_DSC02743.jpg": "/static/media/PrathibhaShetty_CostumeDesigner_Yakshaloka_YakshaganaOnTheOcean_DSC02743.d381c1c6d26e1a069801.jpg",
+    "static/media/Vaali Poster Yakshagana emotional Arc Raghuram Shetty .png": "/static/media/Vaali Poster Yakshagana emotional Arc Raghuram Shetty .0c62961ff027cb61e746.png",
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06704.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06704.f4e8599d9d9815746643.JPG",
     "static/media/YakshaganaY.jpg": "/static/media/YakshaganaY.b75817430d475c09340d.jpg",
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06703.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06703.bf75689e9c68ddf52920.JPG",
@@ -23,6 +24,7 @@
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06686.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06686.f2f5447d7d2d09fa2046.JPG",
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06689.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06689.f9545d618a17d16ef523.JPG",
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06699.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06699.758409f4cf9fc6e9a98d.JPG",
+    "static/media/Vaali Raghuram Shetty Yakshagana.png": "/static/media/Vaali Raghuram Shetty Yakshagana.35502716e164583f8b11.png",
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06684.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06684.948a3d72f68dd8799c8d.JPG",
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06692.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06692.0159354de69e7bb37cc4.JPG",
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06694.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06694.5bc3c1409cdd022fe961.JPG",
@@ -57,12 +59,12 @@
     "static/media/Monaco.ttf": "/static/media/Monaco.b55576c32bebc9c8a480.ttf",
     "static/media/RaghursmShetty_ButaKola_AAtppleAtBANABayArea2009.jpg": "/static/media/RaghursmShetty_ButaKola_AAtppleAtBANABayArea2009.e2a4a42c78726160fb78.jpg",
     "index.html": "/index.html",
-    "main.dee44adc.css.map": "/static/css/main.dee44adc.css.map",
-    "main.6450f028.js.map": "/static/js/main.6450f028.js.map",
+    "main.490e4181.css.map": "/static/css/main.490e4181.css.map",
+    "main.c7f1af31.js.map": "/static/js/main.c7f1af31.js.map",
     "453.3c0ef39b.chunk.js.map": "/static/js/453.3c0ef39b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.dee44adc.css",
-    "static/js/main.6450f028.js"
+    "static/css/main.490e4181.css",
+    "static/js/main.c7f1af31.js"
   ]
 }
