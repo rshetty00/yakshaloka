@@ -17,18 +17,6 @@ function Run-Git {
   }
 }
 
-function Run-Exe {
-  param(
-    [string]$Exe,
-    [Parameter(ValueFromRemainingArguments = $true)]
-    [string[]]$Args
-  )
-  & $Exe @Args
-  if ($LASTEXITCODE -ne 0) {
-    throw "$Exe command failed with exit code $LASTEXITCODE"
-  }
-}
-
 Run-Git fetch origin
 
 $currentBranch = (git rev-parse --abbrev-ref HEAD).Trim()
@@ -48,7 +36,10 @@ $mainSha = (git rev-parse --short=12 HEAD).Trim()
 Write-Host "main SHA: $mainSha" -ForegroundColor DarkCyan
 
 Write-Host "[2/5] Building production bundle..." -ForegroundColor Yellow
-Run-Exe "npm" "run" "build"
+npm run build
+if ($LASTEXITCODE -ne 0) {
+  throw "npm run build failed with exit code $LASTEXITCODE"
+}
 
 Write-Host "[3/5] Deploying build to gh-pages..." -ForegroundColor Yellow
 $cacheRepo = Join-Path $repoRoot "node_modules/.cache/gh-pages/https!github.com!rshetty00!yakshaloka.git"
@@ -56,7 +47,10 @@ if (Test-Path $cacheRepo) {
   Remove-Item -Path $cacheRepo -Recurse -Force
 }
 Run-Git config --global core.longpaths true
-Run-Exe npx gh-pages -d build -r https://github.com/rshetty00/yakshaloka.git -b gh-pages -m "deploy: $mainSha"
+npx gh-pages -d build -r https://github.com/rshetty00/yakshaloka.git -b gh-pages -m "deploy: $mainSha"
+if ($LASTEXITCODE -ne 0) {
+  throw "gh-pages deploy failed with exit code $LASTEXITCODE"
+}
 
 Write-Host "[4/5] Refreshing remote refs..." -ForegroundColor Yellow
 Run-Git fetch origin
