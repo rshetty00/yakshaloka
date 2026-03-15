@@ -48,7 +48,7 @@ $mainSha = (git rev-parse --short=12 HEAD).Trim()
 Write-Host "main SHA: $mainSha" -ForegroundColor DarkCyan
 
 Write-Host "[2/5] Building production bundle..." -ForegroundColor Yellow
-Run-Exe npm run build
+Run-Exe "npm" "run" "build"
 
 Write-Host "[3/5] Deploying build to gh-pages..." -ForegroundColor Yellow
 $cacheRepo = Join-Path $repoRoot "node_modules/.cache/gh-pages/https!github.com!rshetty00!yakshaloka.git"
