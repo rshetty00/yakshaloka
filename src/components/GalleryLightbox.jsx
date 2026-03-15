@@ -46,7 +46,7 @@ export default function GalleryLightbox({ items = [] }) {
           >
             {it.type === 'youtube' ? (
               <img
-                src={`https://img.youtube.com/vi/${getYouTubeVideoId(it.src)}/maxresdefault.jpg`}
+                src={`https://img.youtube.com/vi/${getYouTubeVideoId(it.src)}/hqdefault.jpg`}
                 alt={it.alt || 'YouTube thumbnail'}
                 className="w-full h-full object-cover"
                 loading="lazy"
@@ -64,13 +64,6 @@ export default function GalleryLightbox({ items = [] }) {
                 draggable={false}
                 onDragStart={(e) => e.preventDefault()}
               />
-            ) : it.type === 'youtube' ? (
-              <div className="w-full h-full flex items-center justify-center bg-black">
-                <div className="text-center">
-                  <div className="text-4xl mb-2">▶️</div>
-                  <div className="text-white text-sm">YouTube Video</div>
-                </div>
-              </div>
             ) : (
               <img
                 src={it.src}
@@ -131,7 +124,17 @@ export default function GalleryLightbox({ items = [] }) {
             </button>
 
             <div className="w-full">
-              {current.type === 'video' ? (
+              {current.type === 'youtube' ? (
+                <iframe
+                  width="100%"
+                  height="450"
+                  src={`https://www.youtube.com/embed/${getYouTubeVideoId(current.src)}?rel=0&modestbranding=1&fs=1`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full rounded"
+                  title={current.alt || 'YouTube video'}
+                />
+              ) : current.type === 'video' ? (
                 <video
                   src={current.src}
                   poster={current.poster}
@@ -146,18 +149,6 @@ export default function GalleryLightbox({ items = [] }) {
                     <track key={i} kind={t.kind || 'subtitles'} srcLang={t.srclang} label={t.label} src={t.src} default={t.default} />
                   ))}
                 </video>
-              ) : current.type === 'youtube' ? (
-                <div className="w-full">
-                  <iframe
-                    width="100%"
-                    height="450"
-                    src={`https://www.youtube.com/embed/${getYouTubeVideoId(current.src)}?rel=0&modestbranding=1&fs=1`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full rounded"
-                    title={current.alt || 'YouTube video'}
-                  />
-                </div>
               ) : (
                 <img
                   src={current.src}

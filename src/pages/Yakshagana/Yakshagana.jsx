@@ -12,9 +12,11 @@ import Yakshagana2 from 'assets/images/yakshagana/Yakshagana2.jpg';
 import YakshaganaX from 'assets/images/yakshagana/YakshaganaX.jpg';
 import YakshaganaXX1 from 'assets/images/yakshagana/YakshaganaXX1.jpg';
 import YakshaganaY from 'assets/images/yakshagana/YakshaganaY.jpg';
+import VaaliPoster from 'assets/images/yakshagana/repertoire/Vaali Poster Yakshagana emotional Arc Raghuram Shetty .png';
+import VaaliStill from 'assets/images/yakshagana/repertoire/Vaali Raghuram Shetty Yakshagana.png';
 
 // YouTube highlights
-const PACIFIC_OCEAN_VIDEO = 'https://youtube.com/shorts/Tnv7y42SpKk?feature=share';
+const PACIFIC_OCEAN_VIDEO_ID = 'Tnv7y42SpKk';
 
 const Yakshagana = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -52,13 +54,30 @@ const Yakshagana = () => {
   // Placeholder data - replace with real content
   const repertoire = useMemo(() => ([
     {
+      cover: VaaliPoster,
+      title: 'Vaali: The Eternal Chronicle of the Unbeaten Emperor',
+      origin: 'Ramayana Legacy',
+      duration: '35-45 min',
+      summary: 'A fierce retelling of Vaali’s unmatched might — the warrior who bent gods and demons alike. His power churns oceans, his roar shakes kingdoms, and destiny itself bows before him.',
+      details: 'Guru, performer, and storyteller Raghuram Shetty revives this legendary emperor through Yakshagana, blending deep spiritual, historical, psychological, and scientific insight. With intricate face painting, glittering costumes, sharpened dialogue, and high-energy choreography by the YakshalokaUS team, the saga of Vaali unfolds with commanding force for global audiences.',
+      videoUrl: 'https://www.youtube.com/shorts/_O246SlBDwo',
+      gallery: [
+        { type: 'image', src: VaaliPoster, caption: 'Official Vaali poster' },
+        { type: 'image', src: VaaliStill, caption: 'Vaali in performance form' }
+      ],
+      cast: ['Raghuram Shetty', 'YakshalokaUS Ensemble'],
+      music: ['Bhagavata', 'Maddale', 'Chende', 'Harmonium', 'Chakra Tala'],
+      accent: 'amber'
+    },
+    {
       cover: Yakshagana2,
       title: '“The Epic Vanquishing of Ravana”',
       origin: 'Ramayana',
       duration: '90-120 min',
       summary: 'A fierce battle of Rama - Ravana, Ravana\'s Ten-Headed Sovereign, Rama\'s heroic talents, and power of Self knowledge',
       cast: ['Raghuram', 'Vedavit', 'Viravara', 'Abhishek', 'Priya'],
-      music: ['Bhaagavata', 'Chakra taala', 'Maddale', 'Chende', 'Harmonium']
+      music: ['Bhaagavata', 'Chakra taala', 'Maddale', 'Chende', 'Harmonium'],
+      accent: 'amber'
     },
     {
       cover: HeroImg,
@@ -67,7 +86,8 @@ const Yakshagana = () => {
       duration: '120-150 min',
       summary: 'A vibrant celebration of women empowerment and divine union of universal powers with grandeur, chilling devotion, and classical choreography.',
       cast: ['Raghuram', 'Prathibha', 'Vedavit', 'Viravara'],
-      music: ['Bhagavata', 'Harmonium', 'Maddale', 'Chende', 'Chakra Tala']
+      music: ['Bhagavata', 'Harmonium', 'Maddale', 'Chende', 'Chakra Tala'],
+      accent: 'blue'
     }
   ]), []);
 
@@ -155,7 +175,7 @@ const Yakshagana = () => {
 
   // Gallery items with all Yakshagana images and videos
   const galleryItems = useMemo(() => ([
-    { type: 'youtube', src: PACIFIC_OCEAN_VIDEO, alt: 'Yakshagana Reel Performance', caption: 'Pacific Ocean Performance' },
+    { type: 'youtube', src: PACIFIC_OCEAN_VIDEO_ID, alt: 'Yakshagana Reel Performance', caption: 'Pacific Ocean Performance' },
     { type: 'image', src: HeroImg, alt: 'Yakshagana Performance 1', caption: 'Performance moments' },
     { type: 'image', src: Yakshagana2, alt: 'Yakshagana Performance 2', caption: 'Dance scene' },
     { type: 'image', src: YakshaganaX, alt: 'Yakshagana Performance X', caption: 'Stage presence' },

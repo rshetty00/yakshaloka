@@ -21,13 +21,15 @@ export default function YouTubeEmbed({ url, title = 'YouTube video', onMeta, lar
       const u = new URL(url);
       if (u.hostname.includes('youtu.be')) return u.pathname.slice(1);
       if (u.hostname.includes('youtube.com')) {
+        const shortsMatch = u.pathname.match(/^\/shorts\/([a-zA-Z0-9_-]{6,})/);
+        if (shortsMatch) return shortsMatch[1];
         const vid = u.searchParams.get('v');
         if (vid) return vid;
       }
     } catch (_) {
       // fall back to regex parse
     }
-    const m = url.match(/(?:v=|\/videos\/|embed\/|youtu\.be\/)([a-zA-Z0-9_-]{6,})/);
+    const m = url.match(/(?:v=|\/videos\/|embed\/|shorts\/|youtu\.be\/)([a-zA-Z0-9_-]{6,})/);
     return m ? m[1] : null;
   }, [url]);
 
