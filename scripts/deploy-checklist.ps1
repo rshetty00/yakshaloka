@@ -17,11 +17,15 @@ function Run-Git {
   }
 }
 
-function Run-Cmd {
-  param([string]$Command)
-  Invoke-Expression $Command
+function Run-Exe {
+  param(
+    [string]$Exe,
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]]$Args
+  )
+  & $Exe @Args
   if ($LASTEXITCODE -ne 0) {
-    throw "$Command failed with exit code $LASTEXITCODE"
+    throw "$Exe command failed with exit code $LASTEXITCODE"
   }
 }
 
@@ -44,10 +48,15 @@ $mainSha = (git rev-parse --short=12 HEAD).Trim()
 Write-Host "main SHA: $mainSha" -ForegroundColor DarkCyan
 
 Write-Host "[2/5] Building production bundle..." -ForegroundColor Yellow
-Run-Cmd "npm run build"
+Run-Exe npm run build
 
 Write-Host "[3/5] Deploying build to gh-pages..." -ForegroundColor Yellow
-Run-Cmd "npx gh-pages -d build -r https://github.com/rshetty00/yakshaloka.git -b gh-pages -m \"deploy: $mainSha\""
+$cacheRepo = Join-Path $repoRoot "node_modules/.cache/gh-pages/https!github.com!rshetty00!yakshaloka.git"
+if (Test-Path $cacheRepo) {
+  Remove-Item -Path $cacheRepo -Recurse -Force
+}
+Run-Git config --global core.longpaths true
+Run-Exe npx gh-pages -d build -r https://github.com/rshetty00/yakshaloka.git -b gh-pages -m "deploy: $mainSha"
 
 Write-Host "[4/5] Refreshing remote refs..." -ForegroundColor Yellow
 Run-Git fetch origin
