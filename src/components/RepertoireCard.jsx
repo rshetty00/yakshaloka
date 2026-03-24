@@ -60,6 +60,16 @@ export default function RepertoireCard({
   const [open, setOpen] = useState(false);
   const [activeMedia, setActiveMedia] = useState(0);
 
+  const handleThumbClick = (index) => {
+    setActiveMedia(index);
+    requestAnimationFrame(() => {
+      const featured = document.getElementById('repertoire-featured-media');
+      if (featured) {
+        featured.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  };
+
   const accentMap = {
     amber: {
       border: 'border-amber-300/30 hover:border-amber-300/60',
@@ -107,14 +117,11 @@ export default function RepertoireCard({
 
   useEffect(() => {
     if (!open) return undefined;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
     const onKey = (e) => {
       if (e.key === 'Escape') setOpen(false);
     };
     window.addEventListener('keydown', onKey);
     return () => {
-      document.body.style.overflow = previous;
       window.removeEventListener('keydown', onKey);
     };
   }, [open]);
@@ -265,7 +272,18 @@ export default function RepertoireCard({
                 </div>
 
                 <div className="space-y-6">
-                  <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-4 md:p-5">
+                  {mediaItems.length > 1 && (
+                    <div className="sticky top-3 z-20 flex justify-end">
+                      <a
+                        href="#repertoire-stills"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/55 px-4 py-2 text-xs font-medium text-white/90 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition hover:bg-black/70"
+                      >
+                        Jump to stills ↓
+                      </a>
+                    </div>
+                  )}
+
+                  <div id="repertoire-featured-media" className="rounded-[28px] border border-white/10 bg-white/[0.03] p-4 md:p-5 scroll-mt-20">
                     <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                       <div>
                         <div className="text-[10px] uppercase tracking-[0.32em] text-white/45">Featured media</div>
@@ -291,22 +309,24 @@ export default function RepertoireCard({
                           poster={activeItem.poster}
                           controls
                           playsInline
-                          className="w-full rounded-[18px] bg-black"
+                          className="mx-auto max-h-[76vh] w-auto max-w-full rounded-[18px] bg-black"
                         />
                       ) : (
-                        <img
-                          src={activeItem?.src}
-                          alt={activeItem?.alt || activeItem?.caption || title}
-                          className="w-full rounded-[18px] object-contain"
-                        />
+                        <div className="flex min-h-[50vh] items-center justify-center rounded-[18px] bg-black/40 p-2 md:min-h-[62vh]">
+                          <img
+                            src={activeItem?.src}
+                            alt={activeItem?.alt || activeItem?.caption || title}
+                            className="mx-auto max-h-[74vh] w-auto max-w-full rounded-[18px] object-contain"
+                          />
+                        </div>
                       )}
                     </div>
                   </div>
 
                   {mediaItems.length > 1 && (
-                    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                    <div id="repertoire-stills" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 scroll-mt-20">
                       {mediaItems.map((item, index) => (
-                        <MediaThumb key={`${item.type}-${index}`} item={item} onClick={() => setActiveMedia(index)} />
+                        <MediaThumb key={`${item.type}-${index}`} item={item} onClick={() => handleThumbClick(index)} />
                       ))}
                     </div>
                   )}
