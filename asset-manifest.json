@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.8232ca27.css",
-    "main.js": "/static/js/main.6d177846.js",
+    "main.css": "/static/css/main.f96fd179.css",
+    "main.js": "/static/js/main.8554d8cf.js",
     "static/js/453.3c0ef39b.chunk.js": "/static/js/453.3c0ef39b.chunk.js",
     "static/media/RaghuramShettyBoothakolaReel_24Secs.mp4": "/static/media/RaghuramShettyBoothakolaReel_24Secs.029a9d369ad262dcc107.mp4",
     "static/media/ImportantKolaVideo_SpinningBeforeDance_RaghuramShettyPerformingArtistAsPunjurliBootha_0I7A0169.MP4": "/static/media/ImportantKolaVideo_SpinningBeforeDance_RaghuramShettyPerformingArtistAsPunjurliBootha_0I7A0169.1e2160b28cf66f2cc37b.MP4",
@@ -59,12 +59,12 @@
     "static/media/Monaco.ttf": "/static/media/Monaco.b55576c32bebc9c8a480.ttf",
     "static/media/RaghursmShetty_ButaKola_AAtppleAtBANABayArea2009.jpg": "/static/media/RaghursmShetty_ButaKola_AAtppleAtBANABayArea2009.e2a4a42c78726160fb78.jpg",
     "index.html": "/index.html",
-    "main.8232ca27.css.map": "/static/css/main.8232ca27.css.map",
-    "main.6d177846.js.map": "/static/js/main.6d177846.js.map",
+    "main.f96fd179.css.map": "/static/css/main.f96fd179.css.map",
+    "main.8554d8cf.js.map": "/static/js/main.8554d8cf.js.map",
     "453.3c0ef39b.chunk.js.map": "/static/js/453.3c0ef39b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8232ca27.css",
-    "static/js/main.6d177846.js"
+    "static/css/main.f96fd179.css",
+    "static/js/main.8554d8cf.js"
   ]
 }
