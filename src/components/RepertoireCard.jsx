@@ -239,8 +239,13 @@ export default function RepertoireCard({
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-[70] overflow-y-auto bg-slate-950/90 backdrop-blur-2xl" role="dialog" aria-modal="true">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(96,165,250,0.12),transparent_24%)]" />
+        <div
+          className="fixed inset-0 z-[70] overflow-y-auto overscroll-y-contain bg-slate-950/90 backdrop-blur-2xl"
+          role="dialog"
+          aria-modal="true"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(251,191,36,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(96,165,250,0.12),transparent_24%)]" />
           <div className="relative min-h-screen px-4 py-6 md:px-8 lg:px-10">
             <div className="mx-auto max-w-7xl rounded-[32px] border border-white/10 bg-slate-950/70 shadow-[0_30px_120px_rgba(0,0,0,0.5)] backdrop-blur-xl">
               <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 md:px-8">
