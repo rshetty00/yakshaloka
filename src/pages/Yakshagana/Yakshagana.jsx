@@ -1,10 +1,11 @@
-import React, { useMemo, useEffect, useRef, useState } from 'react';
+﻿import React, { useMemo, useEffect, useRef, useState } from 'react';
 import SectionHeader from '../../components/SectionHeader';
 import RepertoireCard from '../../components/RepertoireCard';
 import EnsembleMemberCard from '../../components/EnsembleMemberCard';
 import YouTubeEmbed from '../../components/YouTubeEmbed';
 import GalleryLightbox from '../../components/GalleryLightbox';
 import OtherArtsSection from '../../components/OtherArtsSection';
+import { REPERTOIRES, getRepertoireByKey } from '../../data/repertoires';
 
 // Yakshagana-specific images and videos
 import HeroImg from 'assets/images/yakshagana/Yakshagana_Main_RaghuramShettyAsShumbhaHeadshot.jpg';
@@ -12,8 +13,10 @@ import Yakshagana2 from 'assets/images/yakshagana/Yakshagana2.jpg';
 import YakshaganaX from 'assets/images/yakshagana/YakshaganaX.jpg';
 import YakshaganaXX1 from 'assets/images/yakshagana/YakshaganaXX1.jpg';
 import YakshaganaY from 'assets/images/yakshagana/YakshaganaY.jpg';
-import VaaliPoster from 'assets/images/yakshagana/repertoire/Vaali Poster Yakshagana emotional Arc Raghuram Shetty .png';
-import VaaliStill from 'assets/images/yakshagana/repertoire/Vaali Raghuram Shetty Yakshagana.png';
+
+// Vaali repertoire assets (loaded dynamically from vaali folder by convention)
+import VaaliPoster from 'assets/images/yakshagana/repertoire/vaali/poster.png';
+import VaaliStill from 'assets/images/yakshagana/repertoire/vaali/still-01.png';
 
 // YouTube highlights
 const PACIFIC_OCEAN_VIDEO_ID = 'Tnv7y42SpKk';
@@ -60,7 +63,7 @@ const Yakshagana = () => {
       duration: '35-45 min',
       summary: 'A fierce retelling of Vaali’s unmatched might — the warrior who bent gods and demons alike. His power churns oceans, his roar shakes kingdoms, and destiny itself bows before him.',
       details: 'Guru, performer, and storyteller Raghuram Shetty revives this legendary emperor through Yakshagana, blending deep spiritual, historical, psychological, and scientific insight. With intricate face painting, glittering costumes, sharpened dialogue, and high-energy choreography by the YakshalokaUS team, the saga of Vaali unfolds with commanding force for global audiences.',
-      videoUrl: 'https://www.youtube.com/shorts/_O246SlBDwo',
+      videoUrl: getRepertoireByKey('vaali').youtubeUrl,
       gallery: [
         { type: 'image', src: VaaliPoster, caption: 'Official Vaali poster' },
         { type: 'image', src: VaaliStill, caption: 'Vaali in performance form' }
