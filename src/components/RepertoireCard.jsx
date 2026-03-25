@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import YouTubeEmbed from './YouTubeEmbed';
 
-function MediaThumb({ item, onClick }) {
+function MediaThumb({ item, onClick, isActive }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-slate-950/70 transition-all duration-300 hover:border-amber-300/50 hover:shadow-[0_0_40px_rgba(251,191,36,0.18)]"
+      className={`group relative overflow-hidden rounded-2xl border bg-slate-950/70 transition-all duration-300 hover:border-amber-300/50 hover:shadow-[0_0_40px_rgba(251,191,36,0.18)] ${isActive ? 'border-amber-300/80 ring-2 ring-amber-300/40' : 'border-white/10'}`}
     >
       <div className="aspect-[4/3] w-full overflow-hidden">
         {item.type === 'youtube' ? (
@@ -35,7 +35,7 @@ function MediaThumb({ item, onClick }) {
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
       <div className="absolute left-3 top-3 rounded-full border border-white/15 bg-black/45 px-2 py-1 text-[10px] uppercase tracking-[0.28em] text-white/80">
-        {item.type === 'youtube' ? 'Reel' : item.type === 'video' ? 'Video' : 'Still'}
+        {item.type === 'youtube' ? 'Performance Reel' : item.type === 'video' ? 'Video' : 'Still'}
       </div>
       <div className="absolute bottom-0 left-0 right-0 p-3 text-left">
         <div className="text-sm font-medium text-white">{item.caption || item.alt || 'Media highlight'}</div>
@@ -59,6 +59,7 @@ export default function RepertoireCard({
 }) {
   const [open, setOpen] = useState(false);
   const [activeMedia, setActiveMedia] = useState(0);
+  const [imageFocusOpen, setImageFocusOpen] = useState(false);
 
   const handleThumbClick = (index) => {
     setActiveMedia(index);
@@ -124,6 +125,10 @@ export default function RepertoireCard({
     return () => {
       window.removeEventListener('keydown', onKey);
     };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) setImageFocusOpen(false);
   }, [open]);
 
   return (
@@ -294,9 +299,15 @@ export default function RepertoireCard({
                         <div className="text-[10px] uppercase tracking-[0.32em] text-white/45">Featured media</div>
                         <div className="mt-1 text-xl font-semibold text-white">Poster-led storytelling</div>
                       </div>
-                      <div className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/70">
-                        Click any still below to switch focus
-                      </div>
+                      {activeItem?.type === 'youtube' ? (
+                        <div className="rounded-full border border-red-300/40 bg-red-500/20 px-3 py-1 text-xs text-red-100">
+                          Performance reel selected • tap play ▶
+                        </div>
+                      ) : (
+                        <div className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/70">
+                          Tap image to view fullscreen
+                        </div>
+                      )}
                     </div>
 
                     <div className="overflow-hidden rounded-[24px] border border-white/10 bg-black/40 p-3">
@@ -306,6 +317,7 @@ export default function RepertoireCard({
                           title={title}
                           large
                           showTitle
+                          autoLoad
                           className="rounded-[18px]"
                         />
                       ) : activeItem?.type === 'video' ? (
@@ -317,13 +329,17 @@ export default function RepertoireCard({
                           className="mx-auto max-h-[76vh] w-auto max-w-full rounded-[18px] bg-black"
                         />
                       ) : (
-                        <div className="flex min-h-[50vh] items-center justify-center rounded-[18px] bg-black/40 p-2 md:min-h-[62vh]">
+                        <button
+                          type="button"
+                          onClick={() => setImageFocusOpen(true)}
+                          className="flex min-h-[62vh] w-full items-center justify-center rounded-[18px] bg-black/40 p-2 md:min-h-[72vh]"
+                        >
                           <img
                             src={activeItem?.src}
                             alt={activeItem?.alt || activeItem?.caption || title}
-                            className="mx-auto max-h-[74vh] w-auto max-w-full rounded-[18px] object-contain"
+                            className="mx-auto max-h-[84vh] w-auto max-w-full rounded-[18px] object-contain"
                           />
-                        </div>
+                        </button>
                       )}
                     </div>
                   </div>
@@ -331,7 +347,12 @@ export default function RepertoireCard({
                   {mediaItems.length > 1 && (
                     <div id="repertoire-stills" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 scroll-mt-20">
                       {mediaItems.map((item, index) => (
-                        <MediaThumb key={`${item.type}-${index}`} item={item} onClick={() => handleThumbClick(index)} />
+                        <MediaThumb
+                          key={`${item.type}-${index}`}
+                          item={item}
+                          isActive={index === activeMedia}
+                          onClick={() => handleThumbClick(index)}
+                        />
                       ))}
                     </div>
                   )}
@@ -352,6 +373,34 @@ export default function RepertoireCard({
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {open && imageFocusOpen && activeItem?.type === 'image' && (
+        <div
+          className="fixed inset-0 z-[80] bg-black/95 p-2 md:p-6"
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setImageFocusOpen(false)}
+        >
+          <div className="h-full w-full flex flex-col" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-2 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setImageFocusOpen(false)}
+                className="rounded-full border border-white/15 bg-black/50 px-4 py-2 text-sm text-white"
+              >
+                Close fullscreen
+              </button>
+            </div>
+            <div className="flex-1 min-h-0 flex items-center justify-center">
+              <img
+                src={activeItem?.src}
+                alt={activeItem?.alt || activeItem?.caption || title}
+                className="max-h-full max-w-full object-contain"
+              />
             </div>
           </div>
         </div>

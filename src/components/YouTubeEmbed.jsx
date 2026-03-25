@@ -10,7 +10,7 @@ import React, { useState, useEffect, useMemo } from 'react';
  *  - large: boolean (bigger preview)
  *  - showTitle: show caption area (uses fetched title if available)
  */
-export default function YouTubeEmbed({ url, title = 'YouTube video', onMeta, large = false, showTitle = false, className = '' }) {
+export default function YouTubeEmbed({ url, title = 'YouTube video', onMeta, large = false, showTitle = false, className = '', autoLoad = false }) {
   const [loaded, setLoaded] = useState(false);
   const [metaTitle, setMetaTitle] = useState('');
   const [metaAuthor, setMetaAuthor] = useState('');
@@ -53,6 +53,10 @@ export default function YouTubeEmbed({ url, title = 'YouTube video', onMeta, lar
       .catch(() => {});
     return () => { cancelled = true; };
   }, [videoId, onMeta]);
+
+  useEffect(() => {
+    setLoaded(Boolean(autoLoad));
+  }, [videoId, autoLoad]);
 
   if (!videoId) {
     return (
