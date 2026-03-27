@@ -14,16 +14,18 @@
     "music": ["Bhagavata", "Maddale", "Chende", "Harmonium", "Chakra Tala"]
   },
   {
-    "key": "parashurama",
-    "title": "Parashurama: The Axe-Wielder's Wrath",
-    "shortTitle": "Parashurama",
-    "origin": "Mahabharata",
-    "duration": "50 mins",
-    "summary": "Coming soon",
+    "key": "ravana",
+    "title": "The Epic Vanquishing of Ravana",
+    "shortTitle": "Ravana",
+    "origin": "Ramayana",
+    "duration": "90-120 min",
+    "summary": "A fierce battle of Rama and Ravana, the ten-headed sovereign; a dramatic journey through valor, strategy, and the power of self-knowledge.",
     "details": "Coming soon",
     "youtubeUrl": null,
-    "folderPath": "assets/images/yakshagana/repertoire/parashurama",
-    "accent": "blue"
+    "folderPath": "assets/images/yakshagana/repertoire/ravana",
+    "accent": "blue",
+    "cast": ["Raghuram", "Vedavit", "Viravara", "Abhishek", "Priya"],
+    "music": ["Bhagavata", "Chakra Tala", "Maddale", "Chende", "Harmonium"]
   },
   {
     "key": "bharata",
