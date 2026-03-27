@@ -5,7 +5,8 @@ import EnsembleMemberCard from '../../components/EnsembleMemberCard';
 import YouTubeEmbed from '../../components/YouTubeEmbed';
 import GalleryLightbox from '../../components/GalleryLightbox';
 import OtherArtsSection from '../../components/OtherArtsSection';
-import { REPERTOIRES, getRepertoireByKey } from '../../data/repertoires';
+import { REPERTOIRES } from '../../data/repertoires';
+import { loadRepertoireAssets } from '../../utils/loadRepertoireAssets';
 
 // Yakshagana-specific images and videos
 import HeroImg from 'assets/images/yakshagana/Yakshagana_Main_RaghuramShettyAsShumbhaHeadshot.jpg';
@@ -14,15 +15,13 @@ import YakshaganaX from 'assets/images/yakshagana/YakshaganaX.jpg';
 import YakshaganaXX1 from 'assets/images/yakshagana/YakshaganaXX1.jpg';
 import YakshaganaY from 'assets/images/yakshagana/YakshaganaY.jpg';
 
-// Vaali repertoire assets (loaded dynamically from vaali folder by convention)
-import VaaliPoster from 'assets/images/yakshagana/repertoire/vaali/poster.png';
-import VaaliStill from 'assets/images/yakshagana/repertoire/vaali/still-01.png';
-
 // YouTube highlights
 const PACIFIC_OCEAN_VIDEO_ID = 'Tnv7y42SpKk';
+const REPERTOIRE_DATA_URL = `${process.env.PUBLIC_URL || ''}/data/repertoires.json`;
 
 const Yakshagana = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [repertoireConfig, setRepertoireConfig] = useState(REPERTOIRES);
   const sectionsRef = useRef([]);
 
   // Parallax effect for hero
@@ -54,45 +53,54 @@ const Yakshagana = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Placeholder data - replace with real content
-  const repertoire = useMemo(() => ([
-    {
-      cover: VaaliPoster,
-      title: 'Vaali: The Eternal Chronicle of the Unbeaten Emperor',
-      origin: 'Ramayana Legacy',
-      duration: '35-45 min',
-      summary: 'A fierce retelling of Vaali’s unmatched might — the warrior who bent gods and demons alike. His power churns oceans, his roar shakes kingdoms, and destiny itself bows before him.',
-      details: 'Guru, performer, and storyteller Raghuram Shetty revives this legendary emperor through Yakshagana, blending deep spiritual, historical, psychological, and scientific insight. With intricate face painting, glittering costumes, sharpened dialogue, and high-energy choreography by the YakshalokaUS team, the saga of Vaali unfolds with commanding force for global audiences.',
-      videoUrl: getRepertoireByKey('vaali').youtubeUrl,
-      gallery: [
-        { type: 'image', src: VaaliPoster, caption: 'Official Vaali poster' },
-        { type: 'image', src: VaaliStill, caption: 'Vaali in performance form' }
-      ],
-      cast: ['Raghuram Shetty', 'YakshalokaUS Ensemble'],
-      music: ['Bhagavata', 'Maddale', 'Chende', 'Harmonium', 'Chakra Tala'],
-      accent: 'amber'
-    },
-    {
-      cover: Yakshagana2,
-      title: '“The Epic Vanquishing of Ravana”',
-      origin: 'Ramayana',
-      duration: '90-120 min',
-      summary: 'A fierce battle of Rama - Ravana, Ravana\'s Ten-Headed Sovereign, Rama\'s heroic talents, and power of Self knowledge',
-      cast: ['Raghuram', 'Vedavit', 'Viravara', 'Abhishek', 'Priya'],
-      music: ['Bhaagavata', 'Chakra taala', 'Maddale', 'Chende', 'Harmonium'],
-      accent: 'amber'
-    },
-    {
-      cover: HeroImg,
-      title: 'Goddess Durga',
-      origin: 'Devi Bhagavatam',
-      duration: '120-150 min',
-      summary: 'A vibrant celebration of women empowerment and divine union of universal powers with grandeur, chilling devotion, and classical choreography.',
-      cast: ['Raghuram', 'Prathibha', 'Vedavit', 'Viravara'],
-      music: ['Bhagavata', 'Harmonium', 'Maddale', 'Chende', 'Chakra Tala'],
-      accent: 'blue'
-    }
-  ]), []);
+  useEffect(() => {
+    let mounted = true;
+
+    const loadRepertoireConfig = async () => {
+      try {
+        const response = await fetch(REPERTOIRE_DATA_URL, { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error(`Failed to load repertoire config: ${response.status}`);
+        }
+
+        const payload = await response.json();
+        const list = Array.isArray(payload) ? payload : payload?.repertoires;
+
+        if (mounted && Array.isArray(list) && list.length > 0) {
+          setRepertoireConfig(list);
+        }
+      } catch (error) {
+        if (mounted) {
+          setRepertoireConfig(REPERTOIRES);
+        }
+      }
+    };
+
+    loadRepertoireConfig();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const repertoire = useMemo(() => {
+    return repertoireConfig.map((entry) => {
+      const assets = loadRepertoireAssets(entry.folderPath);
+      return {
+        cover: assets.poster || HeroImg,
+        title: entry.title,
+        origin: entry.origin,
+        duration: entry.duration,
+        summary: entry.summary,
+        details: entry.details,
+        videoUrl: entry.youtubeUrl,
+        gallery: assets.mediaItems,
+        cast: entry.cast || [],
+        music: entry.music || [],
+        accent: entry.accent || 'amber'
+      };
+    });
+  }, [repertoireConfig]);
 
   const ensemble = useMemo(() => ([
     { photo: HeroImg, name: 'Raghuram Shetty', role: 'Lead Artiste', instrument: '', bio: 'Classical lead with dynamic abhinaya and nrita.' },

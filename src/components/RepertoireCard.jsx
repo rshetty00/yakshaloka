@@ -24,6 +24,20 @@ function MediaThumb({ item, onClick, isActive }) {
             muted
             playsInline
           />
+        ) : item.type === 'audio' ? (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 text-center">
+            <div>
+              <div className="text-3xl">🎵</div>
+              <div className="mt-2 text-xs uppercase tracking-[0.28em] text-white/70">Audio</div>
+            </div>
+          </div>
+        ) : item.type === 'file' ? (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 text-center">
+            <div>
+              <div className="text-3xl">🗂️</div>
+              <div className="mt-2 text-xs uppercase tracking-[0.28em] text-white/70">RAW file</div>
+            </div>
+          </div>
         ) : (
           <img
             src={item.src}
@@ -35,7 +49,7 @@ function MediaThumb({ item, onClick, isActive }) {
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
       <div className="absolute left-3 top-3 rounded-full border border-white/15 bg-black/45 px-2 py-1 text-[10px] uppercase tracking-[0.28em] text-white/80">
-        {item.type === 'youtube' ? 'Performance Reel' : item.type === 'video' ? 'Video' : 'Still'}
+        {item.type === 'youtube' ? 'Performance Reel' : item.type === 'video' ? 'Video' : item.type === 'audio' ? 'Audio' : item.type === 'file' ? 'File' : 'Still'}
       </div>
       <div className="absolute bottom-0 left-0 right-0 p-3 text-left">
         <div className="text-sm font-medium text-white">{item.caption || item.alt || 'Media highlight'}</div>
@@ -92,20 +106,31 @@ export default function RepertoireCard({
     const items = [];
     if (videoUrl) {
       let videoId = videoUrl;
+      let isYouTube = false;
       try {
         const u = new URL(videoUrl);
         if (u.hostname.includes('youtu.be')) {
+          isYouTube = true;
           videoId = u.pathname.slice(1);
         } else if (u.hostname.includes('youtube.com')) {
+          isYouTube = true;
           const shortsMatch = u.pathname.match(/^\/shorts\/([a-zA-Z0-9_-]{6,})/);
           if (shortsMatch) videoId = shortsMatch[1];
           else videoId = u.searchParams.get('v') || videoUrl;
         }
       } catch (_) {
         const match = videoUrl.match(/(?:v=|\/videos\/|embed\/|shorts\/|youtu\.be\/)([a-zA-Z0-9_-]{6,})/);
-        if (match) videoId = match[1];
+        if (match) {
+          isYouTube = true;
+          videoId = match[1];
+        }
       }
-      items.push({ type: 'youtube', src: videoId, caption: 'Performance reel' });
+
+      if (isYouTube) {
+        items.push({ type: 'youtube', src: videoId, caption: 'Performance reel' });
+      } else {
+        items.push({ type: 'video', src: videoUrl, caption: 'Performance reel' });
+      }
     }
     gallery.forEach((item) => items.push(item));
     if (items.length === 0 && cover) {
@@ -303,6 +328,14 @@ export default function RepertoireCard({
                         <div className="rounded-full border border-red-300/40 bg-red-500/20 px-3 py-1 text-xs text-red-100">
                           Performance reel selected • tap play ▶
                         </div>
+                      ) : activeItem?.type === 'audio' ? (
+                        <div className="rounded-full border border-blue-300/40 bg-blue-500/20 px-3 py-1 text-xs text-blue-100">
+                          Audio selected • tap play ▶
+                        </div>
+                      ) : activeItem?.type === 'file' ? (
+                        <div className="rounded-full border border-purple-300/40 bg-purple-500/20 px-3 py-1 text-xs text-purple-100">
+                          RAW file selected • open/download
+                        </div>
                       ) : (
                         <div className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/70">
                           Tap image to view fullscreen
@@ -328,6 +361,29 @@ export default function RepertoireCard({
                           playsInline
                           className="mx-auto max-h-[76vh] w-auto max-w-full rounded-[18px] bg-black"
                         />
+                      ) : activeItem?.type === 'audio' ? (
+                        <div className="flex min-h-[38vh] w-full items-center justify-center rounded-[18px] bg-gradient-to-br from-slate-900 to-slate-800 p-6">
+                          <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-black/30 p-5">
+                            <div className="mb-3 text-sm font-medium text-white">{activeItem?.caption || 'Audio track'}</div>
+                            <audio controls src={activeItem.src} className="w-full" preload="metadata" />
+                          </div>
+                        </div>
+                      ) : activeItem?.type === 'file' ? (
+                        <div className="flex min-h-[38vh] w-full items-center justify-center rounded-[18px] bg-gradient-to-br from-slate-900 to-slate-800 p-6">
+                          <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-black/30 p-5 text-center">
+                            <div className="text-4xl">🗂️</div>
+                            <div className="mt-3 text-sm font-medium text-white">{activeItem?.caption || 'Media file'}</div>
+                            <div className="mt-2 text-xs text-slate-400">This file type is not previewed inline by the browser.</div>
+                            <a
+                              href={activeItem.src}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs text-white/90 hover:bg-white/15"
+                            >
+                              Open / Download file
+                            </a>
+                          </div>
+                        </div>
                       ) : (
                         <button
                           type="button"
