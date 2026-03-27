@@ -6,6 +6,13 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
+# Some environments enable git tracing globally and send trace logs to stderr.
+# That can break scripts when ErrorActionPreference is Stop, so disable trace vars locally.
+$gitTraceVars = @('GIT_TRACE', 'GIT_TRACE_SETUP', 'GIT_TRACE_PACKET', 'GIT_TRACE_PERFORMANCE')
+foreach ($varName in $gitTraceVars) {
+  Remove-Item -Path ("Env:" + $varName) -ErrorAction SilentlyContinue
+}
+
 function Write-Step($msg) {
   Write-Host "`n==> $msg" -ForegroundColor Cyan
 }
@@ -13,13 +20,17 @@ function Write-Step($msg) {
 function Run-Or-Print($cmd) {
   if ($DryRun) {
     Write-Host "[DRY-RUN] $cmd" -ForegroundColor Yellow
-  } else {
-    Invoke-Expression $cmd
+    return
+  }
+
+  & powershell -NoProfile -Command $cmd
+  if ($LASTEXITCODE -ne 0) {
+    throw "Command failed: $cmd"
   }
 }
 
 Write-Step "Checking repository root"
-$repoRoot = git rev-parse --show-toplevel 2>$null
+$repoRoot = (& git rev-parse --show-toplevel 2>&1 | Select-Object -First 1)
 if (-not $repoRoot) {
   throw "This script must be run inside a git repository."
 }
@@ -61,12 +72,18 @@ if (-not $hasChanges) {
 }
 
 Write-Step "Committing"
-git commit -m "$CommitMessage"
+& git commit -m "$CommitMessage"
+if ($LASTEXITCODE -ne 0) {
+  throw "Commit failed."
+}
 
 Write-Step "Pushing to origin/main"
-git push origin main
+& git push origin main
+if ($LASTEXITCODE -ne 0) {
+  throw "Push failed."
+}
 
 Write-Step "Done"
-git log -1 --oneline
-git status --short
+& git log -1 --oneline
+& git status --short
 Write-Host "`nMedia update workflow complete." -ForegroundColor Green
