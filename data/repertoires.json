@@ -28,15 +28,51 @@
     "music": ["Bhagavata", "Chakra Tala", "Maddale", "Chende", "Harmonium"]
   },
   {
-    "key": "bharata",
-    "title": "Bharata: The Devoted King",
-    "shortTitle": "Bharata",
-    "origin": "Ramayana",
-    "duration": "40 mins",
+    "key": "Durga",
+    "title": "Goddess Durga: The First Story of invincible Women’s Power”",
+    "shortTitle": "Mahishasuramardini",
+    "origin": "Devi Bhagavatam",
+    "duration": "60 - 90 mins",
     "summary": "Coming soon",
     "details": "Coming soon",
     "youtubeUrl": null,
-    "folderPath": "assets/images/yakshagana/repertoire/bharata",
+    "folderPath": "assets/images/yakshagana/repertoire/durga",
     "accent": "amber"
-  }
+  },
+  {
+    "key": "abhimanyu",
+    "title": "Abhimanyu: Unmatched Volcanic Warrior of Mahabharata",
+    "shortTitle": "Bharata Ratna Abhimanyu",
+    "origin": "Mahabharata",
+    "duration": "60 mins",
+    "summary": "Coming soon",
+    "details": "Coming soon",
+    "youtubeUrl": null,
+    "folderPath": "assets/images/yakshagana/repertoire/abhimanyu",
+    "accent": "amber"
+  },
+  {
+    "key": "bharata-bahubali",
+    "title": "Bharata - Bahubali: The Unparallelled Emperor vs the Enlightened Ascetic",
+    "shortTitle": "Bharatesha Vaibhava",
+    "origin": "Ādipurāṇa",
+    "duration": "55 mins",
+    "summary": "Coming soon",
+    "details": "Coming soon",
+    "youtubeUrl": null,
+    "folderPath": "assets/images/yakshagana/repertoire/bharatabahubali",
+    "accent": "amber"
+  },
+{
+    "key": "mahakaali",
+    "title": "Goddess Kaali: Annihilation of Demon Twins Chanda-Munda",
+    "shortTitle": "Mahakaali",
+    "origin": "Devi Bhagavatam",
+    "duration": "60 mins",
+    "summary": "Coming soon",
+    "details": "Coming soon",
+    "youtubeUrl": null,
+    "folderPath": "assets/images/yakshagana/repertoire/mahakaali",
+    "accent": "amber"}
+
 ]
