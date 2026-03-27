@@ -1,0 +1,40 @@
+[
+  {
+    "key": "vaali",
+    "title": "Vaali: The Eternal Chronicle of the Unbeaten Emperor",
+    "shortTitle": "Vaali",
+    "origin": "Ramayana",
+    "duration": "45 mins",
+    "summary": "A fierce retelling of Vaali's unmatched might — the warrior who bent gods and demons alike. His power churns oceans, his roar shakes kingdoms, and destiny itself bows before him.",
+    "details": "Guru, performer, and storyteller Raghuram Shetty revives this legendary emperor through Yakshagana, blending deep spiritual, historical, psychological, and scientific insight. With intricate face painting, glittering costumes, sharpened dialogue, and high-energy choreography by the YakshalokaUS team, the saga of Vaali unfolds with commanding force for global audiences.",
+    "youtubeUrl": "https://youtube.com/shorts/_O246SlBDwo?si=tfUNI9SCWS0R1h6u",
+    "folderPath": "assets/images/yakshagana/repertoire/vaali",
+    "accent": "amber",
+    "cast": ["Raghuram Shetty", "YakshalokaUS Ensemble"],
+    "music": ["Bhagavata", "Maddale", "Chende", "Harmonium", "Chakra Tala"]
+  },
+  {
+    "key": "parashurama",
+    "title": "Parashurama: The Axe-Wielder's Wrath",
+    "shortTitle": "Parashurama",
+    "origin": "Mahabharata",
+    "duration": "50 mins",
+    "summary": "Coming soon",
+    "details": "Coming soon",
+    "youtubeUrl": null,
+    "folderPath": "assets/images/yakshagana/repertoire/parashurama",
+    "accent": "blue"
+  },
+  {
+    "key": "bharata",
+    "title": "Bharata: The Devoted King",
+    "shortTitle": "Bharata",
+    "origin": "Ramayana",
+    "duration": "40 mins",
+    "summary": "Coming soon",
+    "details": "Coming soon",
+    "youtubeUrl": null,
+    "folderPath": "assets/images/yakshagana/repertoire/bharata",
+    "accent": "amber"
+  }
+]
