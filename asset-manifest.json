@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.f1c8060f.css",
-    "main.js": "/static/js/main.d9acd59f.js",
+    "main.js": "/static/js/main.b7ba7a98.js",
     "static/js/453.3c0ef39b.chunk.js": "/static/js/453.3c0ef39b.chunk.js",
     "static/media/RaghuramShettyBoothakolaReel_24Secs.mp4": "/static/media/RaghuramShettyBoothakolaReel_24Secs.029a9d369ad262dcc107.mp4",
     "static/media/ImportantKolaVideo_SpinningBeforeDance_RaghuramShettyPerformingArtistAsPunjurliBootha_0I7A0169.MP4": "/static/media/ImportantKolaVideo_SpinningBeforeDance_RaghuramShettyPerformingArtistAsPunjurliBootha_0I7A0169.1e2160b28cf66f2cc37b.MP4",
@@ -24,6 +24,7 @@
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06703.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06703.bf75689e9c68ddf52920.JPG",
     "static/media/IndrajituRaghuramShetty_MovieShoot_Final_2082026.png": "/static/media/IndrajituRaghuramShetty_MovieShoot_Final_2082026.a285ec58bac79e354132.png",
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06695.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06695.2501292d4169030ee05e.JPG",
+    "static/media/Vaali_Raghuram KCA President Execs.JPG": "/static/media/Vaali_Raghuram KCA President Execs.8b220f32ba5ec5664abe.JPG",
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06686.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06686.f2f5447d7d2d09fa2046.JPG",
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06689.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06689.f9545d618a17d16ef523.JPG",
     "static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06699.JPG": "/static/media/KallurtiKola_BootaOnFire_PropertyOfRaghuramShetty_01192013_DSC06699.758409f4cf9fc6e9a98d.JPG",
@@ -66,11 +67,11 @@
     "static/media/RaghursmShetty_ButaKola_AAtppleAtBANABayArea2009.jpg": "/static/media/RaghursmShetty_ButaKola_AAtppleAtBANABayArea2009.e2a4a42c78726160fb78.jpg",
     "index.html": "/index.html",
     "main.f1c8060f.css.map": "/static/css/main.f1c8060f.css.map",
-    "main.d9acd59f.js.map": "/static/js/main.d9acd59f.js.map",
+    "main.b7ba7a98.js.map": "/static/js/main.b7ba7a98.js.map",
     "453.3c0ef39b.chunk.js.map": "/static/js/453.3c0ef39b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f1c8060f.css",
-    "static/js/main.d9acd59f.js"
+    "static/js/main.b7ba7a98.js"
   ]
 }
