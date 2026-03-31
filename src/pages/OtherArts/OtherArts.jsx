@@ -49,6 +49,7 @@ export default function OtherArts({
   const [adminAuthLast, setAdminAuthLast] = useState(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [pendingSave, setPendingSave] = useState(null);
+  const [hasInitializedUrls, setHasInitializedUrls] = useState(false);
 
   useEffect(() => {
     if (urls.length === 0) { setSelectedIndex(-1); return; }
@@ -73,11 +74,12 @@ const SERVER_BASE = inferServerBase();
     let mounted = true;
     (async () => {
       let localLoaded = false;
+      let serverLoaded = false;
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-            if (Array.isArray(parsed) && parsed.length) {
+            if (Array.isArray(parsed)) {
               setUrls(parsed);
               localLoaded = true;
             }
@@ -88,23 +90,25 @@ const SERVER_BASE = inferServerBase();
         const res = await fetch(endpoint);
         if (res.ok) {
           const json = await res.json();
-          if (json && Array.isArray(json.data) && json.data.length) {
+          if (json && Array.isArray(json.data)) {
             if (mounted) setUrls(json.data);
+            serverLoaded = true;
           }
           setServerAvailable(true);
         } else {
           setServerAvailable(false);
         }
       } catch { setServerAvailable(false); }
-      if (!localLoaded && mounted && urls.length === 0) {
+      if (!localLoaded && !serverLoaded && mounted) {
         try {
           const staticRes = await fetch((process.env.PUBLIC_URL || '') + '/data/other-arts.json');
           if (staticRes.ok) {
             const arr = await staticRes.json();
-            if (Array.isArray(arr) && arr.length) setUrls(arr);
+            if (Array.isArray(arr)) setUrls(arr);
           }
         } catch {}
       }
+      if (mounted) setHasInitializedUrls(true);
     })();
     return () => { mounted = false; };
   }, [SERVER_BASE, STORAGE_KEY, listId]);
@@ -146,8 +150,9 @@ const SERVER_BASE = inferServerBase();
   }, [SERVER_BASE, listId, adminAuth]);
 
   useEffect(() => {
+    if (!hasInitializedUrls) return;
     if (autoSync && !pauseAutoSync) saveToServer(urls, false);
-  }, [urls, autoSync, pauseAutoSync, saveToServer]);
+  }, [urls, autoSync, pauseAutoSync, saveToServer, hasInitializedUrls]);
 
   const [toast, setToast] = useState(null);
   const showToast = useCallback((t) => {
@@ -409,13 +414,6 @@ const SERVER_BASE = inferServerBase();
           {isAdmin && adminPanelOpen && (
             <>
               <div className="mb-6 pb-6 border-b border-slate-700">
-                <h3 className="text-lg text-slate-300 font-medium mb-3">Upload Image from Computer</h3>
-                <ImageUploader
-                  adminAuth={adminAuth}
-                  onImageAdded={handleImageUploaded}
-                />
-              </div>
-              <div className="mb-6 pb-6 border-b border-slate-700">
                 <h3 className="text-lg text-slate-300 font-medium mb-3">Add YouTube Video or Image URL</h3>
                 <div className="flex items-center gap-2 flex-wrap">
                   <input type="text" value={adminAddUrl} onChange={e => setAdminAddUrl(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addUrl(); }} placeholder="Paste YouTube or Image URL..." className="flex-1 bg-slate-800 text-slate-100 rounded px-3 py-2 border border-slate-600 focus:border-amber-400 focus:outline-none min-w-[250px]" />
@@ -423,7 +421,14 @@ const SERVER_BASE = inferServerBase();
                   <button onClick={() => saveToServer(urls)} className="bg-emerald-600 text-white px-4 py-2 rounded">Save to Server</button>
                 </div>
                 <div className="mt-2 text-xs text-slate-400">Accepts: YouTube videos or direct image URLs (.jpg, .png, .gif, .webp)</div>
-                <div className="mt-1 text-xs text-slate-400">Auto-sync: {autoSync ? `${autoSyncStatus}` : 'off'}</div>
+                <div className="mt-1 text-xs text-slate-400">Auto-sync: {autoSync ? autoSyncStatus : 'off'}</div>
+              </div>
+              <div className="mb-6 pb-6 border-b border-slate-700">
+                <h3 className="text-lg text-slate-300 font-medium mb-3">Upload Image from Computer</h3>
+                <ImageUploader
+                  adminAuth={adminAuth}
+                  onImageAdded={handleImageUploaded}
+                />
               </div>
             </>
           )}
